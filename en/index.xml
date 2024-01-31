@@ -6,22 +6,6 @@
         <description>Recent content on sanghoon&#39;s dev-log</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ko-kr</language>
-        <copyright>Sanghoon, Han</copyright><atom:link href="http://sangho0n.github.io/en/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title></title>
-        <link>http://sangho0n.github.io/en/_widget/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>http://sangho0n.github.io/en/_widget/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title></title>
-        <link>http://sangho0n.github.io/en/_widget2/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>http://sangho0n.github.io/en/_widget2/</guid>
-        <description></description>
-        </item>
-        
+        <copyright>Sanghoon, Han</copyright><atom:link href="http://sangho0n.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     </channel>
 </rss>
