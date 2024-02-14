@@ -2,64 +2,64 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>sangho0n.github.io/en/</loc>
+    <loc>https://sangho0n.github.io/en/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="sangho0n.github.io/"
+                href="https://sangho0n.github.io/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="sangho0n.github.io/en/"
+                href="https://sangho0n.github.io/en/"
                 />
   </url><url>
-    <loc>sangho0n.github.io/en/_widget/</loc>
+    <loc>https://sangho0n.github.io/en/_widget/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="sangho0n.github.io/_widget/"
+                href="https://sangho0n.github.io/_widget/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="sangho0n.github.io/en/_widget/"
+                href="https://sangho0n.github.io/en/_widget/"
                 />
   </url><url>
-    <loc>sangho0n.github.io/en/_widget2/</loc>
+    <loc>https://sangho0n.github.io/en/_widget2/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="sangho0n.github.io/_widget2/"
+                href="https://sangho0n.github.io/_widget2/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="sangho0n.github.io/en/_widget2/"
+                href="https://sangho0n.github.io/en/_widget2/"
                 />
   </url><url>
-    <loc>sangho0n.github.io/en/categories/</loc>
+    <loc>https://sangho0n.github.io/en/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="sangho0n.github.io/categories/"
+                href="https://sangho0n.github.io/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="sangho0n.github.io/en/categories/"
+                href="https://sangho0n.github.io/en/categories/"
                 />
   </url><url>
-    <loc>sangho0n.github.io/en/tags/</loc>
+    <loc>https://sangho0n.github.io/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="sangho0n.github.io/tags/"
+                href="https://sangho0n.github.io/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="sangho0n.github.io/en/tags/"
+                href="https://sangho0n.github.io/en/tags/"
                 />
   </url>
 </urlset>
