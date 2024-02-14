@@ -3,6 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>sangho0n.github.io/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -13,6 +14,56 @@
                 hreflang="ko"
                 href="sangho0n.github.io/"
                 />
+  </url><url>
+    <loc>sangho0n.github.io/categories/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="sangho0n.github.io/en/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="sangho0n.github.io/categories/"
+                />
+  </url><url>
+    <loc>sangho0n.github.io/tags/gas/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+  </url><url>
+    <loc>sangho0n.github.io/post/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+  </url><url>
+    <loc>sangho0n.github.io/tags/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="sangho0n.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="sangho0n.github.io/tags/"
+                />
+  </url><url>
+    <loc>sangho0n.github.io/tags/ue/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+  </url><url>
+    <loc>sangho0n.github.io/tags/unreal/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+  </url><url>
+    <loc>sangho0n.github.io/categories/unreal/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+  </url><url>
+    <loc>sangho0n.github.io/tags/%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+  </url><url>
+    <loc>sangho0n.github.io/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
+  </url><url>
+    <loc>sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/</loc>
+    <lastmod>2024-02-14T13:53:44+09:00</lastmod>
   </url><url>
     <loc>sangho0n.github.io/_widget/</loc>
     <xhtml:link
@@ -36,30 +87,6 @@
                 rel="alternate"
                 hreflang="ko"
                 href="sangho0n.github.io/_widget2/"
-                />
-  </url><url>
-    <loc>sangho0n.github.io/categories/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="sangho0n.github.io/en/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="sangho0n.github.io/categories/"
-                />
-  </url><url>
-    <loc>sangho0n.github.io/tags/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="sangho0n.github.io/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="sangho0n.github.io/tags/"
                 />
   </url>
 </urlset>
