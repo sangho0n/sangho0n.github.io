@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>언리얼 on sanghoon&#39;s dev-log</title>
-        <link>https://sangho0n.github.io/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/</link>
-        <description>Recent content in 언리얼 on sanghoon&#39;s dev-log</description>
+        <title>Enhanced Input on sanghoon&#39;s dev-log</title>
+        <link>https://sangho0n.github.io/tags/enhanced-input/</link>
+        <description>Recent content in Enhanced Input on sanghoon&#39;s dev-log</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ko-kr</language>
         <copyright>Sanghoon, Han</copyright>
-        <lastBuildDate>Wed, 14 Feb 2024 17:44:19 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 14 Feb 2024 17:44:19 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/tags/enhanced-input/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>언리얼 Enhanced Input</title>
         <link>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/</link>
         <pubDate>Wed, 14 Feb 2024 17:44:19 +0900</pubDate>
@@ -349,83 +349,6 @@ UE4의 디폴트 인풋 시스템의 업그레이드 버전이지만, 하위 호
 InputTriggerTimedBase는 특정 시간 동안 입력이 지속되었는지 확인하고, 지속되는 동안 Ongoing 상태를 반환한다.
 다만 기본적으로 InputTriggerTimedBase는 조건이 충족되어도 Triggered를 반환하지 않기 때문에, 해당 클래스를 상속받아 새로운 트리거를 만들었다면
 GetTriggerType과 UpdateState 메서드를 오버라이드하여 원하는 상태를 반환토록 해야한다.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>언리얼 GAS 개요</title>
-        <link>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/</link>
-        <pubDate>Wed, 14 Feb 2024 13:53:44 +0900</pubDate>
-        
-        <guid>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/</guid>
-        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;이득우 님의 강의&lt;/a&gt;
-와 &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;다른 개발자가 정리해놓은 문서&lt;/a&gt;를 보고 정리한 내용입니다.&lt;/p&gt;
-&lt;p&gt;자세하고 정확한 내용은 위 링크를 참조하세요&lt;/p&gt;
-&lt;hr&gt;
-&lt;h1 id=&#34;게임플레이-어빌리티-시스템&#34;&gt;게임플레이 어빌리티 시스템&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;액터의 어빌리티 및 어빌리티를 통한 액터 간 상호작용 기능을 제공하는 프레임워크&lt;/li&gt;
-&lt;li&gt;장점
-&lt;ul&gt;
-&lt;li&gt;유연성, 확장성 : 다양하고 복잡한 게임 제작에 쉽게 활용할 수 있다.&lt;/li&gt;
-&lt;li&gt;모듈러 시스템 : 각 기능에 대한 의존성 최소화&lt;/li&gt;
-&lt;li&gt;네트워크 지원&lt;/li&gt;
-&lt;li&gt;데이터 기반 설계&lt;/li&gt;
-&lt;li&gt;완성도 : 포트나이트 등의 게임이 이미 이를 활용하고 있음&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;단점
-&lt;ul&gt;
-&lt;li&gt;학습 비용&lt;/li&gt;
-&lt;li&gt;소규모 프로젝트에서의 오버헤드&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;큰 규모의 RPG 및 멀티플레이 게임을 만들기에 적합함&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&#34;구성-요소&#34;&gt;구성 요소&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/gas1.png&#34;
-	
-	
-	
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;gas1.png&#34;
-	
-	
-&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;게임플레이 어빌리티 : 비용 및 쿨타임(optional) 기반의 캐릭터 어빌리티 구현&lt;/li&gt;
-&lt;li&gt;어트리뷰트 : 액터의 특성 조작&lt;/li&gt;
-&lt;li&gt;게임플레이 이펙트 : 어빌리티 발동에 따른 액터의 상태 변경&lt;/li&gt;
-&lt;li&gt;게임플레이 태그 : 액터에 대한 태그 지정&lt;/li&gt;
-&lt;li&gt;게임플레이 큐 : 시청각효과&lt;/li&gt;
-&lt;li&gt;위 모든 것들에 대한 레플리케이션&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/gas2.png&#34;
-	
-	
-	
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;gas1.png&#34;
-	
-	
-&gt;&lt;/p&gt;
-&lt;h1 id=&#34;멀티플레이-게임에서의-gas&#34;&gt;멀티플레이 게임에서의 GAS&lt;/h1&gt;
-&lt;p&gt;GAS 플러그인은 다음과 같은 client-side-prediction(서버의 허가 없이 어빌리티 발동 및 이펙트를 적용하는 것)을 지원한다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;어빌리티 발동&lt;/li&gt;
-&lt;li&gt;애니메이션 몽타주 재생&lt;/li&gt;
-&lt;li&gt;어트리뷰트 변경&lt;/li&gt;
-&lt;li&gt;게임플레이 태그 지정&lt;/li&gt;
-&lt;li&gt;게임플레이 큐 실행&lt;/li&gt;
-&lt;li&gt;CharacterMovementComponent와 연결된 RootMotionSource functions를 통한 움직임 조작&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;블루프린트-vs-c&#34;&gt;블루프린트 vs C++&lt;/h1&gt;
-&lt;p&gt;GAS는 cpp을 사용하여 구현되어야 하지만, GameplayAbilities와 GameplayEffects에 한하여 블루프린트로 구현이 가능하다.&lt;/p&gt;
 </description>
         </item>
         
