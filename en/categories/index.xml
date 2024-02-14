@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Categories on sanghoon&#39;s dev-log</title>
-        <link>http://sangho0n.github.io/en/categories/</link>
+        <link>sangho0n.github.io/en/categories/</link>
         <description>Recent content in Categories on sanghoon&#39;s dev-log</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ko-kr</language>
-        <copyright>Sanghoon, Han</copyright><atom:link href="http://sangho0n.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>Sanghoon, Han</copyright><atom:link href="sangho0n.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" />
     </channel>
 </rss>
