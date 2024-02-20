@@ -322,7 +322,7 @@ UE4의 디폴트 인풋 시스템의 업그레이드 버전이지만, 하위 호
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:left&#34;&gt;UInputTriggerCombo(default)&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;UInputTrigger(default)&lt;/td&gt;
 &lt;td style=&#34;text-align:right&#34;&gt;ETriggerType::Explicit&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
