@@ -7,7 +7,47 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ko-kr</language>
         <copyright>Sanghoon, Han</copyright>
-        <lastBuildDate>Mon, 26 Feb 2024 11:49:35 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 05 Mar 2024 17:31:11 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>UE</title>
+        <link>https://sangho0n.github.io/tags/ue/</link>
+        <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/tags/ue/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Unreal</title>
+        <link>https://sangho0n.github.io/tags/unreal/</link>
+        <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/tags/unreal/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>스마트포인터</title>
+        <link>https://sangho0n.github.io/tags/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%AC%EC%9D%B8%ED%84%B0/</link>
+        <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/tags/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%AC%EC%9D%B8%ED%84%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>언리얼</title>
+        <link>https://sangho0n.github.io/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/</link>
+        <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>포인터</title>
+        <link>https://sangho0n.github.io/tags/%ED%8F%AC%EC%9D%B8%ED%84%B0/</link>
+        <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/tags/%ED%8F%AC%EC%9D%B8%ED%84%B0/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>cs</title>
         <link>https://sangho0n.github.io/tags/cs/</link>
         <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
@@ -56,35 +96,11 @@
         <description></description>
         </item>
         <item>
-        <title>UE</title>
-        <link>https://sangho0n.github.io/tags/ue/</link>
-        <pubDate>Wed, 14 Feb 2024 17:44:19 +0900</pubDate>
-        
-        <guid>https://sangho0n.github.io/tags/ue/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>UE5</title>
         <link>https://sangho0n.github.io/tags/ue5/</link>
         <pubDate>Wed, 14 Feb 2024 17:44:19 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/tags/ue5/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Unreal</title>
-        <link>https://sangho0n.github.io/tags/unreal/</link>
-        <pubDate>Wed, 14 Feb 2024 17:44:19 +0900</pubDate>
-        
-        <guid>https://sangho0n.github.io/tags/unreal/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>언리얼</title>
-        <link>https://sangho0n.github.io/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/</link>
-        <pubDate>Wed, 14 Feb 2024 17:44:19 +0900</pubDate>
-        
-        <guid>https://sangho0n.github.io/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/</guid>
         <description></description>
         </item>
         <item>

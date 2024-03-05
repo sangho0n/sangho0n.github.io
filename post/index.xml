@@ -7,7 +7,297 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ko-kr</language>
         <copyright>Sanghoon, Han</copyright>
-        <lastBuildDate>Mon, 26 Feb 2024 11:49:35 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 05 Mar 2024 17:31:11 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>언리얼 스마트 포인터</title>
+        <link>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/</link>
+        <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/</guid>
+        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.unrealengine.com/5.2/en-US/smart-pointers-in-unreal-engine/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;공식문서&lt;/a&gt;를 바탕으로 이해한 내용을 작성한 글입니다. (의역 多)
+실제와는 다른 내용이 있을 수 있습니다. 지적해주시면 감사하겠습니다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;언리얼은 cpp 사용되는 여러 스마트 포인터들에 대한 구현체를 제공한다. 제공되는 클래스로는 Shared 포인터와 Weak포인터, Unique 포인터는 물론 여기에다가 Shared Reference라는 특이한 타입이 하나가 추가되었다. UObject는 별도의 메모리 트래킹 시스템에 의해 관리되기 때문에, UObject를 상속받는 클래스의 인스턴스는 스마트포인터로 감쌀 수 없다. (가비지 컬렉션과는 다른 방식으로 메모리를 회수하는 구조; RAII 패턴)&lt;/p&gt;
+&lt;h2 id=&#34;타입-종류&#34;&gt;타입 종류&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;타입명&lt;/th&gt;
+&lt;th&gt;사용처&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;TSharedPtr&lt;/td&gt;
+&lt;td&gt;쉐어드 포인터는 감싸고 있는 객체를 소유하는 클래스이다. 소유하고 있는 동안 객체가 외부에 의해 소멸되지 못하게 막으며, 궁극적으로는 해당 객체를 소유하고 있는 쉐어드 포인터(혹은 레퍼런스)의 개수가 0이 될 때 객체의 소멸을 관장한다. 쉐어드포인터는 감싸고 있는 객체가 없는 상태로도 존재할 수 있다. 감싸고 있는 객체가 null이 아닐 때 언제든 쉐어드 레퍼런스를 생성할 수 있다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TSharedRef&lt;/td&gt;
+&lt;td&gt;쉐어드 포인터와 유사하게 동작하지만, 감싸고 있는 객체가 null이 될 수 없다는 점에서 다르다. null이 불가능하기 때문에 언제든 쉐어드 포인터로 변환될 수 있으며, 이때 가리키고 있는 객체는 항상 유효한 상태이다. 객체의 소유권을 명확히하고 싶을 때나 객체가 null이 아님을 보장하고 싶을 때 사용된다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TWeakPtr&lt;/td&gt;
+&lt;td&gt;쉐어드 포인터와 유사하지만, 객체를 소유하고 있지 않기 때문에 라이프사이클에 영향을 주지 않는다. 이러한 특징 때문에 1)&lt;strong&gt;참조사이클&lt;/strong&gt;을 끊는 데 유용하게 사용할 수 있지만, 동시에 참조하는 객체가 언제든 경고 없이 null이 될 수 있기에 안전한 접근을 보장하고 싶다면 TSharedPtr로 변환 후 사용하는 것이 좋다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TUniquePtr&lt;/td&gt;
+&lt;td&gt;유니크 포인터는 객체를 독점적으로 소유한다. 소유권을 넘겨줄 수는 있지만 공유하지는 못한다. 유니크 포인터를 복사하려는 모든 경우에 컴파일 에러가 난다. 스코프를 벗어나게 되면 자동으로 소유하고 있는 객체를 메모리에서 해제한다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;1) 두 개 이상의 객체가 서로를 참조하는 경우 발생하는 현상. 참조카운트가 0이 되지 않아 객체들이 해제되지 않고 메모리 누수가 발생할 수 있다.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;이점&#34;&gt;이점&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;이점&lt;/th&gt;
+&lt;th&gt;설명&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;메모리 누수 방지&lt;/td&gt;
+&lt;td&gt;객체를 자동으로 소멸시켜주기 때문에 메모리 누수를 방지할 수 있다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;약한 참조&lt;/td&gt;
+&lt;td&gt;순환 참조 문제를 해결하고, 댕글링 포인터 문제를 방지한다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;스레드 안전 보장(optional)&lt;/td&gt;
+&lt;td&gt;필요한 경우 스레드 안전을 보장하는 코드를 추가로 작성할 수 있다. (오버헤드 존재)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;런타임 안전성&lt;/td&gt;
+&lt;td&gt;쉐어드 레퍼런스는 null이 될 수 없고 언제든 참조를 해제할 수 있기 때문에 런타임 안정성을 부여한다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;의도 전달&lt;/td&gt;
+&lt;td&gt;1)&lt;strong&gt;소유자와 관찰자&lt;/strong&gt;를 쉽게 구분할 수 있다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;메모리 상의 이점&lt;/td&gt;
+&lt;td&gt;cpp의 포인터 변수의 크기의 2배만으로도 이 모든 기능을 수행한다(64비트 기준; 16바이트의 참조 제어자 포함). 단, 유니크포인터는 cpp의 포인터와 동일한 크기를 갖는다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;1) 소유자는 객체를 소유하고 수명주기를 관리한다. 쉐어드포인터와 유니크포인터를 통해 객체를 소유하며, 더이상 필요하지 않을 때 메모리에서 해제한다. 관찰자는 객체를 참조하고 있지만 소유하지는 않는다(위크포인터). 객체의 소유자가 해당 객체를 삭제하면 관찰자는 알아서 null이되어야 한다.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;헬퍼-클래스와-함수&#34;&gt;헬퍼 클래스와 함수&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;헬퍼&lt;/th&gt;
+&lt;th&gt;설명&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;&lt;em&gt;클래스&lt;/em&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;TSharedFromThis&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;TSahredFromThis를 상속받게 하면 해당 클래스에 AsShared와 SharedThis 메서드가 추가된다. 이러한 메서드들은 객체에 대한 TSharedRef를 얻을 수 있게 도와준다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;&lt;em&gt;함수&lt;/em&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;MakeShared&lt;/strong&gt;와 &lt;strong&gt;MakeShareable&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;MakeShared 함수는 일반적인 cpp 포인터에서 TSharedPtr를 생성해낸다. 이 함수는 새로운 객체 인스턴스와 참조 컨트롤러를 단일 메모리 블록에 할당한다. 객체가 public 생성자를 가지고있어야한다. MakeShareable 역시 cpp포인터에서 TSharedPtr를 생성하는 데 사용된다. 이 함수는 객체의 생성자가 private인 경우에도 작동한다. 따라서 본인이 생성하지 않은 객체의 소유권을 얻고싶을 때에도 사용할 수 있으며, 추가로 소멸자가 호출되었을 때 개발자가 원하는 로직을 부여할 수도 있다. 이러한 추가 기능 때문에 MakeShared에 비해 더 유연한 프로그래밍을 할 수 있지만, 동시에 오버헤드 또한 존재한다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;StaticCastSharedRef&lt;/strong&gt;와 &lt;strong&gt;StaticCastSharedPtr&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;정적 캐스팅을 지원 하는 유틸리티 함수(주로 다운캐스팅)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;                                &lt;strong&gt;ConstCastSharedRef&lt;/strong&gt;와 &lt;strong&gt;ConstCastSharedPtr&lt;/strong&gt;                               &lt;/td&gt;
+&lt;td&gt;각각의 레퍼런스와 포인터형 변수에 대해 const에서 mutalble 가능한 객체를 반환한다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;MakeShareable을 사용하여 소멸자에 추가 로직을 부여하는 예시&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-CPP&#34; data-lang=&#34;CPP&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;n&#34;&gt;TSharedPtr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FOnlineSession&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SharedPtr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MakeShareable&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FOnlineSession&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[](&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FOnlineSession&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ObjToDelete&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    	&lt;span class=&#34;c1&#34;&gt;// 커스텀 소멸자 구현
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;		&lt;span class=&#34;n&#34;&gt;ObjToDelete&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PerformAdditionalCleanup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;k&#34;&gt;delete&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ObjToDelete&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;세부-구현&#34;&gt;세부 구현&lt;/h2&gt;
+&lt;p&gt;언리얼의 스마트포인터 라이브러리는 기능성과 효율성 모두 살린 채 구현되었다.&lt;/p&gt;
+&lt;h3 id=&#34;속도&#34;&gt;속도&lt;/h3&gt;
+&lt;p&gt;스마트포인터는 자원 관리 및 툴 프로그래밍과 같은 high-level 시스템에서는 매우 유용하게 사용되지만, cpp의 기본 포인터에 비해 느리게 동작하기에 렌더링 같은 low-level 엔진 코드에는 적합하지 않다.&lt;/p&gt;
+&lt;p&gt;언리얼 스마트포인터 라이브러리는 다음과 같은 성능상의 이점을 갖는다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;모든 연산이 상수시간에 수행된다.&lt;/li&gt;
+&lt;li&gt;(Shipping 빌드 시) 대부분의 스마트포인터에서의 Dereferencing 시간은 cpp의 기본 포인터만큼 빠르다.&lt;/li&gt;
+&lt;li&gt;스마트포인터의 복사는 새로운 메모리 할당을 요구하지 않는다.&lt;/li&gt;
+&lt;li&gt;스레드 안전 스마트포인터는 lock을 걸지 않는다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;다만 다음과 같은 결점 또한 존재한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;새로운 스마트포인터 생성 및 복사는 cpp 기본 포인터보다 오버헤드가 존재한다.&lt;/li&gt;
+&lt;li&gt;참조카운트를 관리하기에 기본 연산 시 연산 주기가 추가된다.&lt;/li&gt;
+&lt;li&gt;몇몇의 스마트포인터는 cpp 기본 포인터보다 많은 메모리를 사용한다.&lt;/li&gt;
+&lt;li&gt;참조 제어자는 두 번의 힙 메모리 할당을 필요로 한다. MakeSharable 대신 MakeShared를 사용하는 경우 두번째 메모리 할당을 피할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;intrusive-accessors&#34;&gt;Intrusive Accessors&lt;/h3&gt;
+&lt;p&gt;일반적으로 스마트포인터가 참조하고 있는 인스턴스는 자신을 소유하고 있는 스마트포인터의 존재를 인지하지 못한다.(이를 non-intrusive라고 부름)
+그러나 언리얼의 스마트포인터 라이브러리는 TSharedFromThis를 통해 자신을 참조하는 스마트포인터에 대한 접근자를 얻을 수 있다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;FRegistryObject&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;FMyBaseClass&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;TSharedFromThis&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FMyBaseClass&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;RegisterAsBaseClass&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FRegistryObject&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RegistryObject&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;// Access a shared reference to &amp;#39;this&amp;#39;.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// We are directly inherited from &amp;lt;TSharedFromThis&amp;gt; , so AsShared() and SharedThis(this) return the same type.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;TSharedRef&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FMyBaseClass&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ThisAsSharedRef&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AsShared&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;// RegistryObject expects a TSharedRef&amp;lt;FMyBaseClass&amp;gt;, or a TSharedPtr&amp;lt;FMyBaseClass&amp;gt;. TSharedRef can implicitly be converted to a TSharedPtr.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;RegistryObject&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Register&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ThisAsSharedRef&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;FMyDerivedClass&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FMyBaseClass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;Register&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FRegistryObject&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RegistryObject&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;// We are not directly inherited from TSharedFromThis&amp;lt;&amp;gt;, so AsShared() and SharedThis(this) return different types.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// AsShared() will return the type originally specified in TSharedFromThis&amp;lt;&amp;gt; - TSharedRef&amp;lt;FMyBaseClass&amp;gt; in this example.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// SharedThis(this) will return a TSharedRef with the type of &amp;#39;this&amp;#39; - TSharedRef&amp;lt;FMyDerivedClass&amp;gt; in this example.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// The SharedThis() function is only available in the same scope as the &amp;#39;this&amp;#39; pointer.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;TSharedRef&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FMyDerivedClass&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AsSharedRef&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SharedThis&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;// RegistryObject will accept a TSharedRef&amp;lt;FMyDerivedClass&amp;gt; because FMyDerivedClass is a type of FMyBaseClass.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;RegistryObject&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Register&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ThisAsSharedRef&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;FRegistryObject&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;// This function will accept a TSharedRef or TSharedPtr to FMyBaseClass or any of its children.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;Register&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TSharedRef&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FMyBaseClass&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;앞서 언급했듯이 TSharedFromThis를 상속받음으로서 해당 클래스는 AsShared 메서드와 SharedThis를 사용하여 자신의 인스턴스를 참조하는 스마트포인터(TSharedRef)를 얻을 수 있다.
+다만 SharedRef 메서드의 경우 파라미터로 this를 받기 때문에, TSharedFromThis를 직접 상속하지 않는 클래스의 경우에는 반환값이 달라진다. 만약 쉐어드 레퍼런스를 반환하는 팩토리 클래스 혹은 쉐어드 레퍼런스(또는 포인터)를 파라미터로 갖는 메서드의 경우(위 예시에서의 &lt;code&gt;FRegistryObject::Register(TSharedRef&amp;lt;FMyBaseClass&amp;gt;)&lt;/code&gt;), TSharedFromThis를 직접 상속하는 base class의 쉐어드 포인터를 파라미터 타입으로 설정하는 것이 좋다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;AsShared 와 SharedThis는 인스턴스화 된 오브젝트의 스마트포인터를 반환하기 때문에, 생성자에서 사용하게되면 crash나 assert를 유발함에 주의&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;타입캐스팅&#34;&gt;타입캐스팅&lt;/h3&gt;
+&lt;p&gt;언리얼 스마트포인트 라이브러리는 cpp의 포인터와 유사한 방식으로 캐스팅을 할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Up Casting : cpp의 기본 포인터와 유사하게 암묵적으로 수행된다.(기본 클래스의 포인터를 파생 클래스의 포인터로 자동으로 변환할 수 있다.)&lt;/li&gt;
+&lt;li&gt;Const Casting : ConstCastSharedPtr/Ref 메서드를 이용해 수행.&lt;/li&gt;
+&lt;li&gt;Static Casting : StaticCastSharedPtr/Ref 메서드를 이용해 수행(주로 다운캐스팅이다).&lt;/li&gt;
+&lt;li&gt;Dynamic Casting : 런타임 타입 정보(RTTI)가 없기 때문에 동적캐스팅은 지원되지 않는다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;TSharedPtr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FDragDropOperation&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Operation&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DragDropEvent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GetOperation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Some code for validating that the FDragDropOperation is actually an FAssetDragDropOp through other means...
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// We can now cast with StaticCastSharedPtr.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TSharedPtr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FAssetDragDropOp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DragDropOp&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;StaticCastSharedPtr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FAssetDragDropOp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Operation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;스레드-안정성&#34;&gt;스레드 안정성&lt;/h3&gt;
+&lt;p&gt;디폴트로 스마트포인터는 싱글스레드 환경에서만 안전하다. 스레드 세이프한 버전을 원한다면 다음과 같은 클래스들을 사용하면 된다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TSharedPtr&amp;lt;T, ESPMode::ThreadSafe&amp;gt;&lt;/li&gt;
+&lt;li&gt;TSharedRef&amp;lt;T, ESPMode::ThreadSafe&amp;gt;&lt;/li&gt;
+&lt;li&gt;TWeakPtr&amp;lt;T, ESPMode::ThreadSafe&amp;gt;&lt;/li&gt;
+&lt;li&gt;TSharedFromThis&amp;lt;T, ESPMode::ThreadSafe&amp;gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이 클래스들은 레퍼런스 카운트에 대한 원자적 연산을 수행하기 때문에 디폴트 클래스들보다 약간 느리지만, 동작 과정은 cpp 기본 포인터와 매우 유사하다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;읽기와 복사 연산은 항상 스레드 안전하다&lt;/li&gt;
+&lt;li&gt;쓰기와 리셋 연산은 안정성을 위해 반드시 동기화되어야한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;첨언&#34;&gt;첨언&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;쉐어드 포인터/레퍼런스를 메서드의 인자로 넘기는 경우 레퍼런스 카운팅 및 Dereferencing에 의한 오버헤드가 존재한다. 가능하다면 &lt;code&gt;const &amp;amp;&lt;/code&gt;로 넘겨주자&lt;/li&gt;
+&lt;li&gt;쉐어드 포인터의 경우 불완전한 클래스에 대한 전방선언을 하는 것이 가능하다.&lt;/li&gt;
+&lt;li&gt;앞서 언급했듯, 스마트포인터와 가비지 컬렉션(&lt;a class=&#34;link&#34; href=&#34;https://docs.unrealengine.com/5.2/en-US/unreal-object-handling-in-unreal-engine/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;UObject Handling&lt;/a&gt;)은 완전히 분리된 메모리 관리 시스템이다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;전방선언 예시&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 전방 선언
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;IncompleteType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 전방 선언된 타입에 대한 스마트 포인터
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TSharedPtr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;IncompleteType&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;incompleteTypePtr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 나중에 IncompleteType의 정의가 완료되면 해당 타입으로 스마트 포인터를 생성할 수 있음
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TSharedPtr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;IncompleteType&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;incompleteTypePtr2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MakeShared&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;IncompleteType&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
         <title>정렬 알고리즘 간단 정리</title>
         <link>https://sangho0n.github.io/p/%EC%A0%95%EB%A0%AC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%84%EB%8B%A8-%EC%A0%95%EB%A6%AC/</link>
         <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
