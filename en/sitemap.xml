@@ -14,28 +14,16 @@
                 href="https://sangho0n.github.io/en/"
                 />
   </url><url>
-    <loc>https://sangho0n.github.io/en/_widget/</loc>
+    <loc>https://sangho0n.github.io/en/archives/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://sangho0n.github.io/_widget/"
+                href="https://sangho0n.github.io/archives/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://sangho0n.github.io/en/_widget/"
-                />
-  </url><url>
-    <loc>https://sangho0n.github.io/en/_widget2/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://sangho0n.github.io/_widget2/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://sangho0n.github.io/en/_widget2/"
+                href="https://sangho0n.github.io/en/archives/"
                 />
   </url><url>
     <loc>https://sangho0n.github.io/en/categories/</loc>
@@ -50,6 +38,30 @@
                 href="https://sangho0n.github.io/en/categories/"
                 />
   </url><url>
+    <loc>https://sangho0n.github.io/en/page/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://sangho0n.github.io/page/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://sangho0n.github.io/en/page/"
+                />
+  </url><url>
+    <loc>https://sangho0n.github.io/en/search/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://sangho0n.github.io/search/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://sangho0n.github.io/en/search/"
+                />
+  </url><url>
     <loc>https://sangho0n.github.io/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
@@ -60,6 +72,18 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://sangho0n.github.io/en/tags/"
+                />
+  </url><url>
+    <loc>https://sangho0n.github.io/en/about/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://sangho0n.github.io/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://sangho0n.github.io/en/about/"
                 />
   </url>
 </urlset>

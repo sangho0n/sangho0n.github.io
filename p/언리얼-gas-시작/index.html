@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="ko-kr" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 이번 포스트에서는 아래 3가지의 방법을 통'>
+<title>언리얼 GAS 시작</title>
+
+<link rel='canonical' href='https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='언리얼 GAS 시작'>
+<meta property='og:description' content='이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 이번 포스트에서는 아래 3가지의 방법을 통'>
+<meta property='og:url' content='https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/'>
+<meta property='og:site_name' content='sanghoon&#39;s dev-log'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='GAS' /><meta property='article:tag' content='어빌리티' /><meta property='article:published_time' content='2024-03-18T15:58:25&#43;09:00'/><meta property='article:modified_time' content='2024-03-18T15:58:25&#43;09:00'/>
+<meta name="twitter:title" content="언리얼 GAS 시작">
+<meta name="twitter:description" content="이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 이번 포스트에서는 아래 3가지의 방법을 통">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="메뉴 여닫기">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/avatar_hufa2a3a1a2b6d47cfb712fe4c06494714_9812_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">sanghoon&#39;s dev-log</a></h1>
+            <h2 class="site-description">안녕하세요. 게임개발자 한상훈입니다.</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/sangho0n'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/sanghoon_eat/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://sangho0n.github.io/" selected>한국어</option>
+                        
+                            <option value="https://sangho0n.github.io/en/" >English</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>다크 모드</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">목차</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#액터-기능-확장">액터 기능 확장</a></li>
+    <li><a href="#game-ability-system-사용">Game Ability System 사용</a>
+      <ol>
+        <li><a href="#ability-system-component">Ability System Component</a></li>
+        <li><a href="#game-ability">Game Ability</a></li>
+      </ol>
+    </li>
+    <li><a href="#game-ability-system--gameplay-tag-사용">Game Ability System + Gameplay Tag 사용</a>
+      <ol>
+        <li><a href="#gameplay-tags">Gameplay Tags</a></li>
+      </ol>
+    </li>
+    <li><a href="#정리">정리</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/unreal/" >
+                Unreal
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/">언리얼 GAS 시작</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024-03-18</time>
+            </div>
+        
+
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
+    >이득우 님의 강의</a>
+와 <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
+    >다른 개발자가 정리해놓은 문서</a>를 보고 정리한 내용입니다.</p>
+<p>자세하고 정확한 내용은 위 링크를 참조하세요</p>
+<hr>
+<p>이번 포스트에서는 아래 3가지의 방법을 통해 액터의 움직임을 구현해보면서 GAS 프레임워크의 사용 방식에 대해 알아보고,
+각 방식에 따른 차이점을 살펴보겠다.</p>
+<ul>
+<li>액터 기능 확장</li>
+<li>Game Ability System 사용</li>
+<li>Game Ability System + Gameplay Tag 사용</li>
+</ul>
+<p>액터로는 분수대, 움직임은 3초간 제자리 회전/정지를 기준으로 제작하였다.</p>
+<h2 id="액터-기능-확장">액터 기능 확장</h2>
+<p>GAS 프레임워크 없이 URotatingMovementComponent을 직접 사용하여 구현</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ARENABATTLEGAS_API</span> <span class="nl">AABGASFountain</span> <span class="p">:</span> <span class="k">public</span> <span class="n">AABFountain</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">GENERATED_BODY</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">AABGASFountain</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">PostInitializeComponents</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">BeginPlay</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">TimerAction</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">VisibleAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Movement</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">TObjectPtr</span><span class="o">&lt;</span><span class="n">URotatingMovementComponent</span><span class="o">&gt;</span> <span class="n">RotatingMovement</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Timer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">ActionInterval</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">FTimerHandle</span> <span class="n">ActionTimer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">BeginPlay</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">BeginPlay</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">GetWorld</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetTimerManager</span><span class="p">().</span><span class="n">SetTimer</span><span class="p">(</span><span class="n">ActionTimer</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">,</span> <span class="n">ActionInterval</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">Activate</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">Deactivate</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="game-ability-system-사용">Game Ability System 사용</h2>
+<p>GAS 프레임워크를 이용하여 움직임을 구현하기 위해서는, 아래 두 개념을 먼저 이해해야 한다.</p>
+<ul>
+<li>Ability System Component</li>
+<li>Game Ability</li>
+</ul>
+<h3 id="ability-system-component">Ability System Component</h3>
+<ul>
+<li>게임플레이 어빌리티 시스템을 관리하는 컴포넌트</li>
+<li>액터 당 하나만 부착 가능</li>
+<li>액터는 이를 통하여 Gameplay Ability를 발동시킬 수 있음</li>
+<li>해당 컴포넌트를 부착한 액터 사이에 Game Ability System에 의한 상호작용이 가능해짐</li>
+</ul>
+<h3 id="game-ability">Game Ability</h3>
+<ul>
+<li>Ability System Component에 등록되어 발동시킬 수 있는 액션</li>
+<li>발동 과정
+<ul>
+<li>Ability System Component에 등록 : AbilitySystemComponent-&gt;GiveAbility()</li>
+<li>액션 발동 : AbilitySystemComponent-&gt;TryActivateAbility()</li>
+<li>발동된 ability 내부에서는 SpecHandle, ActorInfo, ActivationInfo를 활용하여 요구사항 구현</li>
+</ul>
+</li>
+<li>주요 메서드
+<ul>
+<li>CanActivateAbility</li>
+<li><strong>ActivateAbility</strong></li>
+<li><strong>CancelAbility</strong></li>
+<li>EndAbility</li>
+</ul>
+</li>
+</ul>
+<p>위 두 개념을 이용하여 맨 처음과 동일한 움직임을 구현하면 아래와 같다.</p>
+<ol>
+<li>GameplayAbility를 상속하여 어빌리티 클래스 생성</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ARENABATTLEGAS_API</span> <span class="nl">UABGA_Rotate</span> <span class="p">:</span> <span class="k">public</span> <span class="n">UGameplayAbility</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">GENERATED_BODY</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">CancelAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bReplicateCancelAbility</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                   <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">TriggerEventData</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">Avatar</span> <span class="o">=</span> <span class="n">ActorInfo</span><span class="o">-&gt;</span><span class="n">AvatarActor</span><span class="p">.</span><span class="n">Get</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">RotatingMovement</span> <span class="o">=</span> <span class="n">Avatar</span><span class="o">-&gt;</span><span class="n">GetComponentByClass</span><span class="p">(</span><span class="n">URotatingMovementComponent</span><span class="o">::</span><span class="n">StaticClass</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">Activate</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">CancelAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bReplicateCancelAbility</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">CancelAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">bReplicateCancelAbility</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 생략
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>액터에 컴포넌트 부착 및 인터페이스 구현</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ARENABATTLEGAS_API</span> <span class="nl">AABGASFountain</span> <span class="p">:</span> <span class="k">public</span> <span class="n">AABFountain</span><span class="p">,</span> <span class="k">public</span> <span class="n">IAbilitySystemInterface</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">GENERATED_BODY</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">AABGASFountain</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="n">UAbilitySystemComponent</span><span class="o">*</span> <span class="nf">GetAbilitySystemComponent</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span><span class="p">;</span> <span class="c1">// pure virtual
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">VisibleAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Ability</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">TObjectPtr</span><span class="o">&lt;</span><span class="n">UAbilitySystemComponent</span><span class="o">&gt;</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">VisibleAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Ability</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">TObjectPtr</span><span class="o">&lt;</span><span class="n">URotatingMovementComponent</span><span class="o">&gt;</span> <span class="n">RotatingMovement</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Timer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">ActionInterval</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">FTimerHandle</span> <span class="n">ActionTimer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">UAbilitySystemComponent</span><span class="o">*</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">GetAbilitySystemComponent</span><span class="p">()</span> <span class="k">const</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>부착된 컴포넌트에 어빌리티 등록 및 발동</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">FGameplayAbilitySpec</span> <span class="nf">RotateSpec</span><span class="p">(</span><span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">StaticClass</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">GiveAbility</span><span class="p">(</span><span class="n">RotateSpec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">RotateSpec</span> <span class="o">=</span> <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">FindAbilitySpecFromClass</span><span class="p">(</span><span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">StaticClass</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">RotateSpec</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">TryActivateAbility</span><span class="p">(</span><span class="n">RotateSpec</span><span class="o">-&gt;</span><span class="n">Handle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">else</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">CancelAbilityHandle</span><span class="p">(</span><span class="n">RotateSpec</span><span class="o">-&gt;</span><span class="n">Handle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="game-ability-system--gameplay-tag-사용">Game Ability System + Gameplay Tag 사용</h2>
+<p>게임플레이 태그 없이 Game Ability System만을 사용하여 구현하는 경우, GAS 프레임워크의 장점을 최대로 활용할 수 없다.
+Gameplay Tag가 무엇인지 먼저 알아보자</p>
+<h3 id="gameplay-tags">Gameplay Tags</h3>
+<p>FGameplayTag란 <code>Parent.Child.Grandchild...</code>와 같이 계층적 형태로 등록/관리되는 이름을 의미한다. GameplayTagManager에 의해 등록된다.
+이러한 태그들을 이용하여 클래스들을 분류하고, 상태를 효과적으로 추적할 수 있다.</p>
+<p>상태 추적을 위해 bool값이나 enum을 두고 해당 값을 기준으로 조건문을 통해 상태를 확인하던 방식들은,
+해당 오브젝트가 Gameplay Tag를 가지고있는지 여부로 대체할 수 있다.</p>
+<p>한편 여러개의 Tag들은 Tarray<FGameplayTag>보다는 FGameplayTagContainer를 이용하여 관리하는 것이 좋다. 언제든 배열 형태로
+태그들을 받아볼 수 있을 뿐만 아니라, 여러 메서드를 통해 태그 관리를 쉽게 할 수 있기 때문이다.</p>
+<p>GAS 프레임워크는 Gameplay Tag와 매우 친화적이다. UAbilitySystemComponent가 IGameplayTagAssetInterface를 구현하기 때문에 Ability System Component에 직접 태그를 지정할 수 있을 뿐만 아니라,
+아래와 같이 GameplayAbility의 여러 상태들을 태그 컨테이너로 관리할 수 있도록 구현해두었기 때문이다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// GameplayAbility.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="cm">/** Abilities with these tags are cancelled when this ability is executed */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditDefaultsOnly</span><span class="p">,</span> <span class="n">Category</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">(</span><span class="n">Categories</span><span class="o">=</span><span class="s">&#34;AbilityTagCategory&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FGameplayTagContainer</span> <span class="n">CancelAbilitiesWithTag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="cm">/** Abilities with these tags are blocked while this ability is active */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditDefaultsOnly</span><span class="p">,</span> <span class="n">Category</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">(</span><span class="n">Categories</span><span class="o">=</span><span class="s">&#34;AbilityTagCategory&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FGameplayTagContainer</span> <span class="n">BlockAbilitiesWithTag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="cm">/** Tags to apply to activating owner while this ability is active. These are replicated if ReplicateActivationOwnedTags is enabled in AbilitySystemGlobals. */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditDefaultsOnly</span><span class="p">,</span> <span class="n">Category</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">(</span><span class="n">Categories</span><span class="o">=</span><span class="s">&#34;OwnedTagsCategory&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FGameplayTagContainer</span> <span class="n">ActivationOwnedTags</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>또한 게임플레이 태그를 활용하면, 액터 클래스에서 Gameplay Ability 클래스에 대한 정보가 없어도 동일한 요구사항을 구현할 수 있기 때문에
+코드 간 낮은 의존성을 유지시킬 수 있다는 장점이 있다.</p>
+<p>게임플레이 태그를 활용하면 동일한 요구 사항을 아래와 같이 구현할 수 있다.</p>
+<ol>
+<li>태그 생성</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// DefaultGameplayTags.ini
+</span></span><span class="line"><span class="cl"><span class="o">[</span>/Script/GameplayTags.GameplayTagsSettings<span class="o">]</span>
+</span></span><span class="line"><span class="cl">//...
+</span></span><span class="line"><span class="cl">+GameplayTagList<span class="o">=(</span><span class="nv">Tag</span><span class="o">=</span><span class="s2">&#34;Actor.Action.Rotate&#34;</span>,DevComment<span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">+GameplayTagList<span class="o">=(</span><span class="nv">Tag</span><span class="o">=</span><span class="s2">&#34;Actor.State.IsRotating&#34;</span>,DevComment<span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>태그를 쉽게 얻어오기 위한 매크로 작성</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// ABGameplayTag.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define ABTAG_ACTOR_ROTATE FGameplayTag::RequestGameplayTag(FName(&#34;Actor.Action.Rotate&#34;))
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define ABTAG_ACTOR_ISROTATING FGameplayTag::RequestGameplayTag(FName(&#34;Actor.State.IsRotating&#34;))
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>Gameplay Ability에 태그 등록</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">UABGA_Rotate</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">AbilityTags</span><span class="p">.</span><span class="n">AddTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ROTATE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 활성화될 때 아래 태그가 심어짐
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">ActivationOwnedTags</span><span class="p">.</span><span class="n">AddTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ISROTATING</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>태그를 활용한 어빌리티 등록 및 활성화</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// ABGASFountain.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">GAS</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">TArray</span><span class="o">&lt;</span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UGameplayAbility</span><span class="o">&gt;&gt;</span> <span class="n">Abilities</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 구현부
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">Element</span> <span class="p">:</span> <span class="n">Abilities</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">FGameplayAbilitySpec</span> <span class="nf">Spec</span><span class="p">(</span><span class="n">Element</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">GiveAbility</span><span class="p">(</span><span class="n">Spec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">FGameplayTagContainer</span> <span class="nf">TargetTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ROTATE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">HasMatchingGameplayTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ISROTATING</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">TryActivateAbilitiesByTag</span><span class="p">(</span><span class="n">TargetTag</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">CancelAbilities</span><span class="p">(</span><span class="o">&amp;</span><span class="n">TargetTag</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>이후 AABGASFountain cpp 클래스를 상속하는 블루프린트 클래스를 만든 후, Details 패널에서 알맞은 액티비티를 Abilities에 넣어주면 된다.</p>
+<h2 id="정리">정리</h2>
+<p>회전하는 분수대를 세 가지의 방법으로 구현</p>
+<ol>
+<li>액터의 기능 확장</li>
+<li>GAS : 새로운 클래스(ability)를 만들어 액터로부터 기능 분리</li>
+<li>GAS + Gameplay Tags : 태그를 활용해 액터와 ability 간 의존성 제거</li>
+</ol>
+<p>GAS와 Gameplay Tags를 같이 사용했을 때의 좋은 점</p>
+<ol>
+<li>액터의 역할 최소화</li>
+<li>의존성 제거. 유지보수가 쉬워지고, 재사용성이 높아짐</li>
+<li>확장성 + 타직군 과의 협업 용이</li>
+</ol>
+<p><img src="/img/post/gas/RotatingFountain.gif"
+	
+	
+	
+	loading="lazy"
+	
+		alt="RotatingFountain.gif"
+	
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/unreal/">Unreal</a>
+        
+            <a href="/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/">언리얼</a>
+        
+            <a href="/tags/ue/">UE</a>
+        
+            <a href="/tags/gas/">GAS</a>
+        
+            <a href="/tags/%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0/">어빌리티</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">관련 글</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 GAS 개요</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 스마트 포인터</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 Enhanced Input</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2024 Sanghoon, Han
+    </section>
+    
+    <section class="powerby">
+        <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>로 만듦 <br />
+        <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>의 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> 테마 사용 중
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -7,20 +7,29 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ko-kr</language>
         <copyright>Sanghoon, Han</copyright><atom:link href="https://sangho0n.github.io/en/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title></title>
-        <link>https://sangho0n.github.io/en/_widget/</link>
+        <title>Archives</title>
+        <link>https://sangho0n.github.io/en/archives/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://sangho0n.github.io/en/_widget/</guid>
+        <guid>https://sangho0n.github.io/en/archives/</guid>
         <description></description>
         </item>
         <item>
-        <title></title>
-        <link>https://sangho0n.github.io/en/_widget2/</link>
+        <title>Search</title>
+        <link>https://sangho0n.github.io/en/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://sangho0n.github.io/en/_widget2/</guid>
+        <guid>https://sangho0n.github.io/en/search/</guid>
         <description></description>
+        </item>
+        <item>
+        <title>안녕하세요 👋</title>
+        <link>https://sangho0n.github.io/en/about/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/about/</guid>
+        <description>&lt;p&gt;test 1 2 3&lt;/p&gt;
+</description>
         </item>
         
     </channel>
