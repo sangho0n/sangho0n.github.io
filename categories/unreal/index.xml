@@ -18,6 +18,11 @@
 와 &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;다른 개발자가 정리해놓은 문서&lt;/a&gt;를 보고 정리한 내용입니다.&lt;/p&gt;
 &lt;p&gt;자세하고 정확한 내용은 위 링크를 참조하세요&lt;/p&gt;
+&lt;p&gt;시리즈&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ea%b0%9c%ec%9a%94/&#34; &gt;언리얼 GAS 개요&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%8b%9c%ec%9e%91/&#34; &gt;언리얼 GAS 시작&lt;/a&gt; &amp;lt;- 현재포스트&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;
 &lt;p&gt;이번 포스트에서는 아래 3가지의 방법을 통해 액터의 움직임을 구현해보면서 GAS 프레임워크의 사용 방식에 대해 알아보고,
 각 방식에 따른 차이점을 살펴보겠다.&lt;/p&gt;
@@ -1173,6 +1178,11 @@ GetTriggerType과 UpdateState 메서드를 오버라이드하여 원하는 상�
 와 &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;다른 개발자가 정리해놓은 문서&lt;/a&gt;를 보고 정리한 내용입니다.&lt;/p&gt;
 &lt;p&gt;자세하고 정확한 내용은 위 링크를 참조하세요&lt;/p&gt;
+&lt;p&gt;시리즈&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ea%b0%9c%ec%9a%94/&#34; &gt;언리얼 GAS 개요&lt;/a&gt; &amp;lt;- 현재포스트&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%8b%9c%ec%9e%91/&#34; &gt;언리얼 GAS 시작&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;게임플레이-어빌리티-시스템&#34;&gt;게임플레이 어빌리티 시스템&lt;/h2&gt;
 &lt;ul&gt;
