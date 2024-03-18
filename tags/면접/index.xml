@@ -13,7 +13,7 @@
         <pubDate>Fri, 08 Mar 2024 11:12:45 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/c-%EC%83%81%EC%86%8D%EA%B3%BC-virtual-%ED%82%A4%EC%9B%8C%EB%93%9C/</guid>
-        <description>&lt;p&gt;다른 언어를 쓰면서 희미해졌던 기억을 되살리기 위한 글.
+        <description>&lt;img src="https://sangho0n.github.io/p/c-%EC%83%81%EC%86%8D%EA%B3%BC-virtual-%ED%82%A4%EC%9B%8C%EB%93%9C/img/cpp.svg" alt="Featured image of post C&#43;&#43; 상속과 virtual 키워드" /&gt;&lt;p&gt;다른 언어를 쓰면서 희미해졌던 기억을 되살리기 위한 글.
 이번 포스트에서는 c++에서의 &lt;strong&gt;상속&lt;/strong&gt;관계 및 &lt;strong&gt;virtual&lt;/strong&gt; 키워드에 대해 자세히 알아보도록 하겠다.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;상속&#34;&gt;상속&lt;/h2&gt;
@@ -699,7 +699,7 @@ cpp은 위 두 개념과 더불어 is-implemented-in-terms-of라는 용어를 �
         <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/%EC%A0%95%EB%A0%AC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%84%EB%8B%A8-%EC%A0%95%EB%A6%AC/</guid>
-        <description>&lt;p&gt;정렬 알고리즘은 최적, 평균, 최악 조건에서의 시간복잡도는 물론, 메모리 사용이나 안정성 등의 범주를 기준으로 골라서 써야 한다.
+        <description>&lt;img src="https://sangho0n.github.io/p/%EC%A0%95%EB%A0%AC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%84%EB%8B%A8-%EC%A0%95%EB%A6%AC/img/algorithm.png" alt="Featured image of post 정렬 알고리즘 간단 정리" /&gt;&lt;p&gt;정렬 알고리즘은 최적, 평균, 최악 조건에서의 시간복잡도는 물론, 메모리 사용이나 안정성 등의 범주를 기준으로 골라서 써야 한다.
 비교를 기반으로 하는 정렬 알고리즘의 최악 조건의 속도는 절대 &lt;code&gt;O(nlog(n))&lt;/code&gt;보다 빠를 수 없다.&lt;/p&gt;
 &lt;h1 id=&#34;이-포스트에서-다룰-정렬-알고리즘-목록&#34;&gt;이 포스트에서 다룰 정렬 알고리즘 목록&lt;/h1&gt;
 &lt;ul&gt;

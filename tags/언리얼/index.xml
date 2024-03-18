@@ -13,7 +13,7 @@
         <pubDate>Mon, 18 Mar 2024 15:58:25 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/</guid>
-        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <description>&lt;img src="https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/img/unreal.svg" alt="Featured image of post 언리얼 GAS 시작" /&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;이득우 님의 강의&lt;/a&gt;
 와 &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;다른 개발자가 정리해놓은 문서&lt;/a&gt;를 보고 정리한 내용입니다.&lt;/p&gt;
@@ -539,7 +539,7 @@ Gameplay Tag가 무엇인지 먼저 알아보자&lt;/p&gt;
         <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/</guid>
-        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.unrealengine.com/5.2/en-US/smart-pointers-in-unreal-engine/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <description>&lt;img src="https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/img/unreal.svg" alt="Featured image of post 언리얼 스마트 포인터" /&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.unrealengine.com/5.2/en-US/smart-pointers-in-unreal-engine/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;공식문서&lt;/a&gt;를 바탕으로 이해한 내용을 작성한 글입니다. (의역 多)
 실제와는 다른 내용이 있을 수 있습니다. 지적해주시면 감사하겠습니다.&lt;/p&gt;
 &lt;hr&gt;
@@ -829,7 +829,7 @@ Gameplay Tag가 무엇인지 먼저 알아보자&lt;/p&gt;
         <pubDate>Wed, 14 Feb 2024 17:44:19 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/</guid>
-        <description>&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img%2Fpost%2FEnhancedInput%2Fimage.png&#34;
+        <description>&lt;img src="https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/img/unreal.svg" alt="Featured image of post 언리얼 Enhanced Input" /&gt;&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img%2Fpost%2FEnhancedInput%2Fimage.png&#34;
 	
 	
 	
@@ -1173,7 +1173,7 @@ GetTriggerType과 UpdateState 메서드를 오버라이드하여 원하는 상�
         <pubDate>Wed, 14 Feb 2024 13:53:44 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/</guid>
-        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <description>&lt;img src="https://sangho0n.github.io/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/img/unreal.svg" alt="Featured image of post 언리얼 GAS 개요" /&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;이득우 님의 강의&lt;/a&gt;
 와 &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;다른 개발자가 정리해놓은 문서&lt;/a&gt;를 보고 정리한 내용입니다.&lt;/p&gt;

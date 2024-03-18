@@ -13,7 +13,7 @@
         <pubDate>Fri, 08 Mar 2024 11:12:45 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/c-%EC%83%81%EC%86%8D%EA%B3%BC-virtual-%ED%82%A4%EC%9B%8C%EB%93%9C/</guid>
-        <description>&lt;p&gt;다른 언어를 쓰면서 희미해졌던 기억을 되살리기 위한 글.
+        <description>&lt;img src="https://sangho0n.github.io/p/c-%EC%83%81%EC%86%8D%EA%B3%BC-virtual-%ED%82%A4%EC%9B%8C%EB%93%9C/img/cpp.svg" alt="Featured image of post C&#43;&#43; 상속과 virtual 키워드" /&gt;&lt;p&gt;다른 언어를 쓰면서 희미해졌던 기억을 되살리기 위한 글.
 이번 포스트에서는 c++에서의 &lt;strong&gt;상속&lt;/strong&gt;관계 및 &lt;strong&gt;virtual&lt;/strong&gt; 키워드에 대해 자세히 알아보도록 하겠다.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;상속&#34;&gt;상속&lt;/h2&gt;

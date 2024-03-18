@@ -13,7 +13,7 @@
         <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
         
         <guid>https://sangho0n.github.io/p/%EC%A0%95%EB%A0%AC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%84%EB%8B%A8-%EC%A0%95%EB%A6%AC/</guid>
-        <description>&lt;p&gt;정렬 알고리즘은 최적, 평균, 최악 조건에서의 시간복잡도는 물론, 메모리 사용이나 안정성 등의 범주를 기준으로 골라서 써야 한다.
+        <description>&lt;img src="https://sangho0n.github.io/p/%EC%A0%95%EB%A0%AC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%84%EB%8B%A8-%EC%A0%95%EB%A6%AC/img/algorithm.png" alt="Featured image of post 정렬 알고리즘 간단 정리" /&gt;&lt;p&gt;정렬 알고리즘은 최적, 평균, 최악 조건에서의 시간복잡도는 물론, 메모리 사용이나 안정성 등의 범주를 기준으로 골라서 써야 한다.
 비교를 기반으로 하는 정렬 알고리즘의 최악 조건의 속도는 절대 &lt;code&gt;O(nlog(n))&lt;/code&gt;보다 빠를 수 없다.&lt;/p&gt;
 &lt;h1 id=&#34;이-포스트에서-다룰-정렬-알고리즘-목록&#34;&gt;이 포스트에서 다룰 정렬 알고리즘 목록&lt;/h1&gt;
 &lt;ul&gt;
