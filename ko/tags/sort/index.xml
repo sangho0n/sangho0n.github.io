@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>sort on sanghoon&#39;s dev-log</title>
+        <title>Sort on sanghoon&#39;s dev-log</title>
         <link>https://sangho0n.github.io/ko/tags/sort/</link>
-        <description>Recent content in sort on sanghoon&#39;s dev-log</description>
+        <description>Recent content in Sort on sanghoon&#39;s dev-log</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>ko-kr</language>
+        <language>ko</language>
         <copyright>Sanghoon, Han</copyright>
         <lastBuildDate>Mon, 26 Feb 2024 11:49:35 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/ko/tags/sort/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>정렬 알고리즘 간단 정리</title>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on sanghoon&#39;s dev-log</title>
+        <link>https://sangho0n.github.io/en/post/</link>
+        <description>Recent content in Posts on sanghoon&#39;s dev-log</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Sanghoon, Han</copyright>
+        <lastBuildDate>Mon, 26 Feb 2024 11:49:35 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/en/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Simple Summary of Sorting Algorithms</title>
+        <link>https://sangho0n.github.io/en/p/simple-summary-of-sorting-algorithms/</link>
+        <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/p/simple-summary-of-sorting-algorithms/</guid>
+        <description>&lt;img src="https://sangho0n.github.io/en/p/simple-summary-of-sorting-algorithms/img/algorithm.png" alt="Featured image of post Simple Summary of Sorting Algorithms" /&gt;&lt;p&gt;When selecting a sorting algorithm, not only should you consider the time complexity in best, average, and worst conditions, but also factors such as memory usage and stability.&lt;/p&gt;
+&lt;p&gt;The speed of a comparison-based sorting algorithm in the worst case condition cannot be faster than &lt;code&gt;O(nlog(n))&lt;/code&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;list-of-sorting-algorithms-in-this-post&#34;&gt;List of Sorting Algorithms in This Post&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Selection Sort&lt;/li&gt;
+&lt;li&gt;Insertion Sort&lt;/li&gt;
+&lt;li&gt;Bubble Sort&lt;/li&gt;
+&lt;li&gt;Heap Sort&lt;/li&gt;
+&lt;li&gt;Quick Sort&lt;/li&gt;
+&lt;li&gt;Merge Sort&lt;/li&gt;
+&lt;li&gt;Radix Sort&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;selection-sort&#34;&gt;Selection Sort&lt;/h2&gt;
+&lt;p&gt;One of the simplest algorithms. Suitable for environments where copying operations are slow due to being an in-place algorithm.&lt;/p&gt;
+&lt;p&gt;It scans the array once at each step, selects the minimum (or maximum) value among the unsorted elements and swaps it with the first element.&lt;/p&gt;
+&lt;p&gt;After each step, it reduces the number of unsorted elements by 1 and repeats the same operation for the reduced array.&lt;/p&gt;
+&lt;p&gt;In-Place. Unstable.&lt;/p&gt;
+&lt;h3 id=&#34;time-complexity&#34;&gt;Time Complexity&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Case&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Best&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Worst&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Average&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;insertion-sort&#34;&gt;Insertion Sort&lt;/h2&gt;
+&lt;p&gt;Divides one array into a sorted and an unsorted array, increasing the size of the sorted array step by step and decreasing the size of the unsorted array.&lt;/p&gt;
+&lt;p&gt;It takes the front element of the unsorted array and compares it sequentially with the elements of the sorted array until it finds the right position to insert.&lt;/p&gt;
+&lt;p&gt;In-Place. Stable.&lt;/p&gt;
+&lt;h3 id=&#34;time-complexity-1&#34;&gt;Time Complexity&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Case&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Best (Already sorted)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Worst&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Average&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;bubble-sort&#34;&gt;Bubble Sort&lt;/h2&gt;
+&lt;p&gt;At each step, it linearly scans the array and performs comparisons and swaps with adjacent elements similar to bubbles rising in a cylinder.&lt;/p&gt;
+&lt;p&gt;In-Place. Stable.&lt;/p&gt;
+&lt;h3 id=&#34;time-complexity-2&#34;&gt;Time Complexity&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Case&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Best&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Worst&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Average&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;heap-sort&#34;&gt;Heap Sort&lt;/h2&gt;
+&lt;p&gt;A method of sorting using a Max Heap or Min Heap. It is possible to use a separate heap or transform the given array into a heap (In-Place).&lt;/p&gt;
+&lt;p&gt;The operations of inserting/deleting elements in a heap are &lt;code&gt;O(logn)&lt;/code&gt; (height of the heap, a complete binary tree), and performing these operations for the number of elements (twice; making the heap + removing one element from the heap) results in an overall time complexity of &lt;code&gt;O(nlogn)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In-Place. Unstable.&lt;/p&gt;
+&lt;h3 id=&#34;time-complexity-3&#34;&gt;Time Complexity&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Case&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Best&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Worst&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Average&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;quick-sort&#34;&gt;Quick Sort&lt;/h2&gt;
+&lt;p&gt;Divides the array into smaller arrays based on a pivot value, with smaller values on the left and larger values on the right.&lt;/p&gt;
+&lt;p&gt;For each divided array, Quick Sort is performed recursively until it cannot be divided further.&lt;/p&gt;
+&lt;p&gt;If the pivot is optimally selected at each moment, the given array is precisely halved each time. The worst case is when the pivot is always selected as the minimum value (or maximum value).&lt;/p&gt;
+&lt;p&gt;In-Place. Unstable.&lt;/p&gt;
+&lt;h3 id=&#34;time-complexity-4&#34;&gt;Time Complexity&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Case&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Best&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Worst&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Average&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;merge-sort&#34;&gt;Merge Sort&lt;/h2&gt;
+&lt;p&gt;One of the divide-and-conquer algorithms. It divides the array in half and performs Merge Sort on each divided array. Then, it merges the sorted arrays together to obtain one large sorted array.&lt;/p&gt;
+&lt;p&gt;Unlike other sorting algorithms, it has a space complexity of O(n) even in the best case.&lt;/p&gt;
+&lt;p&gt;To optimize the sorting of divided arrays, Merge Sort can be mixed with other sorting algorithms (such as Insertion Sort) based on a specific size (in this case, it may not be stable).&lt;/p&gt;
+&lt;p&gt;Not In-Place. Stable.&lt;/p&gt;
+&lt;h3 id=&#34;time-complexity-5&#34;&gt;Time Complexity&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Case&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Best&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Worst&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Average&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;O(nlogn)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;radix-sort&#34;&gt;Radix Sort&lt;/h2&gt;
+&lt;p&gt;Unlike the previous algorithms, a sorting algorithm that performs without comparisons. It sorts based on digits, so the digits must be able to be sorted lexicographically.&lt;/p&gt;
+&lt;p&gt;A type of bucket sort.&lt;/p&gt;
+&lt;p&gt;Not In-Place. Stable&lt;/p&gt;
+&lt;h3 id=&#34;time-complexity-6&#34;&gt;Time Complexity&lt;/h3&gt;
+&lt;p&gt;Let n be the number of elements to be sorted, d be the maximum number of digits, and k be the number of buckets (for numbers, it is 10 as the digits are 0 to 9).&lt;/p&gt;
+&lt;p&gt;Both best, worst, and average cases have a complexity of O(d(n + k)).&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

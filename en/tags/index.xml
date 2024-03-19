@@ -5,7 +5,48 @@
         <link>https://sangho0n.github.io/en/tags/</link>
         <description>Recent content in Tags on sanghoon&#39;s dev-log</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>ko-kr</language>
-        <copyright>Sanghoon, Han</copyright><atom:link href="https://sangho0n.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+        <language>en</language>
+        <copyright>Sanghoon, Han</copyright>
+        <lastBuildDate>Mon, 26 Feb 2024 11:49:35 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Algorithm</title>
+        <link>https://sangho0n.github.io/en/tags/algorithm/</link>
+        <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/tags/algorithm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Cs</title>
+        <link>https://sangho0n.github.io/en/tags/cs/</link>
+        <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/tags/cs/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Interview</title>
+        <link>https://sangho0n.github.io/en/tags/interview/</link>
+        <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/tags/interview/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Sort</title>
+        <link>https://sangho0n.github.io/en/tags/sort/</link>
+        <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/tags/sort/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tech Interview</title>
+        <link>https://sangho0n.github.io/en/tags/tech-interview/</link>
+        <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/tags/tech-interview/</guid>
+        <description></description>
+        </item>
+        
     </channel>
 </rss>
