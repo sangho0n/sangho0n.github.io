@@ -38,6 +38,18 @@
                 href="https://sangho0n.github.io/en/categories/"
                 />
   </url><url>
+    <loc>https://sangho0n.github.io/en/about/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://sangho0n.github.io/ko/about/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://sangho0n.github.io/en/about/"
+                />
+  </url><url>
     <loc>https://sangho0n.github.io/en/page/</loc>
     <xhtml:link
                 rel="alternate"
@@ -72,18 +84,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://sangho0n.github.io/en/tags/"
-                />
-  </url><url>
-    <loc>https://sangho0n.github.io/en/about/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://sangho0n.github.io/ko/about/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://sangho0n.github.io/en/about/"
                 />
   </url>
 </urlset>

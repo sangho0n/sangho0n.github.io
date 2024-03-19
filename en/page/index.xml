@@ -15,21 +15,21 @@
         <description></description>
         </item>
         <item>
-        <title>Search</title>
-        <link>https://sangho0n.github.io/en/search/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://sangho0n.github.io/en/search/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>안녕하세요 👋</title>
+        <title>Hi There! 👋</title>
         <link>https://sangho0n.github.io/en/about/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://sangho0n.github.io/en/about/</guid>
         <description>&lt;p&gt;test 1 2 3&lt;/p&gt;
 </description>
+        </item>
+        <item>
+        <title>Search</title>
+        <link>https://sangho0n.github.io/en/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/search/</guid>
+        <description></description>
         </item>
         
     </channel>
