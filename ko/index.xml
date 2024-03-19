@@ -2148,7 +2148,7 @@ GetTriggerType과 UpdateState 메서드를 오버라이드하여 원하는 상�
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://sangho0n.github.io/ko/about/</guid>
-        <description>&lt;p&gt;test 1 2 3&lt;/p&gt;
+        <description>&lt;p&gt;자기소개 테스트 페이지입니다. 반갑습니다&lt;/p&gt;
 </description>
         </item>
         
