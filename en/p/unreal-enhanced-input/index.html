@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Starting from Unreal Engine 5, the existing input mapping system has been deprecated. Let&amp;rsquo;s learn about the Enhanced Input that replaces it. Enhanced Input was introduced in UE5 to effectively support complex input processing and runtime control remapping. It is an upgraded version of UE4&amp;rsquo;s default input system, ensuring backward compatibility while enabling functionalities like radial dead zones, compound actions, combo attacks, etc. in an asset-based environment. Core Concepts The'>
+<title>Unreal Enhanced Input</title>
+
+<link rel='canonical' href='https://sangho0n.github.io/en/p/unreal-enhanced-input/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Unreal Enhanced Input'>
+<meta property='og:description' content='Starting from Unreal Engine 5, the existing input mapping system has been deprecated. Let&amp;rsquo;s learn about the Enhanced Input that replaces it. Enhanced Input was introduced in UE5 to effectively support complex input processing and runtime control remapping. It is an upgraded version of UE4&amp;rsquo;s default input system, ensuring backward compatibility while enabling functionalities like radial dead zones, compound actions, combo attacks, etc. in an asset-based environment. Core Concepts The'>
+<meta property='og:url' content='https://sangho0n.github.io/en/p/unreal-enhanced-input/'>
+<meta property='og:site_name' content='sanghoon&#39;s dev-log'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='Enhanced Input' /><meta property='article:tag' content='향상된' /><meta property='article:tag' content='UE5' /><meta property='article:published_time' content='2024-02-14T17:44:19&#43;09:00'/><meta property='article:modified_time' content='2024-02-14T17:44:19&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/unreal-enhanced-input/img/unreal.svg' />
+<meta name="twitter:title" content="Unreal Enhanced Input">
+<meta name="twitter:description" content="Starting from Unreal Engine 5, the existing input mapping system has been deprecated. Let&amp;rsquo;s learn about the Enhanced Input that replaces it. Enhanced Input was introduced in UE5 to effectively support complex input processing and runtime control remapping. It is an upgraded version of UE4&amp;rsquo;s default input system, ensuring backward compatibility while enabling functionalities like radial dead zones, compound actions, combo attacks, etc. in an asset-based environment. Core Concepts The"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://sangho0n.github.io/en/p/unreal-enhanced-input/img/unreal.svg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/avatar_hufa2a3a1a2b6d47cfb712fe4c06494714_9812_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">sanghoon&#39;s dev-log</a></h1>
+            <h2 class="site-description">Welcome to my blog!</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/sangho0n'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/sanghoon_eat/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://sangho0n.github.io/ko/" >한국어</option>
+                        
+                            <option value="https://sangho0n.github.io/en/" selected>English</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span></span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title"></h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#input-actions">Input Actions</a></li>
+    <li><a href="#input-mapping-contexts">Input Mapping Contexts</a></li>
+    <li><a href="#modifier">Modifier</a>
+      <ol>
+        <li><a href="#directional-input">Directional Input</a></li>
+      </ol>
+    </li>
+    <li><a href="#trigger">Trigger</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/en/p/unreal-enhanced-input/">
+                
+                    <img src="/en/p/unreal-enhanced-input/img/unreal.svg" loading="lazy" alt="Featured image of post Unreal Enhanced Input" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/unreal/" >
+                Unreal
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/en/p/unreal-enhanced-input/">Unreal Enhanced Input</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024-02-14</time>
+            </div>
+        
+
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/" class="link">한국어</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><img src="/img%2Fpost%2FEnhancedInput%2Fimage.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image.png"
+	
+	
+></p>
+<p>Starting from Unreal Engine 5, the existing input mapping system has been deprecated. Let&rsquo;s learn about the Enhanced Input that replaces it.</p>
+<hr>
+<p>Enhanced Input was introduced in UE5 to effectively support complex input processing and runtime control remapping. It is an upgraded version of UE4&rsquo;s default input system, ensuring backward compatibility while enabling functionalities like radial dead zones, compound actions, combo attacks, etc. in an asset-based environment.</p>
+<h1 id="core-concepts">Core Concepts</h1>
+<p>The Enhanced Input system revolves around four core concepts:</p>
+<ul>
+<li><strong>Input Action</strong>: Acts as a communication channel between Enhanced Input system and project code. An input action can report up to three independent floating-point values separate from the input that triggers it.</li>
+<li><strong>Input Mapping Context</strong>: Responsible for mapping user inputs to input actions. These contexts can be dynamically added or removed for each user and can have priorities. By applying one or more input mapping contexts to a player and assigning priorities, conflicts between multiple actions triggered by the same input can be resolved.</li>
+</ul>
+<p>e.g., a door-opening button and a bag-opening button being the same button</p>
+<p>The following two concepts provide elements to flexibly handle input processing:</p>
+<ul>
+<li><strong>Modifier</strong>: Used to refine input values, applying dead zones to prevent response to slight movements or smooth out input values. Developers can use predefined modifiers or define their own.</li>
+<li><strong>Trigger</strong>: Determines whether to activate the input action based on data processed by modifiers or the resulting value of another input action.</li>
+</ul>
+<h2 id="input-actions">Input Actions</h2>
+<p>Input Actions play a crucial role in connecting the Enhanced Input system with project code. To trigger an input action, you need to add the input action to an input mapping context and register the input mapping context with the <strong>Enhanced Input Local Player Subsystem</strong> of the local player.</p>
+<p>To make a pawn react to a triggered input action, you need to control it using Blueprints or CPP code.</p>
+<p><img src="/img%2Fpost%2FEnhancedInput%2Fimage1.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image1.png"
+	
+	
+></p>
+<p><img src="/img%2Fpost%2FEnhancedInput%2Fimage2.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image2.png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AMyCharacter</span><span class="o">::</span><span class="n">SetupPlayerInputComponent</span><span class="p">(</span><span class="k">class</span> <span class="nc">UInputComponent</span><span class="o">*</span> <span class="n">PlayerInputComponent</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">SetupPlayerInputComponent</span><span class="p">(</span><span class="n">PlayerInputComponent</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">UEnhancedInputComponent</span><span class="o">*</span> <span class="n">EnhancedInputComponent</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">UEnhancedInputComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">PlayerInputComponent</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">MyAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Triggered</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">AMyCharacter</span><span class="o">::</span><span class="n">MyAction</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AMyCharacter</span><span class="o">::</span><span class="n">MyAction</span><span class="p">(</span><span class="k">const</span> <span class="n">FInputActionValue</span><span class="o">&amp;</span> <span class="n">Value</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// do sth
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="input-mapping-contexts">Input Mapping Contexts</h2>
+<p>In input mapping contexts, you can map inputs to input actions. Mapped contexts can be added to or removed from the Enhanced Input Local Player Subsystem of a local player at any time.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// do sth ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">APlayerController</span><span class="o">*</span> <span class="n">PlayerController</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">APlayerController</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetController</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">UEnhancedInputLocalPlayerSubsystem</span><span class="o">*</span> <span class="n">Subsystem</span> <span class="o">=</span> <span class="n">ULocalPlayer</span><span class="o">::</span><span class="n">GetSubsystem</span><span class="o">&lt;</span><span class="n">UEnhancedInputLocalPlayerSubsystem</span><span class="o">&gt;</span><span class="p">(</span><span class="n">PlayerController</span><span class="o">-&gt;</span><span class="n">GetLocalPlayer</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Subsystem</span><span class="o">-&gt;</span><span class="n">ClearAllMappings</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">UInputMappingContext</span><span class="o">*</span> <span class="n">NewMappingContext</span> <span class="o">=</span> <span class="n">NewCharacterControl</span><span class="o">-&gt;</span><span class="n">InputMappingContext</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">NewMappingContext</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">           <span class="n">Subsystem</span><span class="o">-&gt;</span><span class="n">AddMappingContext</span><span class="p">(</span><span class="n">NewMappingContext</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// do sth ...
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="modifier">Modifier</h2>
+<p>Modifiers serve as preprocessors that adjust input values before sending them through triggers. Unreal Engine provides the following default modifiers.</p>
+<p><img src="/img%2Fpost%2FEnhancedInput%2Fimage3.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image3.png"
+	
+	
+></p>
+<p>To create a new modifier, you need to first create a class that inherits from the InputModifier class.
+<img src="https://docs.unrealengine.com/5.0/Images/making-interactive-experiences/Input/enhanced-input/image_11.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+>
+Then, override the Modify Raw function.
+<img src="https://docs.unrealengine.com/5.0/Images/making-interactive-experiences/Input/enhanced-input/image_12.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h3 id="directional-input">Directional Input</h3>
+<p>One example of using modifiers effectively is utilizing a single input action for 2D directional input.
+When examining IA_Move and IMC_Default in a third-person template project, you can observe the following settings:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">Key</th>
+<th style="text-align:left">Direction</th>
+<th>Scalar Value</th>
+<th style="text-align:center">Modifier</th>
+<th>Desired Direction Vector</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">w</td>
+<td style="text-align:left">Up</td>
+<td>1</td>
+<td style="text-align:center">Swizzle Input Axis Value</td>
+<td>(1, 0, 0)</td>
+</tr>
+<tr>
+<td style="text-align:left">s</td>
+<td style="text-align:left">Down</td>
+<td>1</td>
+<td style="text-align:center">Swizzle Input Axis Value, Negate</td>
+<td>(-1, 0, 0)</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">Left</td>
+<td>1</td>
+<td style="text-align:center">Negate</td>
+<td>(0, -1, 0)</td>
+</tr>
+<tr>
+<td style="text-align:left">d</td>
+<td style="text-align:left">Right</td>
+<td>1</td>
+<td style="text-align:center">-</td>
+<td>(0, 1, 0)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Looking at the declaration and partial implementation of the UInputModifierSwizzleAxis modifier, you can see:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cm">/** Swizzle axis components of an input value.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * Useful to map a 1D input onto the Y axis of a 2D action.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">(</span><span class="n">NotBlueprintable</span><span class="p">,</span> <span class="n">MinimalAPI</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="p">(</span><span class="n">DisplayName</span> <span class="o">=</span> <span class="s">&#34;Swizzle Input Axis Values&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">UInputModifierSwizzleAxis</span> <span class="o">:</span> <span class="k">public</span> <span class="n">UInputModifier</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GENERATED_BODY</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Default to XY swap, useful for binding 1D inputs to the Y axis.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">BlueprintReadWrite</span><span class="p">,</span> <span class="n">Category</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">EInputAxisSwizzle</span> <span class="n">Order</span> <span class="o">=</span> <span class="n">EInputAxisSwizzle</span><span class="o">::</span><span class="n">YXZ</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="n">FInputActionValue</span> <span class="n">ModifyRaw_Implementation</span><span class="p">(</span><span class="k">const</span> <span class="n">UEnhancedPlayerInput</span><span class="o">*</span> <span class="n">PlayerInput</span><span class="p">,</span> <span class="n">FInputActionValue</span> <span class="n">CurrentValue</span><span class="p">,</span> <span class="kt">float</span> <span class="n">DeltaTime</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="n">FLinearColor</span> <span class="nf">GetVisualizationColor_Implementation</span><span class="p">(</span><span class="n">FInputActionValue</span> <span class="n">SampleValue</span><span class="p">,</span> <span class="n">FInputActionValue</span> <span class="n">FinalValue</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">FInputActionValue</span> <span class="n">UInputModifierSwizzleAxis</span><span class="o">::</span><span class="n">ModifyRaw_Implementation</span><span class="p">(</span><span class="k">const</span> <span class="n">UEnhancedPlayerInput</span><span class="o">*</span> <span class="n">PlayerInput</span><span class="p">,</span> <span class="n">FInputActionValue</span> <span class="n">CurrentValue</span><span class="p">,</span> <span class="kt">float</span> <span class="n">DeltaTime</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FVector</span> <span class="n">Value</span> <span class="o">=</span> <span class="n">CurrentValue</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">FVector</span><span class="o">&gt;</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span> <span class="p">(</span><span class="n">Order</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="n">EInputAxisSwizzle</span><span class="o">::</span><span class="nl">YXZ</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Swap</span><span class="p">(</span><span class="n">Value</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Value</span><span class="p">.</span><span class="n">Y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="n">EInputAxisSwizzle</span><span class="o">::</span><span class="nl">ZYX</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Swap</span><span class="p">(</span><span class="n">Value</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Value</span><span class="p">.</span><span class="n">Z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="n">EInputAxisSwizzle</span><span class="o">::</span><span class="nl">XZY</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Swap</span><span class="p">(</span><span class="n">Value</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">Value</span><span class="p">.</span><span class="n">Z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="n">EInputAxisSwizzle</span><span class="o">::</span><span class="nl">YZX</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Value</span> <span class="o">=</span> <span class="n">FVector</span><span class="p">(</span><span class="n">Value</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">Value</span><span class="p">.</span><span class="n">Z</span><span class="p">,</span> <span class="n">Value</span><span class="p">.</span><span class="n">X</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="n">EInputAxisSwizzle</span><span class="o">::</span><span class="nl">ZXY</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Value</span> <span class="o">=</span> <span class="n">FVector</span><span class="p">(</span><span class="n">Value</span><span class="p">.</span><span class="n">Z</span><span class="p">,</span> <span class="n">Value</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Value</span><span class="p">.</span><span class="n">Y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">FInputActionValue</span><span class="p">(</span><span class="n">CurrentValue</span><span class="p">.</span><span class="n">GetValueType</span><span class="p">(),</span> <span class="n">Value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>With Order defaulting to YXZ, passing a scalar value of 1 through the modifier would result in a value of (1.0f, 0.0f, 0.0f). Setting up the modifier as described in the table allows you to transform scalar values into desired direction vectors.</p>
+<h2 id="trigger">Trigger</h2>
+<p>After modifiers process the input values, triggers determine whether to activate the input action based on the processed values or the resulting value of another input action.
+An exception is the Chorded Action trigger, which is triggered through another input action. The image below shows the default triggers.</p>
+<p><img src="/img%2Fpost%2FEnhancedInput%2Fimage4.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image4.png"
+	
+	
+></p>
+<p>Triggers come in three types: Explicit, Implicit, and Blocker.</p>
+<ul>
+<li>Explicit: Input success upon trigger success</li>
+<li>Implicit: Input success on trigger success and all implicit trigger types&rsquo; success</li>
+<li>Blocker: Input failure upon trigger success</li>
+</ul>
+<p>The table below displays trigger types and their corresponding classes.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">Trigger Class (CPP)</th>
+<th style="text-align:right">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">UInputTrigger(default)</td>
+<td style="text-align:right">ETriggerType::Explicit</td>
+</tr>
+<tr>
+<td style="text-align:left">UInputTriggerCombo</td>
+<td style="text-align:right">ETriggerType::Implicit</td>
+</tr>
+<tr>
+<td style="text-align:left">UInputTriggerChordAction</td>
+<td style="text-align:right">ETriggerType::Implicit</td>
+</tr>
+<tr>
+<td style="text-align:left">UInputTriggerChordBlocker</td>
+<td style="text-align:right">ETriggerType::Blocker</td>
+</tr>
+</tbody>
+</table></div>
+<p>Upon handling user inputs, triggers can return one of these three states:</p>
+<ul>
+<li>None: Failed to trigger due to unmet conditions</li>
+<li>Ongoing: Partial fulfillment of conditions, trigger is processing but not yet successful</li>
+<li>Triggered: All input trigger conditions met and trigger successful</li>
+</ul>
+<p>By inheriting from the InputTrigger class or InputTriggerTimedBase class, you can create custom triggers.
+InputTriggerTimedBase checks if an input was maintained for a specific duration and returns an ongoing state during that duration. However, by default, it does not return triggered even when conditions are met. So, if inheriting and creating a new trigger using this class, you need to override the GetTriggerType and UpdateState methods to return the desired states.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/en/tags/unreal/">Unreal</a>
+        
+            <a href="/en/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/">언리얼</a>
+        
+            <a href="/en/tags/ue/">UE</a>
+        
+            <a href="/en/tags/enhanced-input/">Enhanced Input</a>
+        
+            <a href="/en/tags/%ED%96%A5%EC%83%81%EB%90%9C/">향상된</a>
+        
+            <a href="/en/tags/ue5/">UE5</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title"></h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/p/starting-unreal-gas/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/en/p/starting-unreal-gas/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/starting-unreal-gas/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Starting Unreal GAS</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/p/unreal-smart-pointers/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/en/p/unreal-smart-pointers/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-smart-pointers/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Unreal Smart Pointers</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/p/unreal-gas-overview/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/en/p/unreal-gas-overview/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-overview/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Unreal GAS Overview</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2024 Sanghoon, Han
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe.min.js"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://lib.baomitu.com/photoswipe/4.1.3/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src=""crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
