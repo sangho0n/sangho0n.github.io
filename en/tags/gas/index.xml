@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>GAS on sanghoon&#39;s dev-log</title>
+        <link>https://sangho0n.github.io/en/tags/gas/</link>
+        <description>Recent content in GAS on sanghoon&#39;s dev-log</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Sanghoon, Han</copyright>
+        <lastBuildDate>Mon, 18 Mar 2024 15:58:25 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/en/tags/gas/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Starting Unreal GAS</title>
+        <link>https://sangho0n.github.io/en/p/starting-unreal-gas/</link>
+        <pubDate>Mon, 18 Mar 2024 15:58:25 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/p/starting-unreal-gas/</guid>
+        <description>&lt;img src="https://sangho0n.github.io/en/p/starting-unreal-gas/img/unreal.svg" alt="Featured image of post Starting Unreal GAS" /&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;This summary&lt;/a&gt; by Lee Deok-woo and this &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;document compiled by another developer&lt;/a&gt; were referenced.&lt;/p&gt;
+&lt;p&gt;For detailed and accurate information, please refer to the above links.&lt;/p&gt;
+&lt;p&gt;Series&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ea%b0%9c%ec%9a%94/&#34; &gt;Overview of Unreal GAS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%8b%9c%ec%9e%91/&#34; &gt;Starting Unreal GAS&lt;/a&gt; &amp;lt;- Current Post&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;In this post, we will explore the usage of the GAS framework by implementing actor movement through three methods and examining the differences of each method.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Extending actor functionality&lt;/li&gt;
+&lt;li&gt;Using the Game Ability System&lt;/li&gt;
+&lt;li&gt;Using Game Ability System with Gameplay Tags&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The fountain actor and its movement will be based on a 3-second stationary rotation/stop.&lt;/p&gt;
+&lt;h2 id=&#34;extending-actor-functionality&#34;&gt;Extending Actor Functionality&lt;/h2&gt;
+&lt;p&gt;Implementing movement without the GAS framework by directly using URotatingMovementComponent:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// C++ code snippet provided
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;using-game-ability-system&#34;&gt;Using Game Ability System&lt;/h2&gt;
+&lt;p&gt;To implement movement using the GAS framework, two key concepts need to be understood:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ability System Component&lt;/li&gt;
+&lt;li&gt;Game Ability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;ability-system-component&#34;&gt;Ability System Component&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Manages the gameplay ability system&lt;/li&gt;
+&lt;li&gt;Only one can be attached per actor&lt;/li&gt;
+&lt;li&gt;Allows an actor to trigger Gameplay Abilities through it&lt;/li&gt;
+&lt;li&gt;Enables interactions between actors with this component through the Game Ability System&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;game-ability&#34;&gt;Game Ability&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;An action that can be registered in the Ability System Component and triggered&lt;/li&gt;
+&lt;li&gt;Activation process:
+&lt;ul&gt;
+&lt;li&gt;Registration in Ability System Component: AbilitySystemComponent-&amp;gt;GiveAbility()&lt;/li&gt;
+&lt;li&gt;Activation: AbilitySystemComponent-&amp;gt;TryActivateAbility()&lt;/li&gt;
+&lt;li&gt;Utilizes SpecHandle, ActorInfo, ActivationInfo to implement requirements internally&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Key methods:
+&lt;ul&gt;
+&lt;li&gt;CanActivateAbility&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ActivateAbility&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CancelAbility&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;EndAbility&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By using these concepts, the same movement can be implemented as shown below.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Creating an Ability Class by inheriting from Gameplay Ability&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// C++ code snippet provided
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Attaching components to the actor and implementing the interface&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// C++ code snippet provided
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Registering and triggering abilities with attached components&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// C++ code snippet provided
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;using-game-ability-system--gameplay-tags&#34;&gt;Using Game Ability System + Gameplay Tags&lt;/h2&gt;
+&lt;p&gt;When using only the Game Ability System without gameplay tags, the full advantages of the GAS framework cannot be utilized. Let&amp;rsquo;s understand what Gameplay Tags are:&lt;/p&gt;
+&lt;h3 id=&#34;gameplay-tags&#34;&gt;Gameplay Tags&lt;/h3&gt;
+&lt;p&gt;FGameplayTag represents a hierarchical name structure like &lt;code&gt;Parent.Child.Grandchild...&lt;/code&gt;. These are managed by GameplayTagManager.
+By utilizing these tags, it becomes easier to classify and track the status of classes effectively.&lt;/p&gt;
+&lt;p&gt;Instead of using bool or enum values and condition statements to track status, Gameplay Tags can be used to check if an object has a certain tag, simplifying state monitoring.&lt;/p&gt;
+&lt;p&gt;The GAS framework is very friendly towards Gameplay Tags. Since UAbilitySystemComponent implements IGameplayTagAssetInterface, tags can be specified directly in the Ability System Component, and several states of GameplayAbility can be managed with Gameplay TagContainer.&lt;/p&gt;
+&lt;p&gt;Using Gameplay Tags eliminates the need for specific information about Gameplay Ability classes in actor classes, maintaining low code dependency.&lt;/p&gt;
+&lt;p&gt;By using Gameplay Tags, the same requirements can be implemented as shown below.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Creating Tags&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// DefaultGameplayTags.ini
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// Tags creation snippet
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Writing macros for easier access to tags&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// ABGameplayTag.h
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Macros snippet
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Registering tags with Gameplay Abilities&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// C++ code snippet provided
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Registering and activating abilities using tags&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// C++ code snippet provided
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;After creating a Blueprint class that inherits from the AABGASFountain cpp class, simply add the appropriate activities to the Abilities in the Details panel.&lt;/p&gt;
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;Implemented the rotating fountain using three methods:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Extending actor functionality&lt;/li&gt;
+&lt;li&gt;GAS: Creating a new class (ability) to separate functionality from the actor&lt;/li&gt;
+&lt;li&gt;GAS + Gameplay Tags: Using tags to remove dependencies between actors and abilities&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Benefits of using GAS and Gameplay Tags together:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Minimized actor&amp;rsquo;s role&lt;/li&gt;
+&lt;li&gt;Reduced dependencies. Easier maintenance and higher reusability&lt;/li&gt;
+&lt;li&gt;Improved scalability + easier collaboration with other professions&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/RotatingFountain.gif&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;RotatingFountain.gif&#34;
+	
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Overview of Unreal GAS</title>
+        <link>https://sangho0n.github.io/en/p/overview-of-unreal-gas/</link>
+        <pubDate>Wed, 14 Feb 2024 13:53:44 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/p/overview-of-unreal-gas/</guid>
+        <description>&lt;img src="https://sangho0n.github.io/en/p/overview-of-unreal-gas/img/unreal.svg" alt="Featured image of post Overview of Unreal GAS" /&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Based on the lecture by Lee Deuk-woo&lt;/a&gt;
+and &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;documentation compiled by another developer&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For detailed and accurate information, please refer to the links above.&lt;/p&gt;
+&lt;p&gt;Series:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ea%b0%9c%ec%9a%94/&#34; &gt;Overview of Unreal GAS&lt;/a&gt; &amp;lt;- Current post&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://sangho0n.github.io/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%8b%9c%ec%9e%91/&#34; &gt;Getting started with Unreal GAS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;gameplay-ability-system&#34;&gt;Gameplay Ability System&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;A framework that provides actor abilities and interactions between actors through abilities&lt;/li&gt;
+&lt;li&gt;Advantages
+&lt;ul&gt;
+&lt;li&gt;Flexibility, scalability: Easily utilized for various and complex game development&lt;/li&gt;
+&lt;li&gt;Modular system: Minimizes dependencies for each function&lt;/li&gt;
+&lt;li&gt;Network support&lt;/li&gt;
+&lt;li&gt;Data-driven design&lt;/li&gt;
+&lt;li&gt;Completeness: Games like Fortnite already utilize this system&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Disadvantages
+&lt;ul&gt;
+&lt;li&gt;Learning cost&lt;/li&gt;
+&lt;li&gt;Overhead in small projects&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Suitable for creating large-scale RPGs and multiplayer games&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;components&#34;&gt;Components&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/gas1.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;gas1.png&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Gameplay Ability: Implementation of character abilities based on cost and cooldown (optional)&lt;/li&gt;
+&lt;li&gt;Attributes: Manipulation of actor characteristics&lt;/li&gt;
+&lt;li&gt;Gameplay Effects: Changes in actor state based on ability activation&lt;/li&gt;
+&lt;li&gt;Gameplay Tags: Tagging actors&lt;/li&gt;
+&lt;li&gt;Gameplay Cues: Visual effects&lt;/li&gt;
+&lt;li&gt;Replication for all of the above&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/gas2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;gas1.png&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;gas-in-multiplayer-games&#34;&gt;GAS in Multiplayer Games&lt;/h2&gt;
+&lt;p&gt;The GAS plugin supports client-side prediction, allowing ability activation and effects without server permission.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ability activation&lt;/li&gt;
+&lt;li&gt;Animation montages playback&lt;/li&gt;
+&lt;li&gt;Attribute changes&lt;/li&gt;
+&lt;li&gt;Tagging for gameplay&lt;/li&gt;
+&lt;li&gt;Execution of gameplay cues&lt;/li&gt;
+&lt;li&gt;Movement manipulation through RootMotionSource functions associated with CharacterMovementComponent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;blueprint-vs-c&#34;&gt;Blueprint vs C++&lt;/h2&gt;
+&lt;p&gt;GAS should be implemented using C++, but it is possible to implement GameplayAbilities and GameplayEffects using Blueprint.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
