@@ -15,12 +15,29 @@
         <description></description>
         </item>
         <item>
-        <title>Hi There! 👋</title>
+        <title>Hello</title>
         <link>https://sangho0n.github.io/en/about/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://sangho0n.github.io/en/about/</guid>
-        <description>&lt;p&gt;test 1 2 3&lt;/p&gt;
+        <description>&lt;h1 id=&#34;welcome-visit-&#34;&gt;Welcome Visit! 👋&lt;/h1&gt;
+&lt;h2 id=&#34;about-me&#34;&gt;About Me&lt;/h2&gt;
+&lt;p&gt;In progress&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;about-this-blog&#34;&gt;About This Blog&lt;/h2&gt;
+&lt;p&gt;This blog is built on the hugo framework and hugo-theme-stack theme. The primary language is Korean, but English is also supported.&lt;/p&gt;
+&lt;p&gt;Deployment is automatically done through GitHub Actions. The deployment process is as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Write posts in Korean&lt;/li&gt;
+&lt;li&gt;git push -&amp;gt; execute workflow&lt;/li&gt;
+&lt;li&gt;Check for changed or newly added &lt;code&gt;.md&lt;/code&gt; files&lt;/li&gt;
+&lt;li&gt;Translate those files into English (using OpenAI api; gpt3.5)&lt;/li&gt;
+&lt;li&gt;Build with hugo&lt;/li&gt;
+&lt;li&gt;Deploy the built files as a submodule&lt;/li&gt;
+&lt;li&gt;Deploy to GitHub Pages from the submodule&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you are curious about more details, check out the &lt;a class=&#34;link&#34; href=&#34;https://github.com/sangho0n/hugo_blog/blob/master/.github/workflows/main.yml&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;workflow&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;Although the title is dev-log, occasionally I will also post about hobbies and personal daily reflections in a diary-like format haha.&lt;/p&gt;
 </description>
         </item>
         <item>

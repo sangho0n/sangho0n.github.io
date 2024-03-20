@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Sorting algorithms should be chosen based on criteria such as time complexity in the best, average, and worst cases, as well as memory usage and stability.
+The speed of sorting algorithms based on comparisons cannot be faster than O(nlog(n)) in the worst case.
+List of Sorting Algorithms Covered in this Post Selection Sort Insertion Sort Bubble Sort Heap Sort Quick Sort Merge Sort Radix Sort Selection Sort One of the simplest algorithms.'>
+<title>Summary of Sorting Algorithms</title>
+
+<link rel='canonical' href='https://sangho0n.github.io/en/p/summary-of-sorting-algorithms/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Summary of Sorting Algorithms'>
+<meta property='og:description' content='Sorting algorithms should be chosen based on criteria such as time complexity in the best, average, and worst cases, as well as memory usage and stability.
+The speed of sorting algorithms based on comparisons cannot be faster than O(nlog(n)) in the worst case.
+List of Sorting Algorithms Covered in this Post Selection Sort Insertion Sort Bubble Sort Heap Sort Quick Sort Merge Sort Radix Sort Selection Sort One of the simplest algorithms.'>
+<meta property='og:url' content='https://sangho0n.github.io/en/p/summary-of-sorting-algorithms/'>
+<meta property='og:site_name' content='sanghoon&#39;s dev-log'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Technical Interview' /><meta property='article:tag' content='Algorithms' /><meta property='article:tag' content='sort' /><meta property='article:tag' content='cs' /><meta property='article:tag' content='interview' /><meta property='article:published_time' content='2024-02-26T11:49:35&#43;09:00'/><meta property='article:modified_time' content='2024-02-26T11:49:35&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/summary-of-sorting-algorithms/img/algorithm.png' />
+<meta name="twitter:title" content="Summary of Sorting Algorithms">
+<meta name="twitter:description" content="Sorting algorithms should be chosen based on criteria such as time complexity in the best, average, and worst cases, as well as memory usage and stability.
+The speed of sorting algorithms based on comparisons cannot be faster than O(nlog(n)) in the worst case.
+List of Sorting Algorithms Covered in this Post Selection Sort Insertion Sort Bubble Sort Heap Sort Quick Sort Merge Sort Radix Sort Selection Sort One of the simplest algorithms."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://sangho0n.github.io/en/p/summary-of-sorting-algorithms/img/algorithm.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/avatar_hufa2a3a1a2b6d47cfb712fe4c06494714_9812_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">sanghoon&#39;s dev-log</a></h1>
+            <h2 class="site-description">Welcome to my blog!</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/sangho0n'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/sanghoon_eat/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://sangho0n.github.io/ko/" >한국어</option>
+                        
+                            <option value="https://sangho0n.github.io/en/" selected>English</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span></span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title"></h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#selection-sort">Selection Sort</a>
+      <ol>
+        <li><a href="#time-complexity">Time Complexity</a></li>
+      </ol>
+    </li>
+    <li><a href="#insertion-sort">Insertion Sort</a>
+      <ol>
+        <li><a href="#time-complexity-1">Time Complexity</a></li>
+      </ol>
+    </li>
+    <li><a href="#bubble-sort">Bubble Sort</a>
+      <ol>
+        <li><a href="#time-complexity-2">Time Complexity</a></li>
+      </ol>
+    </li>
+    <li><a href="#heap-sort">Heap Sort</a>
+      <ol>
+        <li><a href="#time-complexity-3">Time Complexity</a></li>
+      </ol>
+    </li>
+    <li><a href="#quick-sort">Quick Sort</a>
+      <ol>
+        <li><a href="#time-complexity-4">Time Complexity</a></li>
+      </ol>
+    </li>
+    <li><a href="#merge-sort">Merge Sort</a>
+      <ol>
+        <li><a href="#time-complexity-5">Time Complexity</a></li>
+      </ol>
+    </li>
+    <li><a href="#radix-sort">Radix Sort</a>
+      <ol>
+        <li><a href="#time-complexity-6">Time Complexity</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/en/p/summary-of-sorting-algorithms/">
+                <img src="/en/p/summary-of-sorting-algorithms/img/algorithm_hu8666b0214ef6ef8b40207752073739fc_14421_800x0_resize_box_3.png"
+                        srcset="/en/p/summary-of-sorting-algorithms/img/algorithm_hu8666b0214ef6ef8b40207752073739fc_14421_800x0_resize_box_3.png 800w, /en/p/summary-of-sorting-algorithms/img/algorithm_hu8666b0214ef6ef8b40207752073739fc_14421_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Summary of Sorting Algorithms" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/algorithms/" >
+                Algorithms
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/en/p/summary-of-sorting-algorithms/">Summary of Sorting Algorithms</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024-02-26</time>
+            </div>
+        
+
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://sangho0n.github.io/ko/p/%EC%A0%95%EB%A0%AC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%84%EB%8B%A8-%EC%A0%95%EB%A6%AC/" class="link">한국어</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>Sorting algorithms should be chosen based on criteria such as time complexity in the best, average, and worst cases, as well as memory usage and stability.</p>
+<p>The speed of sorting algorithms based on comparisons cannot be faster than <code>O(nlog(n))</code> in the worst case.</p>
+<h1 id="list-of-sorting-algorithms-covered-in-this-post">List of Sorting Algorithms Covered in this Post</h1>
+<ul>
+<li>Selection Sort</li>
+<li>Insertion Sort</li>
+<li>Bubble Sort</li>
+<li>Heap Sort</li>
+<li>Quick Sort</li>
+<li>Merge Sort</li>
+<li>Radix Sort</li>
+</ul>
+<h2 id="selection-sort">Selection Sort</h2>
+<p>One of the simplest algorithms. Since it is an in-place algorithm, it is suitable for environments where copying operations are very slow.</p>
+<p>At each step, the array is scanned once, selecting the minimum (maximum) value among the unsorted elements and swapping it with the front element.</p>
+<p>After each step, the number of unsorted elements is reduced by one, and the same operation is repeated for the reduced array.</p>
+<p>In-Place. Unstable.</p>
+<h3 id="time-complexity">Time Complexity</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:center">Case</th>
+<th style="text-align:center">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Best</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+<tr>
+<td style="text-align:center">Worst</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+<tr>
+<td style="text-align:center">Average</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="insertion-sort">Insertion Sort</h2>
+<p>Divides one array into a sorted array and an unsorted array, increasing the size of the sorted array step by step and decreasing the size of the unsorted array.</p>
+<p>An unsorted array&rsquo;s front element is compared sequentially with the elements of the sorted array and inserted at the appropriate position.</p>
+<p>In-Place. Stable.</p>
+<h3 id="time-complexity-1">Time Complexity</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:center">Case</th>
+<th style="text-align:center">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Best (Already sorted)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:center">Worst</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+<tr>
+<td style="text-align:center">Average</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="bubble-sort">Bubble Sort</h2>
+<p>At each step, the array is linearly searched, comparing adjacent elements and performing swap operations.</p>
+<p>In-place. Stable.</p>
+<h3 id="time-complexity-2">Time Complexity</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:center">Case</th>
+<th style="text-align:center">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Best</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+<tr>
+<td style="text-align:center">Worst</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+<tr>
+<td style="text-align:center">Average</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="heap-sort">Heap Sort</h2>
+<p>A method of sorting using a max heap or min heap. It is possible to use a separate heap or make the given array a heap (In-place).</p>
+<p>The operations of inserting/deleting elements in the heap are O(logn) (height of the heap), and these operations are repeated for the number of elements (twice; making a Heap + pulling elements one by one), so the total time complexity is O(nlogn).</p>
+<p>In-Place. Unstable.</p>
+<h3 id="time-complexity-3">Time Complexity</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:center">Case</th>
+<th style="text-align:center">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Best</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+<tr>
+<td style="text-align:center">Worst</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+<tr>
+<td style="text-align:center">Average</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="quick-sort">Quick Sort</h2>
+<p>Divides the array based on the pivot value into smaller values on the left and larger values on the right.</p>
+<p>For each divided array, Quick Sort is performed iteratively until it cannot be divided further.</p>
+<p>If the pivot is optimally selected at every moment, the given array is precisely divided in half every time. The worst case occurs when the pivot is consistently selected as the minimum (or maximum) value.</p>
+<p>In-Place. Unstable.</p>
+<h3 id="time-complexity-4">Time Complexity</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:center">Case</th>
+<th style="text-align:center">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Best</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+<tr>
+<td style="text-align:center">Worst</td>
+<td style="text-align:center">O(n^2)</td>
+</tr>
+<tr>
+<td style="text-align:center">Average</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="merge-sort">Merge Sort</h2>
+<p>One of the divide and conquer algorithms. The array is divided in half, and Merge Sort is performed on each divided array. Then, the sorted arrays are merged to obtain one large sorted array.</p>
+<p>Unlike other sorting algorithms, it has O(n) level of space complexity even in the best case.</p>
+<p>For the purpose of optimizing the divided array, you can mix Merge Sort with another sorting algorithm (such as Insertion Sort) that is not Merge Sort (this may result in instability).</p>
+<p>not In-Place. Stable.</p>
+<h3 id="time-complexity-5">Time Complexity</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:center">Case</th>
+<th style="text-align:center">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Best</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+<tr>
+<td style="text-align:center">Worst</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+<tr>
+<td style="text-align:center">Average</td>
+<td style="text-align:center">O(nlogn)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="radix-sort">Radix Sort</h2>
+<p>Unlike the previous algorithms, a sorting algorithm that operates without comparisons. Since the numbers are sorted based on digits, the digits must be sortable in lexicographical order.</p>
+<p>A kind of bucket sort.</p>
+<p>not In-Place. Stable</p>
+<h3 id="time-complexity-6">Time Complexity</h3>
+<p>Let n be the number of digits to be sorted, d be the maximum number of digits, and k be the number of buckets (0~9 for numbers).</p>
+<p>Best, worst, and average cases are all O(d(n + k))</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/en/tags/technical-interview/">Technical Interview</a>
+        
+            <a href="/en/tags/algorithms/">Algorithms</a>
+        
+            <a href="/en/tags/sort/">Sort</a>
+        
+            <a href="/en/tags/cs/">Cs</a>
+        
+            <a href="/en/tags/interview/">Interview</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title"></h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/p/c-inheritance-and-the-virtual-keyword/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/en/p/c-inheritance-and-the-virtual-keyword/img/cpp.svg" loading="lazy" data-key="" data-hash="/en/p/c-inheritance-and-the-virtual-keyword/img/cpp.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43; Inheritance and the virtual Keyword</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2024 Sanghoon, Han
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe.min.js"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://lib.baomitu.com/photoswipe/4.1.3/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src=""crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

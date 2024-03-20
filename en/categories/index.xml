@@ -7,15 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Sanghoon, Han</copyright>
-        <lastBuildDate>Mon, 18 Mar 2024 15:58:25 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Unreal</title>
-        <link>https://sangho0n.github.io/en/categories/unreal/</link>
-        <pubDate>Mon, 18 Mar 2024 15:58:25 +0900</pubDate>
-        
-        <guid>https://sangho0n.github.io/en/categories/unreal/</guid>
-        <description></description>
-        </item>
-        <item>
+        <lastBuildDate>Fri, 08 Mar 2024 11:12:45 +0900</lastBuildDate><atom:link href="https://sangho0n.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>C&#43;&#43;</title>
         <link>https://sangho0n.github.io/en/categories/c&#43;&#43;/</link>
         <pubDate>Fri, 08 Mar 2024 11:12:45 +0900</pubDate>
@@ -24,11 +16,19 @@
         <description></description>
         </item>
         <item>
-        <title>Algorithm</title>
-        <link>https://sangho0n.github.io/en/categories/algorithm/</link>
+        <title>Unreal</title>
+        <link>https://sangho0n.github.io/en/categories/unreal/</link>
+        <pubDate>Tue, 05 Mar 2024 17:31:11 +0900</pubDate>
+        
+        <guid>https://sangho0n.github.io/en/categories/unreal/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Algorithms</title>
+        <link>https://sangho0n.github.io/en/categories/algorithms/</link>
         <pubDate>Mon, 26 Feb 2024 11:49:35 +0900</pubDate>
         
-        <guid>https://sangho0n.github.io/en/categories/algorithm/</guid>
+        <guid>https://sangho0n.github.io/en/categories/algorithms/</guid>
         <description></description>
         </item>
         

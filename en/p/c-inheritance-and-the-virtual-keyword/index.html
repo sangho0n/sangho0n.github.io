@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='A post to revive memories faded by using other languages. In this post, we&amp;rsquo;ll dive into inheritance relationships and the virtual keyword in C&#43;&#43;.
-Inheritance Unlike other object-oriented languages like Java and C#, C&#43;&#43; allows specifying access specifiers during inheritance.
-1 2 // syntax class Derived : &amp;lt;access_specifier&amp;gt; Parent When inheriting from a base class, this specifies how the base class&amp;rsquo;s elements will be received. Think of this as substituting elements specified less strictly by the access_specifier with those of the specified type during inheritance.'>
-<title>C&#43;&#43; Inheritance and the Virtual Keyword</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='This post aims to delve into the details of inheritance relationships and the virtual keyword in C&#43;&#43; in order to revive memories blurred by using other languages.
+Inheritance Unlike other object-oriented languages such as Java and C#, C&#43;&#43; allows you to specify access specifiers during inheritance.
+1 2 // syntax class Derived : &amp;lt;access_specifier&amp;gt; Parent This indicates how the elements of the parent class are to be acquired when inheriting from the parent class.'>
+<title>C&#43;&#43; Inheritance and the virtual Keyword</title>
 
 <link rel='canonical' href='https://sangho0n.github.io/en/p/c-inheritance-and-the-virtual-keyword/'>
 
-<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='C&#43;&#43; Inheritance and the Virtual Keyword'>
-<meta property='og:description' content='A post to revive memories faded by using other languages. In this post, we&amp;rsquo;ll dive into inheritance relationships and the virtual keyword in C&#43;&#43;.
-Inheritance Unlike other object-oriented languages like Java and C#, C&#43;&#43; allows specifying access specifiers during inheritance.
-1 2 // syntax class Derived : &amp;lt;access_specifier&amp;gt; Parent When inheriting from a base class, this specifies how the base class&amp;rsquo;s elements will be received. Think of this as substituting elements specified less strictly by the access_specifier with those of the specified type during inheritance.'>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='C&#43;&#43; Inheritance and the virtual Keyword'>
+<meta property='og:description' content='This post aims to delve into the details of inheritance relationships and the virtual keyword in C&#43;&#43; in order to revive memories blurred by using other languages.
+Inheritance Unlike other object-oriented languages such as Java and C#, C&#43;&#43; allows you to specify access specifiers during inheritance.
+1 2 // syntax class Derived : &amp;lt;access_specifier&amp;gt; Parent This indicates how the elements of the parent class are to be acquired when inheriting from the parent class.'>
 <meta property='og:url' content='https://sangho0n.github.io/en/p/c-inheritance-and-the-virtual-keyword/'>
 <meta property='og:site_name' content='sanghoon&#39;s dev-log'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='TechnicalInterview' /><meta property='article:tag' content='Language' /><meta property='article:tag' content='CPP' /><meta property='article:tag' content='CS' /><meta property='article:tag' content='Interview' /><meta property='article:published_time' content='2024-03-08T11:12:45&#43;09:00'/><meta property='article:modified_time' content='2024-03-08T11:12:45&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/c-inheritance-and-the-virtual-keyword/img/cpp.svg' />
-<meta name="twitter:title" content="C&#43;&#43; Inheritance and the Virtual Keyword">
-<meta name="twitter:description" content="A post to revive memories faded by using other languages. In this post, we&amp;rsquo;ll dive into inheritance relationships and the virtual keyword in C&#43;&#43;.
-Inheritance Unlike other object-oriented languages like Java and C#, C&#43;&#43; allows specifying access specifiers during inheritance.
-1 2 // syntax class Derived : &amp;lt;access_specifier&amp;gt; Parent When inheriting from a base class, this specifies how the base class&amp;rsquo;s elements will be received. Think of this as substituting elements specified less strictly by the access_specifier with those of the specified type during inheritance."><meta name="twitter:card" content="summary_large_image">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Technical Interview' /><meta property='article:tag' content='Language' /><meta property='article:tag' content='cpp' /><meta property='article:tag' content='cs' /><meta property='article:tag' content='interview' /><meta property='article:published_time' content='2024-03-08T11:12:45&#43;09:00'/><meta property='article:modified_time' content='2024-03-08T11:12:45&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/c-inheritance-and-the-virtual-keyword/img/cpp.svg' />
+<meta name="twitter:title" content="C&#43;&#43; Inheritance and the virtual Keyword">
+<meta name="twitter:description" content="This post aims to delve into the details of inheritance relationships and the virtual keyword in C&#43;&#43; in order to revive memories blurred by using other languages.
+Inheritance Unlike other object-oriented languages such as Java and C#, C&#43;&#43; allows you to specify access specifiers during inheritance.
+1 2 // syntax class Derived : &amp;lt;access_specifier&amp;gt; Parent This indicates how the elements of the parent class are to be acquired when inheriting from the parent class."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://sangho0n.github.io/en/p/c-inheritance-and-the-virtual-keyword/img/cpp.svg' />
     </head>
     <body class="
@@ -269,28 +269,17 @@ Inheritance Unlike other object-oriented languages like Java and C#, C&#43;&#43;
   <ol>
     <li><a href="#inheritance">Inheritance</a>
       <ol>
-        <li><a href="#public">Public</a></li>
-        <li><a href="#private">Private</a></li>
-        <li><a href="#protected">Protected</a></li>
-        <li><a href="#casting">Casting</a></li>
+        <li><a href="#public">public</a></li>
+        <li><a href="#private">private</a></li>
+        <li><a href="#protected">protected</a></li>
+        <li><a href="#casting">casting</a></li>
       </ol>
     </li>
-    <li><a href="#is-implemented-in-terms-of">Is-Implemented-In-Terms-Of</a>
+    <li><a href="#is-implemented-in-terms-of">is-implemented-in-terms-of</a>
       <ol>
-        <li><a href="#implementation-via-inheritance-vs-implicit-composition">Implementation via Inheritance vs Implicit Composition</a></li>
+        <li><a href="#implementation-with-inheritance-vs-composition">Implementation with Inheritance vs. Composition</a></li>
       </ol>
     </li>
-    <li><a href="#polymorphism">Polymorphism</a>
-      <ol>
-        <li><a href="#virtual">Virtual</a>
-          <ol>
-            <li><a href="#virtual-function">Virtual Function</a></li>
-            <li><a href="#virtual-base-class">Virtual Base Class</a></li>
-          </ol>
-        </li>
-      </ol>
-    </li>
-    <li><a href="#references">References</a></li>
   </ol>
 </nav>
         </div>
@@ -307,7 +296,7 @@ Inheritance Unlike other object-oriented languages like Java and C#, C&#43;&#43;
         <div class="article-image">
             <a href="/en/p/c-inheritance-and-the-virtual-keyword/">
                 
-                    <img src="/en/p/c-inheritance-and-the-virtual-keyword/img/cpp.svg" loading="lazy" alt="Featured image of post C&#43;&#43; Inheritance and the Virtual Keyword" />
+                    <img src="/en/p/c-inheritance-and-the-virtual-keyword/img/cpp.svg" loading="lazy" alt="Featured image of post C&#43;&#43; Inheritance and the virtual Keyword" />
                 
             </a>
         </div>
@@ -326,7 +315,7 @@ Inheritance Unlike other object-oriented languages like Java and C#, C&#43;&#43;
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/en/p/c-inheritance-and-the-virtual-keyword/">C&#43;&#43; Inheritance and the Virtual Keyword</a>
+            <a href="/en/p/c-inheritance-and-the-virtual-keyword/">C&#43;&#43; Inheritance and the virtual Keyword</a>
         </h2>
     
         
@@ -382,10 +371,10 @@ Inheritance Unlike other object-oriented languages like Java and C#, C&#43;&#43;
     <section class="article-content">
     
     
-    <p>A post to revive memories faded by using other languages.
-In this post, we&rsquo;ll dive into <strong>inheritance</strong> relationships and the <strong>virtual</strong> keyword in C++.</p>
+    <p>This post aims to delve into the details of <strong>inheritance</strong> relationships and the <strong>virtual</strong> keyword in C++ in order to revive memories blurred by using other languages.</p>
+<hr>
 <h2 id="inheritance">Inheritance</h2>
-<p>Unlike other object-oriented languages like Java and C#, C++ allows specifying access specifiers during inheritance.</p>
+<p>Unlike other object-oriented languages such as Java and C#, C++ allows you to specify access specifiers during inheritance.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -396,9 +385,9 @@ In this post, we&rsquo;ll dive into <strong>inheritance</strong> relationships a
 </span></span><span class="line"><span class="cl">class Derived : &lt;access_specifier&gt; Parent
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>When inheriting from a base class, this specifies how the base class&rsquo;s elements will be received.
-Think of this as substituting elements specified less strictly by the <code>access_specifier</code> with those of the specified type during inheritance.</p>
-<p>Let&rsquo;s examine three classes inheriting from the following class:</p>
+</div><p>This indicates how the elements of the parent class are to be acquired when inheriting from the parent class.
+Think of replacing the elements loosely specified in the <code>access_specifier</code> with those specified by the type for inheritance.</p>
+<p>Let&rsquo;s look at three types of classes that inherit the following class and examine the characteristics of each.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -423,8 +412,8 @@ Think of this as substituting elements specified less strictly by the <code>acce
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="public">Public</h3>
-<p>Used to represent an is-a relationship. It follows the access specifier of the parent.</p>
+</div><h3 id="public">public</h3>
+<p>Used to represent the is-a relationship. It follows the access specifier of the parent.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -445,13 +434,13 @@ Think of this as substituting elements specified less strictly by the <code>acce
 </span></span><span class="line"><span class="cl">    <span class="n">Pub</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="n">pubInt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// public
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//privInt = 2; // Cannot access private from parent class
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//privInt = 2; // Cannot access parent class&#39;s private
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">protInt</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// protected
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Hence, external access is limited to the pubInt, which was public in the parent class.</p>
+</div><p>Therefore, external access is limited to the <code>pubInt</code> of the parent class specified as public.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -460,14 +449,14 @@ Think of this as substituting elements specified less strictly by the <code>acce
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">Pub</span><span class="o">*</span> <span class="n">pub</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pub</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pub</span><span class="o">-&gt;</span><span class="n">pubInt</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//cout &lt;&lt; pub-&gt;privInt &lt;&lt; endl; // Error: ‘int Base::privInt’ is private within this context
-</span></span></span><span class="line"><span class="cl"><span class="c1">//cout &lt;&lt; pub-&gt;protInt &lt;&lt; endl; // Error: ‘int Base::protInt’ is protected within this context
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">    <span class="n">Pub</span><span class="o">*</span> <span class="n">pub</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pub</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pub</span><span class="o">-&gt;</span><span class="n">pubInt</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//cout &lt;&lt; pub-&gt;privInt &lt;&lt; endl; //error: ‘int Base::privInt’ is private within this context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//cout &lt;&lt; pub-&gt;protInt &lt;&lt; endl; //error: ‘int Base::protInt’ is protected within this context
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="private">Private</h3>
-<p>Used to represent an is-implemented-in-terms-of relationship (default in C++). Private inheritance restricts access to the base class&rsquo;s private members but inherits public and protected ones.</p>
+</div><h3 id="private">private</h3>
+<p>Used when representing the is-implemented-in-terms-of relationship (default in cpp). Private inheritance inherits the elements of the parent class that can be accessed less strictly than private (i.e., protected and public elements) as private.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -488,13 +477,13 @@ Think of this as substituting elements specified less strictly by the <code>acce
 </span></span><span class="line"><span class="cl">    <span class="n">Priv</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="n">pubInt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// public -&gt; private
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//privInt = 2; // Cannot access private from parent class
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//privInt = 2; // Cannot access parent class&#39;s private
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">protInt</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// protected -&gt; private
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Thus, external access to any member of the parent class is disallowed.</p>
+</div><p>Therefore, external access is prevented to any elements of the parent class.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -503,13 +492,13 @@ Think of this as substituting elements specified less strictly by the <code>acce
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">Priv</span><span class="o">*</span> <span class="n">priv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Priv</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//cout &lt;&lt; priv-&gt;pubInt &lt;&lt; endl; // Error: ‘int Base::pubInt’ is inaccessible within this context
-</span></span></span><span class="line"><span class="cl"><span class="c1">//cout &lt;&lt; priv-&gt;privInt &lt;&lt; endl; // Error: ‘int Base::privInt’ is private within this context
-</span></span></span><span class="line"><span class="cl"><span class="c1">//cout &lt;&lt; priv-&gt;protInt &lt;&lt; endl; // Error: ‘int Base::protInt’ is protected within this context
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">    <span class="n">Priv</span><span class="o">*</span> <span class="n">priv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Priv</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//cout &lt;&lt; priv-&gt;pubInt &lt;&lt; endl; //error: ‘int Base::pubInt’ is inaccessible within this context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//cout &lt;&lt; priv-&gt;privInt &lt;&lt; endl; //error: ‘int Base::privInt’ is private within this context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//cout &lt;&lt; priv-&gt;protInt &lt;&lt; endl; //error: ‘int Base::protInt’ is protected within this context
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>Additionally, even new classes inheriting from this cannot access any parent class members.</p>
+</div><p>Furthermore, even if a new class inherits from this class, access to any elements of the great-grandparent class is still unavailable.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -527,14 +516,13 @@ Think of this as substituting elements specified less strictly by the <code>acce
 </span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">GrandChild</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// Unable to access any member of Base
+</span></span><span class="line"><span class="cl">        <span class="c1">// Unable to access any elements of Base
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="protected">Protected</h3>
-<p>Similar to private inheritance in that it indicates an is-implemented-in-terms-of relationship.
-It changes the parent class&rsquo;s public elements to protected during inheritance.</p>
+</div><h3 id="protected">protected</h3>
+<p>Same as the private specifier, it is used when representing the is-implemented-in-terms-of relationship. It inherits the parent class&rsquo;s public elements as protected.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -555,13 +543,13 @@ It changes the parent class&rsquo;s public elements to protected during inherita
 </span></span><span class="line"><span class="cl">    <span class="n">Prot</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="n">pubInt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// public -&gt; protected
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//privInt = 2; // Error: ‘int Base::privInt’ is private within this context
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">protInt</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="c1">// protected 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//privInt = 2; // error: ‘int Base::privInt’ is private within this context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">protInt</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// protected
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Therefore, external access to any member of the Base class is restricted.</p>
+</div><p>Therefore, external access is denied to any elements of the Base class.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -571,12 +559,12 @@ It changes the parent class&rsquo;s public elements to protected during inherita
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">    <span class="n">Prot</span><span class="o">*</span> <span class="n">prot</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Prot</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//cout &lt;&lt; prot-&gt;pubInt &lt;&lt; endl; // Error: ‘int Base::pubInt’ is inaccessible within this context
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//cout &lt;&lt; prot-&gt;privInt &lt;&lt; endl; // Error: ‘int Base::privInt’ is private within this context
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//cout &lt;&lt; prot-&gt;protInt &lt;&lt; endl; // Error: ‘int Base::protInt’ is protected within this context
+</span></span><span class="line"><span class="cl">    <span class="c1">//cout &lt;&lt; prot-&gt;pubInt &lt;&lt; endl; //error: ‘int Base::pubInt’ is inaccessible within this context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//cout &lt;&lt; prot-&gt;privInt &lt;&lt; endl; //error: ‘int Base::privInt’ is private within this context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//cout &lt;&lt; prot-&gt;protInt &lt;&lt; endl; // error: ‘int Base::protInt’ is protected within this context
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>However, unlike private, new classes inheriting from this can access members of the parent class.</p>
+</div><p>Moreover, unlike private, when a class inherits from this, it&rsquo;s possible to access the elements of the great-grandparent class.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -601,9 +589,8 @@ It changes the parent class&rsquo;s public elements to protected during inherita
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>However, in the code above, because private inheritance was used by default, external access to GrandChild2&rsquo;s pubInt and protInt is prevented.</p>
-<h3 id="casting">Casting</h3>
-<p>Here is support for casting in each case:</p>
+</div><h3 id="casting">casting</h3>
+<p>The supported cast for each case is as follows.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -631,36 +618,31 @@ It changes the parent class&rsquo;s public elements to protected during inherita
 </span></span><span class="line"><span class="cl">    <span class="c1">// upcasting check
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Base</span> <span class="o">*</span><span class="n">ptr1</span><span class="p">,</span> <span class="o">*</span><span class="n">ptr2</span><span class="p">,</span> <span class="o">*</span><span class="n">ptr3</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ptr1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pub</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//ptr2 = new Priv(); // Error: ‘Base’ is an inaccessible base of ‘Priv’
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//ptr3 = new Prot(); // Error: ‘Base’ is an inaccessible base of ‘Prot’
+</span></span><span class="line"><span class="cl">    <span class="c1">//ptr2 = new Priv(); // error: ‘Base’ is an inaccessible base of ‘Priv’
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//ptr3 = new Prot(); // error: ‘Base’ is an inaccessible base of ‘Prot’
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
 </span></span><span class="line"><span class="cl">    <span class="c1">// downcasting check
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Base</span><span class="o">*</span> <span class="n">base</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Base</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Pub</span><span class="o">*</span> <span class="n">pub_down</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Pub</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">base</span><span class="p">);</span> <span class="c1">// Checked at compile time. Does not consider polymorphism
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// Pub* pub_down = dynamic_cast&lt;Pub*&gt;(base); // Error because there is no virtual function (source type is not polymorphic)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// Priv* priv_down = static_cast&lt;Priv*&gt;(base); // Error: ‘Base’ is an inaccessible base of ‘Priv’
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// Prot* prot_down = static_cast&lt;Prot*&gt;(base); // Error: ‘Base’ is an inaccessible base of ‘Prot’
+</span></span><span class="line"><span class="cl">    <span class="n">Pub</span><span class="o">*</span> <span class="n">pub_down</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Pub</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">base</span><span class="p">);</span> <span class="c1">// checked at compile-time. Doesn&#39;t consider polymorphism
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// Pub* pub_down = dynamic_cast&lt;Pub*&gt;(base); // error because source type is not polymorphic
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// Priv* priv_down = static_cast&lt;Priv*&gt;(base); // error: ‘Base’ is an inaccessible base of ‘Priv’
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// Prot* prot_down = static_cast&lt;Prot*&gt;(base); // error: ‘Base’ is an inaccessible base of ‘Prot’
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
 </span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">ptr1</span><span class="p">,</span> <span class="n">ptr2</span><span class="p">,</span> <span class="n">ptr3</span><span class="p">,</span> <span class="n">pub_down</span><span class="p">,</span> <span class="n">base</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>For those familiar with other languages or those who haven&rsquo;t deeply thought about access specifiers in inheritance while developing, they may be curious about what non-public inheritance is used for to express it.
-Let&rsquo;s find out more about <strong>is-implemented-in-terms-of</strong> in the following sections.</p>
-<h2 id="is-implemented-in-terms-of">Is-Implemented-In-Terms-Of</h2>
-<p>In general programming languages, is-a relationships are represented using inheritance (public inheritance in the case of C++) and has-a relationships are represented using composition (containment, aggregation) to describe relationships between objects.
-In C++, along with the above two concepts, there is a specific term called <em>is-implemented-in-terms-of</em> to describe relationships between objects.</p>
-<p>As the name suggests, is-implemented-in-terms-of indicates that when an object uses another object to function.
-Therefore, is-implemented-in-terms-of can also be represented using composition in C++.
-So, what differentiates has-a from is-implemented-in-terms-of? The distinguishing factor between the two relationships lies in the domain.</p>
-<p>The has-a relationship is used when modeling application domains easily recognizable in everyday life.
-For instance, in the application domain of people, means of communication, and means of transportation can be modeled as has-a relationships.
-On the other hand, is-implemented-in-terms-of signifies the space of software implementation. Examples include buffers, mutexes, search trees, etc.</p>
-<p>In C++, relationships involving has-a can be implemented using composition, similar to other languages.
-On the contrary, the is-implemented-in-terms-of relationship can be implemented using composition similar to has-a or through non-public inheritance.</p>
-<p>The question arises, in which scenarios is it more appropriate to use non-public inheritance for implementation, and when to use composition?
-Let&rsquo;s look at examples of classes implemented in both ways and explore which approach is preferable.</p>
+</div><h2 id="is-implemented-in-terms-of">is-implemented-in-terms-of</h2>
+<p>In general programming languages, the is-a relationship is represented using inheritance (in the case of C++, public inheritance) and the has-a relationship is modeled using composition (containment, aggregation).
+C++ introduces the is-implemented-in-terms-of term to indicate relationships between objects where one object uses another to function.
+Thus, in C++, is-implemented-in-terms-of can also be represented using composition.
+Then, what is the difference between has-a and is-implemented-in-terms-of? The distinction between the two relationships lies in their domain.</p>
+<p>The has-a relationship is used to model application domains that we can easily recognize in real life into programming.
+For example, application domains like people, means of communication, and modes of transport are modeled through the has-a relationship.
+On the other hand, is-implemented-in-terms-of is used solely to indicate the realm of software implementation. Examples include buffers, mutexes, and search trees.</p>
+<p>C++ provides the flexibility for implementing has-a relationships using composition or non-public inheritance for is-implemented-in-terms-of relationships.</p>
+<p>So, when should we implement a feature using non-public inheritance, and when should we use composition? It&rsquo;s worth examining which approach is suitable by looking at examples of classes created using both methods.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -727,275 +709,31 @@ Let&rsquo;s look at examples of classes implemented in both ways and explore whi
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="implementation-via-inheritance-vs-implicit-composition">Implementation via Inheritance vs Implicit Composition</h3>
-<p>As seen from the example code above, anything achievable through single composition can also be implemented through inheritance. Why then, does C++ differentiate between is-implemented-in-terms-of and has-a?</p>
-<p>The reason is that there are cases where something implementable via non-public inheritance is not achievable through single composition.
-The following 5 items indicate each scenario (roughly listed from common to less common):</p>
+</div><h3 id="implementation-with-inheritance-vs-composition">Implementation with Inheritance vs. Composition</h3>
+<p>As you can see from the above example, whatever can be done with a single composition can also be implemented with inheritance. So, why does C++ distinguish between is-implemented-in-terms-of and has-a?</p>
+<p>The reason lies in that some features can be implemented with non-public inheritance but not with a single composition.
+Below are five items indicating when to use each method (roughly listed starting from the most common case).</p>
 <ul>
-<li><strong>When needing to access protected members.</strong> Generally, used when calling protected methods (or constructors) is necessary.</li>
-<li><strong>When needing to override virtual functions.</strong> If the base class has a pure virtual function, composition cannot be used.</li>
-<li><strong>When one implementation needs to be created before (or destroyed after) another.</strong> When multiple implementations are interdependent, and the life cycle of one implementation needs to encompass the other.
-If the implementation includes a critical section or data transaction requiring a lock, it must cover the entire lifetime of the other implementations.</li>
-<li><strong>When sharing a virtual base class or requiring changes to virtual base class creation.</strong></li>
+<li><strong>When access to protected members is needed.</strong> This usually refers to the need to call protected methods (or constructors).</li>
+<li><strong>When there is a need to override virtual functions.</strong> If the base class has a pure virtual function, composition cannot be used.</li>
+<li><strong>When an implementation needs to be constructed (or destroyed) before (or after) another implementation.</strong> If multiple implementations depend on one another such that a specific implementation&rsquo;s lifecycle must cover all others, critical sections like locks, data transactions, etc., it becomes crucial.</li>
+<li><strong>When sharing a virtual base class or modification is needed when creating a virtual base class.</strong></li>
 </ul>
-<p>Finally, although distinct from is-implemented-in-terms-of, non-public inheritance has one more characteristic that composition alone cannot provide.</p>
+<p>Lastly, despite being distant from is-implemented-in-terms-of, non-public inheritance possesses another characteristic that composition alone cannot achieve.</p>
 <ul>
-<li><strong>When ‘Restricted Polymorphism’ is necessary</strong>; for cases where only some code needs Liskov Substitution. Public inheritance always enables Liskov substitution.
-Non-public inheritance, however, can represent a &rsquo;limited&rsquo; is-a relationship. While it may not appear polymorphic to an external observer using non-public inheritance
-(Derived is not a Base), polymorphism may be required within member functions or by friend classes.</li>
+<li><strong>When &lsquo;restricted polymorphism&rsquo; is required.</strong> Cases where the Liskov substitution principle needs to be applied only to certain pieces of code. Public inheritance guarantees Liskov substitution always, while non-public inheritance can denote a more limited IS-A relationship. Although from the outside, non-public inheritance may not seem polymorphic at all (D is not a B), situations might arise in member functions or friend classes where polymorphism is needed.</li>
 </ul>
-<p>Let&rsquo;s examine the code for MySet and MyList. In this case:</p>
+<p>Let&rsquo;s revisit the <code>MySet</code> and <code>MyList</code> code. In this case:</p>
 <ul>
-<li>MyList does not have protected members.</li>
-<li>MyList is not an abstract class.</li>
-<li>MySet does not inherit from any class except MyList.</li>
-<li>MyList does not inherit the virtual base class which MySet needs or must override.</li>
-<li>MySet is not a MyList.</li>
+<li><code>MyList</code> has no protected members.</li>
+<li><code>MyList</code> is not an abstract class.</li>
+<li><code>MySet</code> has no other classes inherited except <code>MyList</code>.</li>
+<li><code>MyList</code> does not inherit any virtual base class.</li>
+<li><code>MySet</code> is not <code>MyList</code>; MySet is-not-a MyList</li>
 </ul>
-<p>Since none of these five situations apply, it is preferable to implement through composition rather than inheritance.
-Inheritance can potentially expose unnecessary information to the child classes and create undesired dependencies not required for the implementation.</p>
-<p>While compiling this post, I realized that C++ has quite a variety of ways to implement object relationships compared to other languages.
-At the same time, it does not only look easy to understand but also seems to have many parts that should not be casually overused due to violating the principles of object-oriented programming.</p>
-<h2 id="polymorphism">Polymorphism</h2>
-<p>Polymorphism is the ability of an operator or method with the same name to perform different tasks. In C++, polymorphism can be achieved through operator/method overloading and method overriding.
-Among these, method overriding is used in conjunction with the <em>virtual</em> keyword.
-In this post, let&rsquo;s understand how the virtual keyword is used when implementing method overriding.</p>
-<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20200703160531/Polymorphism-in-CPP.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="Polymorphism in C&#43;&#43;"
-	
-	
-></p>
-<h3 id="virtual">Virtual</h3>
-<p>In C++, the virtual keyword is used when declaring virtual functions and when inheriting a virtual base class.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// syntax
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">virtual</span> <span class="p">[</span><span class="n">type</span><span class="o">-</span><span class="n">specifiers</span><span class="p">]</span> <span class="n">member_function_declarator</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Class_Name</span> <span class="o">:</span> <span class="k">virtual</span> <span class="p">[</span><span class="n">access</span><span class="o">-</span><span class="n">specifier</span><span class="p">]</span> <span class="n">Base_Class_Name</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Class_Name</span> <span class="o">:</span> <span class="p">[</span><span class="n">access</span><span class="o">-</span><span class="n">specifier</span><span class="p">]</span> <span class="k">virtual</span> <span class="n">Base_Class_Name</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="virtual-function">Virtual Function</h4>
-<p>Virtual functions are used for defining functions in the base class that can be overridden in a derived class to achieve polymorphism.
-When a function is declared as virtual, it is registered in a vTable (virtual table) generated by the compiler for each class, and during runtime, it accesses this vTable (vPtr) to decide which function to call.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// C++ program to show the working of vtable and vptr 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"> 
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl"><span class="c1">// base class 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Base</span> <span class="p">{</span> 
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span> 
-</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">function1</span><span class="p">()</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> 
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Base function1()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
-</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">function2</span><span class="p">()</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> 
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Base function2()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
-</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">function3</span><span class="p">()</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> 
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Base function3()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
-</span></span><span class="line"><span class="cl"><span class="p">};</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl"><span class="c1">// class derived from Base 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Derived1</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span> 
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span> 
-</span></span><span class="line"><span class="cl">    <span class="c1">// overriding function1() 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="n">function1</span><span class="p">()</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> 
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Derived1 function1()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
-</span></span><span class="line"><span class="cl">    <span class="c1">// not overriding function2() and function3() 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl"><span class="c1">// class derived from Derived1 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Derived2</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Derived1</span> <span class="p">{</span> 
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span> 
-</span></span><span class="line"><span class="cl">    <span class="c1">// again overriding function2() 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="n">function2</span><span class="p">()</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> 
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Derived2 function2()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
-</span></span><span class="line"><span class="cl">    <span class="c1">// not overriding function1() and function3() 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl"><span class="c1">// driver code 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> 
-</span></span><span class="line"><span class="cl"><span class="p">{</span> 
-</span></span><span class="line"><span class="cl">    <span class="c1">// defining base class pointers 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Base</span><span class="o">*</span> <span class="n">ptr1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Base</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">Base</span><span class="o">*</span> <span class="n">ptr2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Derived1</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">Base</span><span class="o">*</span> <span class="n">ptr3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Derived2</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">    <span class="c1">// calling all functions 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">function1</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">function2</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">function3</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">function1</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">function2</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">function3</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr3</span><span class="o">-&gt;</span><span class="n">function1</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr3</span><span class="o">-&gt;</span><span class="n">function2</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">ptr3</span><span class="o">-&gt;</span><span class="n">function3</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">    <span class="c1">// deleting objects 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">delete</span> <span class="n">ptr1</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">ptr2</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">ptr3</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Console Output
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Base</span> <span class="n">function1</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Base</span> <span class="n">function2</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Base</span> <span class="n">function3</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Derived1</span> <span class="n">function1</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Base</span> <span class="n">function2</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Base</span> <span class="n">function3</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Derived1</span> <span class="n">function1</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Derived2</span> <span class="n">function2</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">Base</span> <span class="n">function3</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="virtual-base-class">Virtual Base Class</h4>
-<p>C++ allows multiple inheritances. When an instance is created, the space allocated to A will attempt to be created twice. Fortunately, the compiler detects this and flags it as an error.
-In fact, such inheritance structures can lead to the diamond problem, so it is not a recommended inheritance structure.</p>
-<p>If you need to call A&rsquo;s show() even in this inheritance situation, you can make B and C inherit A as a virtual base.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">virtual</span> <span class="k">public</span> <span class="n">A</span> <span class="p">{</span> 
-</span></span><span class="line"><span class="cl"><span class="p">};</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">C</span> <span class="o">:</span> <span class="k">public</span> <span class="k">virtual</span> <span class="n">A</span> <span class="p">{</span> 
-</span></span><span class="line"><span class="cl"><span class="p">};</span> 
-</span></span><span class="line"><span class="cl"><span class="c1">// Both syntaxes are valid
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="references">References</h2>
-<ul>
-<li><a class="link" href="https://aristeia.com/books.html"  target="_blank" rel="noopener"
-    >&ldquo;Effective C++” Third Edition by Scott Meyers.</a></li>
-<li><a class="link" href="http://www.gotw.ca/publications/mill06.htm"  target="_blank" rel="noopener"
-    >Uses and Abuses of Inheritance</a></li>
-<li><a class="link" href="https://stackoverflow.com/questions/860339/what-is-the-difference-between-public-private-and-protected-inheritance"  target="_blank" rel="noopener"
-    >What is the difference between public, private, and protected inheritance?</a></li>
-<li><a class="link" href="https://learn.microsoft.com/ko-kr/cpp/cpp/virtual-cpp?view=msvc-170"  target="_blank" rel="noopener"
-    >virtual (C++)</a></li>
-<li><a class="link" href="https://www.geeksforgeeks.org/cpp-polymorphism/"  target="_blank" rel="noopener"
-    >C++ Polymorphism</a></li>
-<li><a class="link" href="https://www.geeksforgeeks.org/vtable-and-vptr-in-cpp/"  target="_blank" rel="noopener"
-    >vTable And vPtr in C++</a></li>
-<li><a class="link" href="https://www.geeksforgeeks.org/virtual-base-class-in-c/"  target="_blank" rel="noopener"
-    >Virtual base class in C++</a></li>
-</ul>
+<p>As none of the above five situations apply, it&rsquo;s best to implement it using composition rather than inheritance. Using inheritance can expose unnecessary information to subclasses and create unnecessary dependencies.</p>
+<p>With a thorough review, it seems that C++ offers a variety of ways in implementing object relationships compared to other languages. However, it is not easy to understand, and it seems that there are many aspects to consider to avoid violating the principles of object-oriented programming.</p>
+<p><em><strong>Note:</strong> The source of this translation is present in the original document.</em></p>
 
 </section>
 
@@ -1004,11 +742,11 @@ In fact, such inheritance structures can lead to the diamond problem, so it is n
     
     <section class="article-tags">
         
-            <a href="/en/tags/technicalinterview/">TechnicalInterview</a>
+            <a href="/en/tags/technical-interview/">Technical Interview</a>
         
             <a href="/en/tags/language/">Language</a>
         
-            <a href="/en/tags/cpp/">CPP</a>
+            <a href="/en/tags/cpp/">Cpp</a>
         
             <a href="/en/tags/cs/">Cs</a>
         
@@ -1038,6 +776,39 @@ In fact, such inheritance structures can lead to the diamond problem, so it is n
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title"></h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/p/summary-of-sorting-algorithms/">
+        
+        
+            <div class="article-image">
+                <img src="/en/p/summary-of-sorting-algorithms/img/algorithm.1e03f7d03d9b813040e0613d6489efa9_hu8666b0214ef6ef8b40207752073739fc_14421_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Summary of Sorting Algorithms"
+                        
+                        data-hash="md5-HgP30D2bgTBA4GE9ZInvqQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Summary of Sorting Algorithms</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     

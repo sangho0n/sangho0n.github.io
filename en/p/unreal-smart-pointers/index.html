@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Based on the official documentation, this article provides an interpretation of the content. (Many interpretations included) There may be differences from reality. Your feedback is appreciated. Unreal provides implementations of various smart pointers used in C&#43;&#43;. The provided classes include Shared Pointer, Weak Pointer, Unique Pointer, and an additional unique type called Shared Reference. Since UObject is managed by a separate memory tracking system, instances of classes that inherit from'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Based on the official documentation, this document provides insights into Unreal&amp;rsquo;s implementation of various smart pointers used in C&#43;&#43;. The provided classes include Shared Pointers, Weak Pointers, Unique Pointers, and an additional type known as Shared Reference. Due to separate memory management for UObjects, instances of classes inherited from UObject cannot be wrapped with smart pointers (memory is reclaimed differently, following the RAII pattern).
+Types of Pointers Type Usage TSharedPtr A shared pointer owns the encapsulated object.'>
 <title>Unreal Smart Pointers</title>
 
 <link rel='canonical' href='https://sangho0n.github.io/en/p/unreal-smart-pointers/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Unreal Smart Pointers'>
-<meta property='og:description' content='Based on the official documentation, this article provides an interpretation of the content. (Many interpretations included) There may be differences from reality. Your feedback is appreciated. Unreal provides implementations of various smart pointers used in C&#43;&#43;. The provided classes include Shared Pointer, Weak Pointer, Unique Pointer, and an additional unique type called Shared Reference. Since UObject is managed by a separate memory tracking system, instances of classes that inherit from'>
+<meta property='og:description' content='Based on the official documentation, this document provides insights into Unreal&amp;rsquo;s implementation of various smart pointers used in C&#43;&#43;. The provided classes include Shared Pointers, Weak Pointers, Unique Pointers, and an additional type known as Shared Reference. Due to separate memory management for UObjects, instances of classes inherited from UObject cannot be wrapped with smart pointers (memory is reclaimed differently, following the RAII pattern).
+Types of Pointers Type Usage TSharedPtr A shared pointer owns the encapsulated object.'>
 <meta property='og:url' content='https://sangho0n.github.io/en/p/unreal-smart-pointers/'>
 <meta property='og:site_name' content='sanghoon&#39;s dev-log'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='Smart Pointer' /><meta property='article:tag' content='Pointer' /><meta property='article:published_time' content='2024-03-05T17:31:11&#43;09:00'/><meta property='article:modified_time' content='2024-03-05T17:31:11&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/unreal-smart-pointers/img/unreal.svg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='Smart Pointer' /><meta property='article:tag' content='Pointer' /><meta property='article:published_time' content='2024-03-05T17:31:11&#43;09:00'/><meta property='article:modified_time' content='2024-03-05T17:31:11&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/unreal-smart-pointers/img/unreal.svg' />
 <meta name="twitter:title" content="Unreal Smart Pointers">
-<meta name="twitter:description" content="Based on the official documentation, this article provides an interpretation of the content. (Many interpretations included) There may be differences from reality. Your feedback is appreciated. Unreal provides implementations of various smart pointers used in C&#43;&#43;. The provided classes include Shared Pointer, Weak Pointer, Unique Pointer, and an additional unique type called Shared Reference. Since UObject is managed by a separate memory tracking system, instances of classes that inherit from"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Based on the official documentation, this document provides insights into Unreal&amp;rsquo;s implementation of various smart pointers used in C&#43;&#43;. The provided classes include Shared Pointers, Weak Pointers, Unique Pointers, and an additional type known as Shared Reference. Due to separate memory management for UObjects, instances of classes inherited from UObject cannot be wrapped with smart pointers (memory is reclaimed differently, following the RAII pattern).
+Types of Pointers Type Usage TSharedPtr A shared pointer owns the encapsulated object."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://sangho0n.github.io/en/p/unreal-smart-pointers/img/unreal.svg' />
     </head>
     <body class="
@@ -261,10 +264,10 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#types">Types</a></li>
+    <li><a href="#types-of-pointers">Types of Pointers</a></li>
     <li><a href="#benefits">Benefits</a></li>
     <li><a href="#helper-classes-and-functions">Helper Classes and Functions</a></li>
-    <li><a href="#implementation-details">Implementation Details</a>
+    <li><a href="#detailed-implementation">Detailed Implementation</a>
       <ol>
         <li><a href="#speed">Speed</a></li>
         <li><a href="#intrusive-accessors">Intrusive Accessors</a></li>
@@ -272,7 +275,7 @@
         <li><a href="#thread-safety">Thread Safety</a></li>
       </ol>
     </li>
-    <li><a href="#additional-notes">Additional Notes</a></li>
+    <li><a href="#comments">Comments</a></li>
   </ol>
 </nav>
         </div>
@@ -364,11 +367,9 @@
     <section class="article-content">
     
     
-    <p>Based on the official documentation, this article provides an interpretation of the content. (Many interpretations included)
-There may be differences from reality. Your feedback is appreciated.</p>
-<hr>
-<p>Unreal provides implementations of various smart pointers used in C++. The provided classes include Shared Pointer, Weak Pointer, Unique Pointer, and an additional unique type called Shared Reference. Since UObject is managed by a separate memory tracking system, instances of classes that inherit from UObject cannot be wrapped with smart pointers. (A memory reclaiming structure different from garbage collection; RAII pattern)</p>
-<h2 id="types">Types</h2>
+    <p>Based on the <a class="link" href="https://docs.unrealengine.com/5.2/en-US/smart-pointers-in-unreal-engine/"  target="_blank" rel="noopener"
+    >official documentation</a>, this document provides insights into Unreal&rsquo;s implementation of various smart pointers used in C++. The provided classes include Shared Pointers, Weak Pointers, Unique Pointers, and an additional type known as Shared Reference. Due to separate memory management for UObjects, instances of classes inherited from UObject cannot be wrapped with smart pointers (memory is reclaimed differently, following the RAII pattern).</p>
+<h2 id="types-of-pointers">Types of Pointers</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -379,65 +380,65 @@ There may be differences from reality. Your feedback is appreciated.</p>
 <tbody>
 <tr>
 <td>TSharedPtr</td>
-<td>Shared Pointer is a class that owns the object it wraps. It prevents the object from being destroyed by external factors while it is owned. Ultimately, when the number of shared pointers (or references) owning the object becomes 0, it manages the object&rsquo;s destruction. Shared pointers can exist even when they are not wrapping any object. When the wrapped object is not null, a shared reference can be created at any time.</td>
+<td>A shared pointer owns the encapsulated object. It prevents the object from being destroyed while it is owned externally, and ultimately governs the destruction of the object when the count of shared pointers (or references) owning it becomes 0. A shared pointer can exist even when it doesn&rsquo;t encapsulate an object. You can create a shared reference anytime the encapsulated object is not null.</td>
 </tr>
 <tr>
 <td>TSharedRef</td>
-<td>Similar to a shared pointer but differs in that the wrapped object cannot be null. Since null is not possible, it can be converted to a shared pointer at any time, and the pointed object is always in a valid state. It is used when you want to clearly define ownership or ensure that the object is not null.</td>
+<td>Similar to a shared pointer, but the encapsulated object cannot be null. Since null is impossible, it can be converted to a shared pointer anytime, ensuring that the object being pointed to is always valid. It is used when explicit ownership of an object is desired or when ensuring that an object is not null.</td>
 </tr>
 <tr>
 <td>TWeakPtr</td>
-<td>Similar to a shared pointer but does not own the object, therefore does not impact the object&rsquo;s lifecycle. It can be useful for breaking <strong>reference cycles</strong> but since the object being referenced can become null at any time without warning, it is better to convert it to a shared pointer for safe access.</td>
+<td>Similar to a shared pointer, but it does not own the object, allowing it to not affect the reference&rsquo;s lifecycle. It can be useful for breaking reference cycles, but accessing an object simultaneously can become null without warning. If safe access is desired, it&rsquo;s recommended to convert it to a shared pointer first.</td>
 </tr>
 <tr>
 <td>TUniquePtr</td>
-<td>A unique pointer owns the object exclusively. It can transfer ownership but cannot be shared. Attempting to copy a unique pointer results in a compile error. When it goes out of scope, it automatically releases the object it owns from memory.</td>
+<td>A unique pointer exclusively owns the object. Although ownership can be transferred, it cannot be shared. Trying to copy a unique pointer results in a compile error in all cases. When the scope is exited, the owned object is automatically released from memory.</td>
 </tr>
 </tbody>
 </table></div>
-<p><em><strong>Reference cycle</strong>: A phenomenon that occurs when two or more objects reference each other. If the reference count does not reach 0, the objects will not be released, leading to memory leaks.</em></p>
+<p><em>1) Refers to a situation where two or more objects reference each other, preventing each other from being released because the reference count never reaches 0, potentially leading to memory leaks.</em></p>
 <h2 id="benefits">Benefits</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
 <th>Benefit</th>
-<th>Explanation</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Prevention of Memory Leaks</td>
-<td>By automatically destroying objects, it prevents memory leaks.</td>
+<td>Automatically deallocates objects, preventing memory leaks.</td>
 </tr>
 <tr>
 <td>Weak References</td>
-<td>Solves circular reference problems and prevents dangling pointers.</td>
+<td>Solves circular reference issues and prevents dangling pointer problems.</td>
 </tr>
 <tr>
-<td>Thread Safety Assurance (optional)</td>
-<td>Additional code can be written to ensure thread safety when needed. (Overhead exists)</td>
+<td>Optional Thread Safety</td>
+<td>Additional code can be added for thread safety when needed (comes with overhead).</td>
 </tr>
 <tr>
 <td>Runtime Safety</td>
-<td>Shared references cannot be null and can release references at any time, ensuring runtime stability.</td>
+<td>Shared references cannot be null and can release references at any time, ensuring runtime safety.</td>
 </tr>
 <tr>
-<td>Intention Conveyance</td>
-<td><strong>Owners and observers</strong> can be easily distinguished.</td>
+<td>Intentional Conveyance</td>
+<td>Easily distinguishes between owners and observers.</td>
 </tr>
 <tr>
-<td>Memory Advantages</td>
-<td>All these functions can be performed with just double the size of a pointer variable in C++ (based on 64-bits; including 16 bytes for reference control). However, a unique pointer has the same size as a C++ pointer.</td>
+<td>Memory Benefits</td>
+<td>Performs all functions with just twice the size of a pointer variable in C++ (based on 64-bit systems; including 16 bytes for reference control). However, a unique pointer has the same size as a C++ pointer.</td>
 </tr>
 </tbody>
 </table></div>
-<p><em>Owner manages and controls the lifespan of the object. Through shared pointers and unique pointers, ownership of the object is maintained, and when no longer needed, the object is released from memory. Observers reference the object but do not own it (Weak pointers). When the owner of the object deletes it, the observer should automatically become null.</em></p>
+<p><em>1) Owners own objects and manage their lifecycles. They can own and release objects using shared pointers and unique pointers when they are no longer needed. Observers reference objects but do not own them (weak pointers). When the owner deletes the object, the observer should become null.</em></p>
 <h2 id="helper-classes-and-functions">Helper Classes and Functions</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
 <th>Helper</th>
-<th>Explanation</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -447,7 +448,7 @@ There may be differences from reality. Your feedback is appreciated.</p>
 </tr>
 <tr>
 <td><strong>TSharedFromThis</strong></td>
-<td>Inheriting from TSharedFromThis adds the AsShared and SharedThis methods to the class. These methods help in obtaining a TSharedRef for the object.</td>
+<td>Inheriting from TSharedFromThis adds AsShared and SharedThis methods to the class. These methods help obtain a TSharedRef for the object.</td>
 </tr>
 <tr>
 <td><strong><em>Functions</em></strong></td>
@@ -455,19 +456,19 @@ There may be differences from reality. Your feedback is appreciated.</p>
 </tr>
 <tr>
 <td><strong>MakeShared</strong> and <strong>MakeShareable</strong></td>
-<td>MakeShared function creates a TSharedPtr from a regular C++ pointer. This function allocates a new object instance and reference controller in a single memory block. The object must have a public constructor. MakeShareable is also used to create a TSharedPtr from a C++ pointer. This function works even when the object&rsquo;s constructor is private. This allows you to obtain ownership of an object you did not create, and additionally, you can provide custom logic when the destructor is called. Due to these additional features, it allows for more flexible programming compared to MakeShared, but it also comes with overhead.</td>
+<td>MakeShared creates a TSharedPtr from a regular C++ pointer. It allocates a new object instance and a reference controller in a single memory block. The object must have a public constructor. MakeShareable is also used to create a TSharedPtr from a C++ pointer. It works even if the object&rsquo;s constructor is private. It allows ownership of objects not created by oneself and can provide custom logic upon destruction. This flexibility can lead to additional programming practices compared to MakeShared but comes with additional overhead.</td>
 </tr>
 <tr>
 <td><strong>StaticCastSharedRef</strong> and <strong>StaticCastSharedPtr</strong></td>
-<td>Utility functions that support static casting (mainly downcasting)</td>
+<td>Utility functions supporting static casting (usually downcasting).</td>
 </tr>
 <tr>
-<td>                                 <strong>ConstCastSharedRef</strong> and <strong>ConstCastSharedPtr</strong>                               </td>
-<td>Each returns a reference or a pointer type variable with const-ness being mutable.</td>
+<td>                                <strong>ConstCastSharedRef</strong> and <strong>ConstCastSharedPtr</strong>                              </td>
+<td>Return a const to mutable object for each reference and pointer type variable.</td>
 </tr>
 </tbody>
 </table></div>
-<p>Example of adding additional logic to the destructor using MakeShareable</p>
+<p>Example of using MakeShareable to add additional logic to the destructor:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -480,32 +481,32 @@ There may be differences from reality. Your feedback is appreciated.</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-CPP" data-lang="CPP"><span class="line"><span class="cl">	<span class="n">TSharedPtr</span><span class="o">&lt;</span><span class="n">FOnlineSession</span><span class="o">&gt;</span> <span class="n">SharedPtr</span> <span class="o">=</span> <span class="n">MakeShareable</span><span class="p">(</span><span class="k">new</span> <span class="n">FOnlineSession</span><span class="p">(),</span> <span class="p">[](</span><span class="n">FOnlineSession</span><span class="o">*</span> <span class="n">ObjToDelete</span><span class="p">)</span><span class="o">-&gt;</span> <span class="kt">void</span>
 </span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">    	<span class="c1">// Implement custom destructor logic
+</span></span><span class="line"><span class="cl">    	<span class="c1">// Custom destructor implementation
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">ObjToDelete</span><span class="o">-&gt;</span><span class="n">PerformAdditionalCleanup</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">		<span class="k">delete</span> <span class="n">ObjToDelete</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="p">});</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="implementation-details">Implementation Details</h2>
-<p>Unreal&rsquo;s smart pointer library is implemented to preserve both functionality and efficiency.</p>
+</div><h2 id="detailed-implementation">Detailed Implementation</h2>
+<p>Unreal&rsquo;s smart pointers library is implemented with both functionality and efficiency in mind.</p>
 <h3 id="speed">Speed</h3>
-<p>While smart pointers are very useful in high-level systems like resource management and tool programming, they are not suitable for low-level engine code like rendering due to their slower performance compared to C++ raw pointers.</p>
-<p>Unreal&rsquo;s smart pointer library has the following performance benefits:</p>
+<p>While smart pointers are beneficial in high-level systems like resource management and tool programming, they are not suitable for low-level engine code such as rendering due to performance overhead compared to raw C++ pointers.</p>
+<p>Unreal&rsquo;s smart pointers library provides the following performance advantages:</p>
 <ul>
 <li>All operations are performed in constant time.</li>
-<li>In Shipping builds, dereferencing in most smart pointers is as fast as in C++ raw pointers.</li>
-<li>Copying smart pointers does not require new memory allocation.</li>
+<li>(In shipping builds) Dereferencing in most smart pointers is as fast as raw C++ pointers.</li>
+<li>Copying a smart pointer does not require new memory allocation.</li>
 <li>Thread-safe smart pointers do not require locking.</li>
 </ul>
-<p>However, there are also drawbacks:</p>
+<p>However, there are some drawbacks as well:</p>
 <ul>
-<li>Creating and copying new smart pointers have overhead compared to C++ raw pointers.</li>
-<li>Managing reference counts adds an additional overhead to basic operations.</li>
-<li>Some smart pointers use more memory than C++ raw pointers.</li>
-<li>Reference controllers require two heap memory allocations. Using MakeShared instead of MakeSharable can avoid the second memory allocation.</li>
+<li>Creating and copying new smart pointers have overhead compared to raw C++ pointers.</li>
+<li>Managing reference counts adds computational overhead to basic operations.</li>
+<li>Some smart pointers require more memory than raw C++ pointers.</li>
+<li>Reference controllers require two heap memory allocations. Using MakeShared can eliminate the second memory allocation.</li>
 </ul>
 <h3 id="intrusive-accessors">Intrusive Accessors</h3>
-<p>Typically, the instance referenced by a smart pointer is not aware of the smart pointers referencing it (known as non-intrusive). However, Unreal&rsquo;s smart pointer library allows accessors to obtain references from smart pointers that reference themselves through TSharedFromThis.</p>
+<p>By inheriting TSharedFromThis, a class can obtain accessors for shared pointers that reference it. This allows objects to know which shared pointers are referencing them.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -530,14 +531,6 @@ There may be differences from reality. Your feedback is appreciated.</p>
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FRegistryObject</span><span class="p">;</span>
@@ -546,41 +539,33 @@ There may be differences from reality. Your feedback is appreciated.</p>
 </span></span><span class="line"><span class="cl">        <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">RegisterAsBaseClass</span><span class="p">(</span><span class="n">FRegistryObject</span><span class="o">*</span> <span class="n">RegistryObject</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// Access a shared reference to &#39;this&#39;.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// We are directly inherited from &lt;TSharedFromThis&gt; , so AsShared() and SharedThis(this) return the same type.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">TSharedRef</span><span class="o">&lt;</span><span class="n">FMyBaseClass</span><span class="o">&gt;</span> <span class="n">ThisAsSharedRef</span> <span class="o">=</span> <span class="n">AsShared</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// RegistryObject expects a TSharedRef&lt;FMyBaseClass&gt;, or a TSharedPtr&lt;FMyBaseClass&gt;. TSharedRef can implicitly be converted to a TSharedPtr.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">RegistryObject</span><span class="o">-&gt;</span><span class="n">Register</span><span class="p">(</span><span class="n">ThisAsSharedRef</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">RegistryObject</span><span class="o">-&gt;</span><span class="n">Register</span><span class="p">(</span><span class="n">ThisAsSharedRef</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">};</span>
 </span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">FMyDerivedClass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">FMyBaseClass</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">Register</span><span class="p">(</span><span class="n">FRegistryObject</span><span class="o">*</span> <span class="n">RegistryObject</span><span class="p">)</span> <span class="k">override</span>
 </span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// We are not directly inherited from TSharedFromThis&lt;&gt;, so AsShared() and SharedThis(this) return different types.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// AsShared() will return the type originally specified in TSharedFromThis&lt;&gt; - TSharedRef&lt;FMyBaseClass&gt; in this example.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// SharedThis(this) will return a TSharedRef with the type of &#39;this&#39; - TSharedRef&lt;FMyDerivedClass&gt; in this example.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// The SharedThis() function is only available in the same scope as the &#39;this&#39; pointer.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">TSharedRef</span><span class="o">&lt;</span><span class="n">FMyDerivedClass</span><span class="o">&gt;</span> <span class="n">AsSharedRef</span> <span class="o">=</span> <span class="n">SharedThis</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// RegistryObject will accept a TSharedRef&lt;FMyDerivedClass&gt; because FMyDerivedClass is a type of FMyBaseClass.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">RegistryObject</span><span class="o">-&gt;</span><span class="n">Register</span><span class="p">(</span><span class="n">ThisAsSharedRef</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">TSharedRef</span><span class="o">&lt;</span><span class="n">FMyDerivedClass</span><span class="o">&gt;</span> <span class="n">AsSharedRef</span> <span class="o">=</span> <span class="n">SharedThis</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">RegistryObject</span><span class="o">-&gt;</span><span class="n">Register</span><span class="p">(</span><span class="n">ThisAsSharedRef</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">};</span>
 </span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">FRegistryObject</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// This function will accept a TSharedRef or TSharedPtr to FMyBaseClass or any of its children.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">void</span> <span class="nf">Register</span><span class="p">(</span><span class="n">TSharedRef</span><span class="o">&lt;</span><span class="n">FMyBaseClass</span><span class="o">&gt;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Register</span><span class="p">(</span><span class="n">TSharedRef</span><span class="o">&lt;</span><span class="n">FMyBaseClass</span><span class="o">&gt;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>As mentioned, by inheriting from TSharedFromThis, the class can use AsShared and SharedThis methods to obtain a shared pointer (TSharedRef) for its instance. However, in cases where a class does not directly inherit TSharedFromThis, the return value will differ. It is advisable to set the shared pointer of the base class directly when using a factory class or a method that takes a shared reference (such as <code>FRegistryObject::Register(TSharedRef&lt;FMyBaseClass&gt;)</code>).</p>
-<p><strong>Note that using AsShared and SharedThis in the constructor can lead to crashes or assertions, as they return the smart pointer of the instantiated object.</strong></p>
+</div><p>As mentioned, by inheriting TSharedFromThis, a class can use AsShared and SharedThis methods to obtain a shared reference of its instance. Note that the SharedRef method returns a shared reference to the originally specified type in TSharedFromThis, while SharedThis returns a shared reference with the type of &rsquo;this&rsquo;. It is recommended to use the shared pointer of the base class directly when passing shared pointers in method parameters.</p>
+<p><strong>Be cautious when using AsShared and SharedThis in constructors, as it may lead to crashes or asserts.</strong></p>
 <h3 id="type-casting">Type Casting</h3>
-<p>Unreal&rsquo;s smart pointer library allows for casting similar to C++ pointers.</p>
+<p>Unreal&rsquo;s smart pointers library allows casting similar to raw C++ pointers.</p>
 <ul>
-<li>Up Casting: Implicitly performed, similar to C++ raw pointers (automatic conversion from a base class pointer to a derived class pointer).</li>
-<li>Const Casting: Perform using ConstCastSharedPtr/Ref methods.</li>
-<li>Static Casting: Perform using StaticCastSharedPtr/Ref methods (mainly downcasting).</li>
-<li>Dynamic Casting: Not supported as there is no runtime type information (RTTI).</li>
+<li>Up Casting: Implicitly performed, allowing a base class pointer to be automatically converted to a derived class pointer.</li>
+<li>Const Casting: Use ConstCastSharedPtr/Ref methods for const casting.</li>
+<li>Static Casting: Use StaticCastSharedPtr/Ref methods for static casting (usually downcasting).</li>
+<li>Dynamic Casting: Dynamic casting is not supported due to the absence of runtime type information (RTTI).</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -594,56 +579,33 @@ There may be differences from reality. Your feedback is appreciated.</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">TSharedPtr</span><span class="o">&lt;</span><span class="n">FDragDropOperation</span><span class="o">&gt;</span> <span class="n">Operation</span> <span class="o">=</span> <span class="n">DragDropEvent</span><span class="p">.</span><span class="n">GetOperation</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Some code for validating that the FDragDropOperation is actually an FAssetDragDropOp through other means...
+</span></span><span class="line"><span class="cl"><span class="c1">// Validating that the FDragDropOperation is an FAssetDragDropOp through other means...
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="c1">// We can now cast with StaticCastSharedPtr.
+</span></span><span class="line"><span class="cl"><span class="c1">// Casting with StaticCastSharedPtr
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">TSharedPtr</span><span class="o">&lt;</span><span class="n">FAssetDragDropOp</span><span class="o">&gt;</span> <span class="n">DragDropOp</span> <span class="o">=</span> <span class="n">StaticCastSharedPtr</span><span class="o">&lt;</span><span class="n">FAssetDragDropOp</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Operation</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="thread-safety">Thread Safety</h3>
-<p>By default, smart pointers are only safe in a single-threaded environment. If you want thread-safe versions, you can use the following classes:</p>
+<p>By default, smart pointers are only safe in single-threaded environments. If you want a thread-safe version, you can use classes like:</p>
 <ul>
 <li>TSharedPtr&lt;T, ESPMode::ThreadSafe&gt;</li>
 <li>TSharedRef&lt;T, ESPMode::ThreadSafe&gt;</li>
 <li>TWeakPtr&lt;T, ESPMode::ThreadSafe&gt;</li>
 <li>TSharedFromThis&lt;T, ESPMode::ThreadSafe&gt;</li>
 </ul>
-<p>These classes perform atomic operations on reference counts, making them slightly slower than the default classes but operationally very similar to C++ raw pointers.</p>
+<p>These classes perform atomic operations on reference counts, which makes them slightly slower than default classes but operation is very similar to raw C++ pointers.</p>
 <ul>
 <li>Reading and copying operations are always thread-safe.</li>
-<li>Writing and resetting operations must be synchronized for safety.</li>
+<li>Writing and reset operations require synchronization for safety.</li>
 </ul>
-<h2 id="additional-notes">Additional Notes</h2>
+<h2 id="comments">Comments</h2>
 <ul>
-<li>When passing shared pointers/references as method arguments, there is overhead due to reference counting and dereferencing. If possible, pass them as <code>const&amp;</code>.</li>
-<li>Shared pointers allow forward declaration for incomplete classes.</li>
-<li>As mentioned earlier, smart pointers and garbage collection (<a class="link" href="https://docs.unrealengine.com/5.2/en-US/unreal-object-handling-in-unreal-engine/"  target="_blank" rel="noopener"
-    >UObject Handling</a>) are separate memory management systems.</li>
+<li>When passing shared pointers/references as method arguments, there is overhead due to reference counting and dereferencing. If possible, pass by <code>const &amp;</code>.</li>
+<li>Shared pointers allow forward declaration of incomplete types.</li>
+<li>As mentioned, smart pointers and garbage collection in C++ (<a class="link" href="https://docs.unrealengine.com/5.2/en-US/unreal-object-handling-in-unreal-engine/"  target="_blank" rel="noopener"
+    >UObject Handling</a>) are two separate memory management systems.</li>
 </ul>
-<p>Forward declaration example:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// Forward declaration
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">IncompleteType</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Shared pointer for the forward-declared type
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">TSharedPtr</span><span class="o">&lt;</span><span class="n">IncompleteType</span><span class="o">&gt;</span> <span class="n">incompleteTypePtr</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// When the definition of IncompleteType is complete, you can create a shared pointer for that type
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">TSharedPtr</span><span class="o">&lt;</span><span class="n">IncompleteType</span><span class="o">&gt;</span> <span class="n">incompleteTypePtr2</span> <span class="o">=</span> <span class="n">MakeShared</span><span class="o">&lt;</span><span class="n">IncompleteType</span><span class="o">&gt;</span><span class="p">();</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div>
+
 </section>
 
 
@@ -652,8 +614,6 @@ There may be differences from reality. Your feedback is appreciated.</p>
     <section class="article-tags">
         
             <a href="/en/tags/unreal/">Unreal</a>
-        
-            <a href="/en/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/">언리얼</a>
         
             <a href="/en/tags/ue/">UE</a>
         
@@ -693,25 +653,6 @@ There may be differences from reality. Your feedback is appreciated.</p>
             
                 
 <article class="has-image">
-    <a href="/en/p/starting-unreal-gas/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/en/p/starting-unreal-gas/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/starting-unreal-gas/img/unreal.svg"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Starting Unreal GAS</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
     <a href="/en/p/unreal-enhanced-input/">
         
         
@@ -731,18 +672,37 @@ There may be differences from reality. Your feedback is appreciated.</p>
             
                 
 <article class="has-image">
-    <a href="/en/p/overview-of-unreal-gas/">
+    <a href="/en/p/unreal-gas-overview/">
         
         
             <div class="article-image">
                 
-                    <img src="/en/p/overview-of-unreal-gas/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/overview-of-unreal-gas/img/unreal.svg"/>
+                    <img src="/en/p/unreal-gas-overview/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-overview/img/unreal.svg"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Overview of Unreal GAS</h2>
+            <h2 class="article-title">Unreal GAS Overview</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/p/unreal-gas-overview/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/en/p/unreal-gas-overview/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-overview/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Unreal GAS Overview</h2>
         </div>
     </a>
 </article>
