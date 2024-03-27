@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr">
+<html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 시리즈 언리얼 GAS 개요 언리얼 GAS 시작 언리얼'>
-<title>언리얼 GAS 입력처리</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='This post is a summary of lectures by 이득우 and documents compiled by other developers. For detailed and accurate information, please refer to the provided links. Series Unreal GAS Overview Getting Started with Unreal GAS Unreal GAS Input Handling &amp;lt;- Current Post In this post, we will explore how to trigger abilities (such as jump and attack) based on user input. OwnerActor and AvatarActor In the Gameplay Ability'>
+<title>Unreal GAS Input Handling</title>
 
-<link rel='canonical' href='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/'>
+<link rel='canonical' href='https://sangho0n.github.io/en/p/unreal-gas-input-handling/'>
 
-<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='언리얼 GAS 입력처리'>
-<meta property='og:description' content='이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 시리즈 언리얼 GAS 개요 언리얼 GAS 시작 언리얼'>
-<meta property='og:url' content='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/'>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Unreal GAS Input Handling'>
+<meta property='og:description' content='This post is a summary of lectures by 이득우 and documents compiled by other developers. For detailed and accurate information, please refer to the provided links. Series Unreal GAS Overview Getting Started with Unreal GAS Unreal GAS Input Handling &amp;lt;- Current Post In this post, we will explore how to trigger abilities (such as jump and attack) based on user input. OwnerActor and AvatarActor In the Gameplay Ability'>
+<meta property='og:url' content='https://sangho0n.github.io/en/p/unreal-gas-input-handling/'>
 <meta property='og:site_name' content='sanghoon&#39;s dev-log'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='GAS' /><meta property='article:tag' content='어빌리티' /><meta property='article:published_time' content='2024-03-26T22:19:41&#43;09:00'/><meta property='article:modified_time' content='2024-03-26T22:19:41&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/img/unreal.svg' />
-<meta name="twitter:title" content="언리얼 GAS 입력처리">
-<meta name="twitter:description" content="이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 시리즈 언리얼 GAS 개요 언리얼 GAS 시작 언리얼"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/img/unreal.svg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='GAS' /><meta property='article:tag' content='Ability' /><meta property='article:published_time' content='2024-03-26T22:19:41&#43;09:00'/><meta property='article:modified_time' content='2024-03-26T22:19:41&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/unreal-gas-input-handling/img/unreal.svg' />
+<meta name="twitter:title" content="Unreal GAS Input Handling">
+<meta name="twitter:description" content="This post is a summary of lectures by 이득우 and documents compiled by other developers. For detailed and accurate information, please refer to the provided links. Series Unreal GAS Overview Getting Started with Unreal GAS Unreal GAS Input Handling &amp;lt;- Current Post In this post, we will explore how to trigger abilities (such as jump and attack) based on user input. OwnerActor and AvatarActor In the Gameplay Ability"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://sangho0n.github.io/en/p/unreal-gas-input-handling/img/unreal.svg' />
     </head>
     <body class="
     article-page
@@ -51,7 +51,7 @@
         
             
             <figure class="site-avatar">
-                <a href="/ko/">
+                <a href="/en/">
                 
                     
                     
@@ -70,8 +70,8 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/ko">sanghoon&#39;s dev-log</a></h1>
-            <h2 class="site-description">안녕하세요. 게임개발자 한상훈입니다.</h2>
+            <h1 class="site-name"><a href="/en">sanghoon&#39;s dev-log</a></h1>
+            <h2 class="site-description">Welcome to my blog!</h2>
         </div>
     </header><ol class="social-menu">
             
@@ -114,7 +114,7 @@
         
         
         <li >
-            <a href='/ko/' >
+            <a href='/en/' >
                 
                 
                 
@@ -134,7 +134,7 @@
         
         
         <li >
-            <a href='/ko/search/' >
+            <a href='/en/search/' >
                 
                 
                 
@@ -153,7 +153,7 @@
         
         
         <li >
-            <a href='/ko/about/' >
+            <a href='/en/about/' >
                 
                 
                 
@@ -172,7 +172,7 @@
         
         
         <li >
-            <a href='/ko/archives/' >
+            <a href='/en/archives/' >
                 
                 
                 
@@ -206,9 +206,9 @@
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://sangho0n.github.io/ko/" selected>한국어</option>
+                            <option value="https://sangho0n.github.io/ko/" >한국어</option>
                         
-                            <option value="https://sangho0n.github.io/en/" >English</option>
+                            <option value="https://sangho0n.github.io/en/" selected>English</option>
                         
                     </select>
                 </li>
@@ -261,13 +261,13 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#owneractor와-avataractor">OwnerActor와 AvatarActor</a></li>
-    <li><a href="#fgameplayabilityspec과-fgameplayabilityspechandle">FGameplayAbilitySpec과 FGameplayAbilitySpecHandle</a></li>
+    <li><a href="#owneractor-and-avataractor">OwnerActor and AvatarActor</a></li>
+    <li><a href="#fgameplayabilityspec-and-fgameplayabilityspechandle">FGameplayAbilitySpec and FGameplayAbilitySpecHandle</a></li>
     <li><a href="#inputid">InputID</a></li>
     <li><a href="#instancingpolicy">InstancingPolicy</a></li>
-    <li><a href="#ability-task와-gameplay-cue">Ability Task와 Gameplay Cue</a></li>
-    <li><a href="#디버깅">디버깅</a></li>
-    <li><a href="#최종화면">최종화면</a></li>
+    <li><a href="#ability-task-and-gameplay-cue">Ability Task and Gameplay Cue</a></li>
+    <li><a href="#debugging">Debugging</a></li>
+    <li><a href="#final-result">Final Result</a></li>
   </ol>
 </nav>
         </div>
@@ -282,9 +282,9 @@
     <article class="has-image main-article">
     <header class="article-header">
         <div class="article-image">
-            <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/">
+            <a href="/en/p/unreal-gas-input-handling/">
                 
-                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/img/unreal.svg" loading="lazy" alt="Featured image of post 언리얼 GAS 입력처리" />
+                    <img src="/en/p/unreal-gas-input-handling/img/unreal.svg" loading="lazy" alt="Featured image of post Unreal GAS Input Handling" />
                 
             </a>
         </div>
@@ -294,7 +294,7 @@
     
     <header class="article-category">
         
-            <a href="/ko/categories/unreal/" >
+            <a href="/en/categories/unreal/" >
                 Unreal
             </a>
         
@@ -303,7 +303,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/">언리얼 GAS 입력처리</a>
+            <a href="/en/p/unreal-gas-input-handling/">Unreal GAS Input Handling</a>
         </h2>
     
         
@@ -347,7 +347,7 @@
 
             <div>
                 
-                    <a href="https://sangho0n.github.io/en/p/unreal-gas-input-handling/" class="link">English</a>
+                    <a href="https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/" class="link">한국어</a>
                 
             </div>
         </footer>
@@ -360,35 +360,32 @@
     
     
     <p><a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
-    >이득우 님의 강의</a>
-와 <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
-    >다른 개발자가 정리해놓은 문서</a>를 보고 정리한 내용입니다.</p>
-<p>자세하고 정확한 내용은 위 링크를 참조하세요</p>
-<p>시리즈</p>
+    >This post is a summary of lectures by 이득우</a> and <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
+    >documents compiled by other developers</a>.</p>
+<p>For detailed and accurate information, please refer to the provided links.</p>
+<p>Series</p>
 <ul>
-<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ea%b0%9c%ec%9a%94/" >언리얼 GAS 개요</a></li>
-<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%8b%9c%ec%9e%91/" >언리얼 GAS 시작</a></li>
-<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%9e%85%eb%a0%a5%ec%b2%98%eb%a6%ac/" >언리얼 GAS 입력처리</a> &lt;- 현재포스트</li>
+<li><a class="link" href="../unreal-gas-overview/" >Unreal GAS Overview</a></li>
+<li><a class="link" href="../unreal-gas-start/" >Getting Started with Unreal GAS</a></li>
+<li><a class="link" href="../unreal-gas-input-handling/" >Unreal GAS Input Handling</a> &lt;- Current Post</li>
 </ul>
 <hr>
-<p>이번 포스트에서는 사용자의 입력을 통해 어빌리티(점프, 공격)를 발동시키는 방법에 대해 알아보겠다.</p>
-<h2 id="owneractor와-avataractor">OwnerActor와 AvatarActor</h2>
-<p>게임플레이 어빌리티 시스템에서의 OwnerActor란 AbilitySystemComponent를 가지고 있는 액터를 말한다.
-이에 비해 AvatarActor란 AbilitySystemComponent의 물리적 표현을 의미한다.</p>
-<p>앞선 포스트에서 살펴보았듯이, OwnerActor와 AvatarActor는 같은 액터로 설정될 수 있다.</p>
+<p>In this post, we will explore how to trigger abilities (such as jump and attack) based on user input.</p>
+<h2 id="owneractor-and-avataractor">OwnerActor and AvatarActor</h2>
+<p>In the Gameplay Ability System, OwnerActor refers to the actor that has the AbilitySystemComponent. In contrast, AvatarActor refers to the physical representation of the AbilitySystemComponent.</p>
+<p>As seen in the previous post, OwnerActor and AvatarActor can be set to the same actor.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// 간단한 경우에 한함
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// For simple cases
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>보통 캐릭터의 능력은 현재 상태에 따라 발동되는 경우가 대부분이기 때문에, PlayerState를 OwnerActor로 두는 경우가 많다.
-이번 포스트에서도 역시 PlayerState에 어빌리티 시스템을 부착하고, OwnerActor와 AvatarActor를 설정하겠다.
-(단, Owner와 Avatar가 다른 경우에도 두 액터 모두 IAbilitySystemInterface를 구현해야 함!)</p>
+</div><p>Since a character&rsquo;s abilities are usually triggered based on the current state, it is common to set PlayerState as the OwnerActor. In this post, we will attach the ability system to the PlayerState and set the OwnerActor and AvatarActor accordingly.
+(Note: Both actors must implement IAbilitySystemInterface even if Owner and Avatar are different.)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -433,53 +430,51 @@
 </span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// Owner 클래스
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// Owner class
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">AABGASPlayerState</span><span class="o">::</span><span class="n">AABGASPlayerState</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span> <span class="o">=</span> <span class="n">CreateDefaultSubobject</span><span class="o">&lt;</span><span class="n">UAbilitySystemComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&#34;AbiltiySystemComponent&#34;</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// AbilitySystemComponent-&gt;SetIsReplicated(true);
+</span></span><span class="line"><span class="cl">    <span class="n">AbilitySystemComponent</span> <span class="o">=</span> <span class="n">CreateDefaultSubobject</span><span class="o">&lt;</span><span class="n">UAbilitySystemComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&#34;AbiltiySystemComponent&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// AbilitySystemComponent-&gt;SetIsReplicated(true);
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">UAbilitySystemComponent</span><span class="o">*</span> <span class="n">AABGASPlayerState</span><span class="o">::</span><span class="n">GetAbilitySystemComponent</span><span class="p">()</span> <span class="k">const</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Avatar 클래스
+</span></span><span class="line"><span class="cl"><span class="c1">// Avatar class
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">AABGASCharacterPlayer</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//AbilitySystemComponent-&gt;SetIsReplicated(true);
+</span></span><span class="line"><span class="cl">    <span class="n">AbilitySystemComponent</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//AbilitySystemComponent-&gt;SetIsReplicated(true);
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">UAbilitySystemComponent</span><span class="o">*</span> <span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">GetAbilitySystemComponent</span><span class="p">()</span> <span class="k">const</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">PossessedBy</span><span class="p">(</span><span class="n">AController</span><span class="o">*</span> <span class="n">NewController</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">PossessedBy</span><span class="p">(</span><span class="n">NewController</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">PossessedBy</span><span class="p">(</span><span class="n">NewController</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">_PlayerState</span> <span class="o">=</span> <span class="n">GetPlayerState</span><span class="o">&lt;</span><span class="n">AABGASPlayerState</span><span class="o">&gt;</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">_PlayerState</span><span class="o">-&gt;</span><span class="n">IsValidLowLevelFast</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// 아바타에도 어빌리티 시스템 컴포넌트가 있지만, Owner의 컴포넌트에 대한 참조일 뿐이다.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">AbilitySystemComponent</span> <span class="o">=</span> <span class="n">_PlayerState</span><span class="o">-&gt;</span><span class="n">GetAbilitySystemComponent</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="n">_PlayerState</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// do sth...
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		
-</span></span><span class="line"><span class="cl"><span class="c1">// NOTE : 멀티플레이 게임에서는 InitAbilityActorInfo 위치가 바뀌어야 함!
-</span></span></span><span class="line"><span class="cl"><span class="c1">// (PossessedBy 메서드는 서버에서만 불리기 때문)
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 일단은 싱글플레이 예시이기 때문에 컨트롤러가 pawn을 possess할 때
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 어빌리티 시스템의 InitAbilityActorInfo를 호출하는 것으로 설정
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">_PlayerState</span> <span class="o">=</span> <span class="n">GetPlayerState</span><span class="o">&lt;</span><span class="n">AABGASPlayerState</span><span class="o">&gt;</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">_PlayerState</span><span class="o">-&gt;</span><span class="n">IsValidLowLevelFast</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Both the Avatar and PlayerState actors have an Ability System Component, but the Avatar&#39;s component is just a reference to the Owner&#39;s component.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">AbilitySystemComponent</span> <span class="o">=</span> <span class="n">_PlayerState</span><span class="o">-&gt;</span><span class="n">GetAbilitySystemComponent</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="n">_PlayerState</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// do sth...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        
+</span></span><span class="line"><span class="cl"><span class="c1">// NOTE: In multiplayer games, InitAbilityActorInfo needs to be called in a different position!
+</span></span></span><span class="line"><span class="cl"><span class="c1">// (PossessedBy method is only called on the server)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// For now, this is a single-player example, so when the controller possesses the pawn
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the InitAbilityActorInfo of the ability system is called
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>또한 PlayerState는 서버와 클라이언트 간 pub-sub이 용이한 클래스이기 때문에 멀티플레이 게임 개발시에는 특히나
-PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
-<h2 id="fgameplayabilityspec과-fgameplayabilityspechandle">FGameplayAbilitySpec과 FGameplayAbilitySpecHandle</h2>
-<p>이전 포스트에서 살펴보았듯이 액티비티 시스템 컴포넌트에 어빌리티를 부여하기 위해서는 먼저 FGameplayAbilitySpec 구조체를 생성하여 등록해야 한다.
-생성된 구조체 인스턴스를 GiveAbility 혹은 GiveAbilityAndActivateOnce 메서드를 이용해 등록하면 된다.</p>
+</div><p>Furthermore, since PlayerState is a class that easily facilitates pub-sub between the server and clients, it is advisable to set the PlayerState class as the Owner in multiplayer game development.</p>
+<h2 id="fgameplayabilityspec-and-fgameplayabilityspechandle">FGameplayAbilitySpec and FGameplayAbilitySpecHandle</h2>
+<p>As seen in the previous post, in order to grant abilities to the AbilitySystemComponent, you need to create and register an instance of the FGameplayAbilitySpec structure. You can register the created instance using the GiveAbility or GiveAbilityAndActivateOnce methods.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -503,14 +498,14 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// 어빌리티 시스템 컴포넌트에 어빌리티 부여
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">Element</span> <span class="p">:</span> <span class="n">Abilities</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">FGameplayAbilitySpec</span> <span class="nf">Spec</span><span class="p">(</span><span class="n">Element</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">GiveAbility</span><span class="p">(</span><span class="n">Spec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// Grant ability to the ability system component
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">Element</span> <span class="p">:</span> <span class="n">Abilities</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FGameplayAbilitySpec</span> <span class="nf">Spec</span><span class="p">(</span><span class="n">Element</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">GiveAbility</span><span class="p">(</span><span class="n">Spec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl"><span class="c1">// FGameplayAbilitySpec 선언부 중 일부
+</span></span><span class="line"><span class="cl"><span class="c1">// Some of the FGameplayAbilitySpec declaration
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">USTRUCT</span><span class="p">(</span><span class="n">BlueprintType</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">GAMEPLAYABILITIES_API</span> <span class="nl">FGameplayAbilitySpec</span> <span class="p">:</span> <span class="k">public</span> <span class="n">FFastArraySerializerItem</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -524,7 +519,7 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span></span><span class="line"><span class="cl">    <span class="n">FGameplayAbilitySpec</span><span class="p">(</span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UGameplayAbility</span><span class="o">&gt;</span> <span class="n">InAbilityClass</span><span class="p">,</span> <span class="n">int32</span> <span class="n">InLevel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">int32</span> <span class="n">InInputID</span> <span class="o">=</span> <span class="n">INDEX_NONE</span><span class="p">,</span> <span class="n">UObject</span><span class="o">*</span> <span class="n">InSourceObject</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>이렇게 등록된 어빌리티는 컴포넌트 내부에 있는 <code>FGameplayAbilitySpecContainer ActivatableAbilities</code>를 통해 접근할 수 있다.</p>
+</div><p>Once registered, you can access the granted abilities through the <code>FGameplayAbilitySpecContainer ActivatableAbilities</code> within the component.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -545,54 +540,28 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// AbilitySystemComponent.h
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">UPROPERTY</span><span class="p">(</span><span class="n">ReplicatedUsing</span><span class="o">=</span><span class="n">OnRep_ActivateAbilities</span><span class="p">,</span> <span class="n">BlueprintReadOnly</span><span class="p">,</span> <span class="n">Category</span> <span class="o">=</span> <span class="s">&#34;Abilities&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">FGameplayAbilitySpecContainer</span> <span class="n">ActivatableAbilities</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">UPROPERTY</span><span class="p">(</span><span class="n">ReplicatedUsing</span><span class="o">=</span><span class="n">OnRep_ActivateAbilities</span><span class="p">,</span> <span class="n">BlueprintReadOnly</span><span class="p">,</span> <span class="n">Category</span> <span class="o">=</span> <span class="s">&#34;Abilities&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">FGameplayAbilitySpecContainer</span> <span class="n">ActivatableAbilities</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="cm">/** Returns the list of all activatable abilities. Read-only. */</span>
-</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">FGameplayAbilitySpec</span><span class="o">&gt;&amp;</span> <span class="n">GetActivatableAbilities</span><span class="p">()</span> <span class="k">const</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/** Returns the list of all activatable abilities. Read-only. */</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">FGameplayAbilitySpec</span><span class="o">&gt;&amp;</span> <span class="n">GetActivatableAbilities</span><span class="p">()</span> <span class="k">const</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ActivatableAbilities</span><span class="p">.</span><span class="n">Items</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="cm">/** Returns the list of all activatable abilities. */</span>
-</span></span><span class="line"><span class="cl">    <span class="n">TArray</span><span class="o">&lt;</span><span class="n">FGameplayAbilitySpec</span><span class="o">&gt;&amp;</span> <span class="n">GetActivatableAbilities</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/** Returns the list of all activatable abilities. */</span>
+</span></span><span class="line"><span class="cl"><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FGameplayAbilitySpec</span><span class="o">&gt;&amp;</span> <span class="n">GetActivatableAbilities</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ActivatableAbilities</span><span class="p">.</span><span class="n">Items</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>한편 능력 발동에 대한 메서드들에서는 아래처럼 FGameplayAbilitySpecHandle 구조체를 인자로 받는 것을 확인할 수 있는데,</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">    <span class="n">FGameplayAbilitySpecHandle</span> <span class="nf">GiveAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpec</span><span class="o">&amp;</span> <span class="n">AbilitySpec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">UFUNCTION</span><span class="p">(</span><span class="n">BlueprintCallable</span><span class="p">,</span> <span class="n">Category</span> <span class="o">=</span> <span class="s">&#34;Abilities&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="n">TryActivateAbility</span><span class="p">(</span><span class="n">FGameplayAbilitySpecHandle</span> <span class="n">AbilityToActivate</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bAllowRemoteActivation</span> <span class="o">=</span> <span class="nb">true</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>이는 어빌리티 시스템 컴포넌트에서 GameplayAbility를 다룰 때
-능력과 관련된 구조체를 아래와 같이 설계했기 때문이다.</p>
+</div><p>In various ability triggering methods, you will notice that a structure called FGameplayAbilitySpecHandle is used as an argument. This is because the GameplayAbility system was designed to handle abilities and related structures as follows:</p>
 <ul>
-<li><strong>FGameplayAbilitySpec</strong> : 능력 자체를 의미하는 구조체. 능력의 상태, 발동횟수 등과 같은 정보를 담고있다.</li>
-<li><strong>FGameplayAbilitySpecHandle</strong> : 능력을 고유하게 식별하기 위해 사용되는 구조체. GameplayAbility의 타입마다 하나씩 생성된다.</li>
+<li><strong>FGameplayAbilitySpec</strong>: A structure that represents the ability itself. It contains information about the ability&rsquo;s state, activation count, etc.</li>
+<li><strong>FGameplayAbilitySpecHandle</strong>: A structure used to uniquely identify a granted ability. One is created for each type of GameplayAbility.</li>
 </ul>
-<p><img src="/img/post/gas/handle.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="handle.png"
-	
-	
-></p>
-<p>핸들의 값은 스펙 생성시 자동으로 1씩 증가한다</p>
+<p>The handle value increments by 1 automatically when a Spec is created.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -625,35 +594,32 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span></span><span class="line"><span class="cl"><span class="n">USTRUCT</span><span class="p">(</span><span class="n">BlueprintType</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">FGameplayAbilitySpecHandle</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">GENERATED_USTRUCT_BODY</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GENERATED_USTRUCT_BODY</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">FGameplayAbilitySpecHandle</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="o">:</span> <span class="n">Handle</span><span class="p">(</span><span class="n">INDEX_NONE</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FGameplayAbilitySpecHandle</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="o">:</span> <span class="n">Handle</span><span class="p">(</span><span class="n">INDEX_NONE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="cm">/** True if GenerateNewHandle was called on this handle */</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">bool</span> <span class="nf">IsValid</span><span class="p">()</span> <span class="k">const</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">Handle</span> <span class="o">!=</span> <span class="n">INDEX_NONE</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/** True if GenerateNewHandle was called on this handle */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="nf">IsValid</span><span class="p">()</span> <span class="k">const</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Handle</span> <span class="o">!=</span> <span class="n">INDEX_NONE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl"><span class="c1">// 중략
+</span></span><span class="line"><span class="cl"><span class="c1">// truncated part
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">int32</span> <span class="n">Handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">UPROPERTY</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">int32</span> <span class="n">Handle</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="inputid">InputID</h2>
-<p>이제 어떻게 입력을 BindAction할 수 있을지 생각해보자. 기존의 InputComponent을 이용한다면 액션마다
-메서드를 하나씩 생성하여 BindAction 메서드에 인자로 넘겨주어야 할 것이다.</p>
-<p>GAS를 이용하는 경우 액션을 발동시키기 위해서는 어빌리티 시스템 컴포넌트에서 태그나 스펙 등을 이용해서 어빌리티를 활성화시켜야하는데,
-어빌리티의 구현부를 GameplayAbiltiy로 독립시켜놨음에도 불구하고 기존의 방식처럼 메서드를 하나씩 생성하는 것은 바람직하지 않다.</p>
-<p>이에 FGameplayAbilitySpec에는 InputID라는 필드가 존재한다.
-이와 EnhacnedInputComponent::BindAction을 함께 이용하면 범용적인 입력처리가 가능해진다.</p>
+<p>Now let&rsquo;s think about how to bind actions for triggering abilities. If using the traditional InputComponent, you would need to create a method for each action and pass it as an argument to BindAction.</p>
+<p>When using GAS, however, you need to activate abilities by using tags, specs, and other methods from the AbilitySystemComponent. It is not practical to create a method for each action as before.</p>
+<p>Therefore, the FGameplayAbilitySpec structure has an InputID field. By combining it with EnhancedInputComponent::BindAction, we can achieve universal input processing.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -709,79 +675,58 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">SetupPlayerInputComponent</span><span class="p">(</span><span class="n">UInputComponent</span><span class="o">*</span> <span class="n">PlayerInputComponent</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">SetupPlayerInputComponent</span><span class="p">(</span><span class="n">PlayerInputComponent</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">SetupPlayerInputComponent</span><span class="p">(</span><span class="n">PlayerInputComponent</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">SetupGASInputComponent</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SetupGASInputComponent</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">SetupGASInputComponent</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">IsValid</span><span class="p">(</span><span class="n">AbilitySystemComponent</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">IsValid</span><span class="p">(</span><span class="n">InputComponent</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">auto</span> <span class="n">EnhancedInputComponent</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">UEnhancedInputComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">InputComponent</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">IsValid</span><span class="p">(</span><span class="n">AbilitySystemComponent</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">IsValid</span><span class="p">(</span><span class="n">InputComponent</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">EnhancedInputComponent</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">UEnhancedInputComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">InputComponent</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">JumpAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Triggered</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputPressed</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">JUMP</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">JumpAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Completed</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputReleased</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">JUMP</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">AttackAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Triggered</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputPressed</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">ATTACK</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">AttackAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Completed</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputReleased</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">ATTACK</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">JumpAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Triggered</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputPressed</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">JUMP</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">JumpAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Completed</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputReleased</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">JUMP</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">AttackAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Triggered</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputPressed</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">ATTACK</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EnhancedInputComponent</span><span class="o">-&gt;</span><span class="n">BindAction</span><span class="p">(</span><span class="n">AttackAction</span><span class="p">,</span> <span class="n">ETriggerEvent</span><span class="o">::</span><span class="n">Completed</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnGASInputReleased</span><span class="p">,</span> <span class="p">(</span><span class="n">int32</span><span class="p">)</span><span class="n">EPLAYERGASINPUTTYPE</span><span class="o">::</span><span class="n">ATTACK</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">OnGASInputPressed</span><span class="p">(</span><span class="n">int32</span> <span class="n">InputID</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">Spec</span> <span class="o">=</span> <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">FindAbilitySpecFromInputID</span><span class="p">(</span><span class="n">InputID</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">Spec</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">Spec</span><span class="o">-&gt;</span><span class="n">InputPressed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">Spec</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">AbilitySpecInputPressed</span><span class="p">(</span><span class="o">*</span><span class="n">Spec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">TryActivateAbility</span><span class="p">(</span><span class="n">Spec</span><span class="o">-&gt;</span><span class="n">Handle</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">Spec</span> <span class="o">=</span> <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">FindAbilitySpecFromInputID</span><span class="p">(</span><span class="n">InputID</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">Spec</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Spec</span><span class="o">-&gt;</span><span class="n">InputPressed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">Spec</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">AbilitySpecInputPressed</span><span class="p">(</span><span class="o">*</span><span class="n">Spec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">TryActivateAbility</span><span class="p">(</span><span class="n">Spec</span><span class="o">-&gt;</span><span class="n">Handle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">OnGASInputReleased</span><span class="p">(</span><span class="n">int32</span> <span class="n">InputID</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">Spec</span> <span class="o">=</span> <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">FindAbilitySpecFromInputID</span><span class="p">(</span><span class="n">InputID</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">Spec</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">Spec</span><span class="o">-&gt;</span><span class="n">InputPressed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">Spec</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">AbilitySpecInputReleased</span><span class="p">(</span><span class="o">*</span><span class="n">Spec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">Spec</span> <span class="o">=</span> <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">FindAbilitySpecFromInputID</span><span class="p">(</span><span class="n">InputID</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">Spec</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Spec</span><span class="o">-&gt;</span><span class="n">InputPressed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">Spec</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">AbilitySpecInputReleased</span><span class="p">(</span><span class="o">*</span><span class="n">Spec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>이제 점프 어빌리티와 공격 어빌리티를 생성해 어빌리티 시스템 컴포넌트에 등록해주면 된다.
-점프 어빌리티는 GAS 플러그인이 기본으로 제공하는 클래스를 이용하도록 하고, 공격 어빌리티 클래스는 AbilityTask를 활용해 제작하도록 하겠다.</p>
-<p>GAS 플러그인이 기본적으로 제공하는 Jump 어빌리티의 구현부를 보자</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UGameplayAbility_CharacterJump</span><span class="o">::</span><span class="n">UGameplayAbility_CharacterJump</span><span class="p">(</span><span class="k">const</span> <span class="n">FObjectInitializer</span><span class="o">&amp;</span> <span class="n">ObjectInitializer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="o">:</span> <span class="n">Super</span><span class="p">(</span><span class="n">ObjectInitializer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">NetExecutionPolicy</span> <span class="o">=</span> <span class="n">EGameplayAbilityNetExecutionPolicy</span><span class="o">::</span><span class="n">LocalPredicted</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">InstancingPolicy</span> <span class="o">=</span> <span class="n">EGameplayAbilityInstancingPolicy</span><span class="o">::</span><span class="n">NonInstanced</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>위와 같이 많은 Policy들을 생성자에서 지정할 수 있는데, InstancingPolicy는 그중 하나이다.</p>
+</div><p>Now once you have created and registered the Jump and Attack abilities and added them to the AbilitySystemComponent, the set actions will be triggered based on user input. Jump ability uses the default GAS plugin class, while the Attack ability class will be created using AbilityTask.</p>
 <h2 id="instancingpolicy">InstancingPolicy</h2>
-<p>InstancingPolicy는 게임어빌리티의 인스턴스를 어떻게/몇번 생성할 것인지를 나타내는 옵션이다. 지정가능한 타입들은 아래와 같다.</p>
+<p>InstancingPolicy determines how the ability is instantiated when executed, limiting what an ability can do in its implementation. The types that can be specified are as follows:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -799,74 +744,32 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">UENUM</span><span class="p">(</span><span class="n">BlueprintType</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UENUM</span><span class="p">(</span><span class="n">BlueprintType</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="n">EGameplayAbilityInstancingPolicy</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="cm">/**
-</span></span></span><span class="line"><span class="cl"><span class="cm">	 *	How the ability is instanced when executed. This limits what an ability can do in its implementation. For example, a NonInstanced
-</span></span></span><span class="line"><span class="cl"><span class="cm">	 *	Ability cannot have state. It is probably unsafe for an InstancedPerActor ability to have latent actions, etc.
-</span></span></span><span class="line"><span class="cl"><span class="cm">	 */</span>
-</span></span><span class="line"><span class="cl">	<span class="k">enum</span> <span class="nc">Type</span> <span class="o">:</span> <span class="kt">int</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// This ability is never instanced. Anything that executes the ability is operating on the CDO.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">NonInstanced</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">enum</span> <span class="nc">Type</span> <span class="o">:</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// This ability is never instanced. Anything that executes the ability is operating on the CDO.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">NonInstanced</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1">// Each actor gets their own instance of this ability. State can be saved, replication is possible.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">InstancedPerActor</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Each actor gets their own instance of this ability. State can be saved, replication is possible.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">InstancedPerActor</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1">// We instance this ability each time it is executed. Replication possible but not recommended.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">InstancedPerExecution</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// We instance this ability each time it is executed. Replication possible but not recommended.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">InstancedPerExecution</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>멀티플레이 게임을 고려했을 때는 InstancedPerActor가 무난한 선택이지만, 점프의 경우 기본 클래스의 정책을 따르도록 하자.</p>
-<p>다음으로는 공격 어빌리티를 제작할 것인데, 어빌리티에 의해 발동되는 애니메이션들은 Ability Task를 통해 재생시킬 수 있다.</p>
-<h2 id="ability-task와-gameplay-cue">Ability Task와 Gameplay Cue</h2>
-<p>게임플레이 어빌리티의 발동는 한 프레임에서만 실행된다. 시간이 지남에 따라 발생하는 작업의 경우 Ability Task나 Gameplay Cue를 이용할 수 있다.
-둘의 차이점은 아래와 같다.</p>
-<ul>
-<li><strong>Ability Task</strong>
-<ul>
-<li>어빌리티가 활성화되는 동안에만 실행된다.</li>
-<li>게임에 직접적인 영향을 주는 작업을 실행할 때 사용한다.</li>
-<li>주로 애니메이션, 루트모션 이동, 속성 변화에 대한 응답, 입력에 대한 응답 등에 사용된다.</li>
-</ul>
-</li>
-<li><strong>Gameplay Cue</strong>
-<ul>
-<li>게임에 직접적인 영향을 주지 않는 작업을 실행한다.</li>
-<li>SFX, VFX, Camera Shake 등에 사용된다.</li>
-</ul>
-</li>
-</ul>
-<p>이번에는 공격 애니메이션 몽타주를 Gameplay Task를 이용해 재생할 것이다. GAS 플러그인은 아래와 같은 여러 태스크들을 기본으로 제공한다.</p>
-<p><img src="/img/post/gas/ability_task.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="ability_task.png"
-	
-	
-></p>
-<p>애니메이션 몽타주를 재생하려면 UAbilityTask_PlayMontageAndWait를 이용하면 된다.
-다음과 같은 패턴에 맞춰, 어빌리티 태스크를 이용해 애니메이션을 재생시켜볼 것이다.</p>
-<ol>
-<li>어빌리티 태스크에 작업이 완료된 후 브로드캐스팅되는 <strong>델리게이트 선언</strong>(UAbilityTask_PlayMontageAndWait에 기본적으로 선언되어 있음)</li>
-<li>어빌리티에서 위 델리게이트에 바인딩 될 <strong>콜백 함수 선언 및 바인딩</strong></li>
-<li>바인딩 후 <strong>ReadyForActivation</strong> 메서드를 이용해 태스크가 실행될 수 있는 상태 만들기</li>
-<li>델리게이트에 의해 호출된 메서드에서 <strong>EndAbility</strong>를 통해 어빌리티 종료</li>
-</ol>
+</div><p>For a jump ability like the default class, it is best to follow the policy set by the base class.</p>
+<h2 id="ability-task-and-gameplay-cue">Ability Task and Gameplay Cue</h2>
+<p>Ability Tasks are executed only while the ability is active, whereas Gameplay Cues are used for tasks that do not directly affect the game. Abilities are triggered only once during one frame. For tasks that last over time, Ability Tasks and Gameplay Cues are utilized.
+Ability tasks are used for tasks that directly impact the game, such as animations, root motion movement, response to attribute changes, and response to input.
+Gameplay Cues are used for tasks that do not directly impact the game, like SFX, VFX, and Camera Shake.</p>
+<p>In this post, we will create an Attack ability that plays the attack animation using an Ability Task. We will use the UAbilityTask_PlayMontageAndWait to play the animation.
+Following the outlined pattern, we will create the ability task, bind callback functions in the ability class, use ReadyForActivation method to ensure the task can execute, and end the ability by calling EndAbility when the delegate is invoked.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -906,19 +809,17 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span><span class="lnt">35
 </span><span class="lnt">36
 </span><span class="lnt">37
-</span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">TriggerEventData</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">AABCharacterBase</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ActorInfo</span><span class="o">-&gt;</span><span class="n">AvatarActor</span><span class="p">.</span><span class="n">Get</span><span class="p">());</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetCharacterMovement</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetMovementMode</span><span class="p">(</span><span class="n">EMovementMode</span><span class="o">::</span><span class="n">MOVE_None</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="c1">// Ability Task를 이용해 애니메이션 재생시켜보기
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">*</span> <span class="n">PlayerAttackTask</span> <span class="o">=</span> <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">::</span><span class="n">CreatePlayMontageAndWaitProxy</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">*</span> <span class="n">PlayerAttackTask</span> <span class="o">=</span> <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">::</span><span class="n">CreatePlayMontageAndWaitProxy</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="n">FName</span><span class="p">(</span><span class="s">&#34;PlayAttack&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">        <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetComboActionMontage</span><span class="p">()</span>
@@ -949,45 +850,8 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="디버깅">디버깅</h2>
-<p>입력 처리에 성공했다면, 원하는 동작(점프, 공격)이 입력에 따라 재생되는 것을 확인할 수 있을 것이다.
-그렇지 않다면 어느 단계에서 버그가 발생하였는지 알아볼 필요가 있다. 이를 위해 어빌리티에 게임플레이 태그를 심고,
-콘솔커맨드를 호출하여 PIE 뷰포트에 이를 띄워보도록 하겠다.</p>
-<p>이전 포스트에서는 게임플레이 태그를 생성하여, 이를 cpp에서 얻어오는 코드를 작성하고 어빌리티마다 태그를 부여해주었다.
-그러나 이와 같은 방식으로는, 게임플레이 태그가 변경될 때마다 cpp 빌드가 필요하기 때문에 개발 속도에 매우 큰 차질이 생긴다.</p>
-<p>이번 포스트에서는 우리가 만든 게임어빌리티 클래스를 상속받는 blueprint 클래스를 만들고,
-블루프린트에서 게임플레이 태그를 부여하여 소스코드 빌드 없이도 동일한 역할이 수행되도록 만들어보겠다. 아래는 그 과정을 나열한 것이다.</p>
-<ul>
-<li>
-<p>게임플레이 어빌리티 블루프린트 생성
-<img src="/img/post/gas/bp_tags.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="bp_tags.png"
-	
-	
-></p>
-</li>
-<li>
-<p>캐릭터에서 어빌리티 클래스를 cpp에서 블루프린트로 변경
-<img src="/img/post/gas/bp_character.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="bp_character.png"
-	
-	
-></p>
-</li>
-<li>
-<p>cpp을 통해 어빌리티 시스템 컴포넌트가 초기화될 때 콘솔커맨드 <code>showdebug abilitysystem</code> 호출</p>
-</li>
-</ul>
+</div><h2 id="debugging">Debugging</h2>
+<p>If you have succeeded in handling inputs, you should now see the desired actions (jump, attack) being triggered based on the user&rsquo;s input. If not, it is necessary to determine where the bug occurred. To do this, add gameplay tags to the abilities and call the console command <code>showdebug abilitysystem</code> to display it in the PIE viewport when the AbilitySystemComponent is initialized via cpp.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1000,23 +864,21 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASCharacterPlayer</span><span class="o">::</span><span class="n">PossessedBy</span><span class="p">(</span><span class="n">AController</span><span class="o">*</span> <span class="n">NewController</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">PossessedBy</span><span class="p">(</span><span class="n">NewController</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 중략
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="cp">#if WITH_EDITOR
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="cp">#if WITH_EDITOR
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>    <span class="k">auto</span> <span class="n">PlayerController</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">APlayerController</span><span class="o">&gt;</span><span class="p">(</span><span class="n">NewController</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">IsLocallyControlled</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">        <span class="n">PlayerController</span><span class="o">-&gt;</span><span class="n">ConsoleCommand</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&#34;showdebug abilitysystem&#34;</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span><span class="line"><span class="cl">    <span class="cp">#endif
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="최종화면">최종화면</h2>
+</div><h2 id="final-result">Final Result</h2>
 <center>
 <p><img src="/img/post/gas/debug.gif"
 	
@@ -1036,15 +898,15 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
     
     <section class="article-tags">
         
-            <a href="/ko/tags/unreal/">Unreal</a>
+            <a href="/en/tags/unreal/">Unreal</a>
         
-            <a href="/ko/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/">언리얼</a>
+            <a href="/en/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/">언리얼</a>
         
-            <a href="/ko/tags/ue/">UE</a>
+            <a href="/en/tags/ue/">UE</a>
         
-            <a href="/ko/tags/gas/">GAS</a>
+            <a href="/en/tags/gas/">GAS</a>
         
-            <a href="/ko/tags/%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0/">어빌리티</a>
+            <a href="/en/tags/ability/">Ability</a>
         
     </section>
 
@@ -1078,18 +940,18 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
             
                 
 <article class="has-image">
-    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/">
+    <a href="/en/p/unreal-gas-start/">
         
         
             <div class="article-image">
                 
-                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/img/unreal.svg"/>
+                    <img src="/en/p/unreal-gas-start/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-start/img/unreal.svg"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">언리얼 GAS 시작</h2>
+            <h2 class="article-title">Unreal GAS Start</h2>
         </div>
     </a>
 </article>
@@ -1097,18 +959,18 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
             
                 
 <article class="has-image">
-    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/">
+    <a href="/en/p/unreal-gas-overview/">
         
         
             <div class="article-image">
                 
-                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/img/unreal.svg"/>
+                    <img src="/en/p/unreal-gas-overview/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-overview/img/unreal.svg"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">언리얼 GAS 개요</h2>
+            <h2 class="article-title">Unreal GAS Overview</h2>
         </div>
     </a>
 </article>
@@ -1116,18 +978,18 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
             
                 
 <article class="has-image">
-    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/">
+    <a href="/en/p/unreal-enhanced-input/">
         
         
             <div class="article-image">
                 
-                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/img/unreal.svg"/>
+                    <img src="/en/p/unreal-enhanced-input/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-enhanced-input/img/unreal.svg"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">언리얼 스마트 포인터</h2>
+            <h2 class="article-title">Unreal Enhanced Input</h2>
         </div>
     </a>
 </article>
@@ -1135,18 +997,18 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.</p>
             
                 
 <article class="has-image">
-    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/">
+    <a href="/en/p/unreal-smart-pointers/">
         
         
             <div class="article-image">
                 
-                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/img/unreal.svg"/>
+                    <img src="/en/p/unreal-smart-pointers/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-smart-pointers/img/unreal.svg"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">언리얼 Enhanced Input</h2>
+            <h2 class="article-title">Unreal Smart Pointers</h2>
         </div>
     </a>
 </article>

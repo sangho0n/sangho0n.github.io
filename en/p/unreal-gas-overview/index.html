@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='This content is based on lectures by Lee Deok-woo and documents compiled by other developers. For detailed and accurate information, please refer to the above links. Series Unreal GAS Overview &amp;lt;- Current Post Starting Unreal GAS Handling Unreal GAS Inputs Gameplay Ability System A framework that provides actor abilities and interaction among actors through abilities Advantages Flexibility, scalability: Easily used in various and complex game development scenarios Modular system: Minimizes'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Based on the lectures by Lee Deukwoo and document compiled by other developers. For detailed and accurate information, please refer to the links above. Series Unreal GAS Overview &amp;lt;- Current post Unreal GAS Getting Started Unreal GAS Input Handling Gameplay Ability System A framework that provides actor abilities and interactions between actors through abilities Advantages Flexibility, scalability: Easily utilized for diverse and complex game development Modular system: Minimizes dependency on'>
 <title>Unreal GAS Overview</title>
 
 <link rel='canonical' href='https://sangho0n.github.io/en/p/unreal-gas-overview/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Unreal GAS Overview'>
-<meta property='og:description' content='This content is based on lectures by Lee Deok-woo and documents compiled by other developers. For detailed and accurate information, please refer to the above links. Series Unreal GAS Overview &amp;lt;- Current Post Starting Unreal GAS Handling Unreal GAS Inputs Gameplay Ability System A framework that provides actor abilities and interaction among actors through abilities Advantages Flexibility, scalability: Easily used in various and complex game development scenarios Modular system: Minimizes'>
+<meta property='og:description' content='Based on the lectures by Lee Deukwoo and document compiled by other developers. For detailed and accurate information, please refer to the links above. Series Unreal GAS Overview &amp;lt;- Current post Unreal GAS Getting Started Unreal GAS Input Handling Gameplay Ability System A framework that provides actor abilities and interactions between actors through abilities Advantages Flexibility, scalability: Easily utilized for diverse and complex game development Modular system: Minimizes dependency on'>
 <meta property='og:url' content='https://sangho0n.github.io/en/p/unreal-gas-overview/'>
 <meta property='og:site_name' content='sanghoon&#39;s dev-log'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='GAS' /><meta property='article:tag' content='Ability' /><meta property='article:published_time' content='2024-02-14T13:53:44&#43;09:00'/><meta property='article:modified_time' content='2024-02-14T13:53:44&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/unreal-gas-overview/img/unreal.svg' />
 <meta name="twitter:title" content="Unreal GAS Overview">
-<meta name="twitter:description" content="This content is based on lectures by Lee Deok-woo and documents compiled by other developers. For detailed and accurate information, please refer to the above links. Series Unreal GAS Overview &amp;lt;- Current Post Starting Unreal GAS Handling Unreal GAS Inputs Gameplay Ability System A framework that provides actor abilities and interaction among actors through abilities Advantages Flexibility, scalability: Easily used in various and complex game development scenarios Modular system: Minimizes"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Based on the lectures by Lee Deukwoo and document compiled by other developers. For detailed and accurate information, please refer to the links above. Series Unreal GAS Overview &amp;lt;- Current post Unreal GAS Getting Started Unreal GAS Input Handling Gameplay Ability System A framework that provides actor abilities and interactions between actors through abilities Advantages Flexibility, scalability: Easily utilized for diverse and complex game development Modular system: Minimizes dependency on"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://sangho0n.github.io/en/p/unreal-gas-overview/img/unreal.svg' />
     </head>
     <body class="
@@ -261,22 +261,10 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#series-gameplay-ability-system-gas">tags: [&ldquo;Unreal&rdquo;, &ldquo;언리얼&rdquo;, &ldquo;UE&rdquo;, &ldquo;GAS&rdquo;, &ldquo;Ability&rdquo;]
-categories: [&ldquo;Unreal&rdquo;]
-series: [&ldquo;Gameplay Ability System (GAS)&rdquo;]</a></li>
-    <li><a href="#actor-function-extension">Actor Function Extension</a></li>
-    <li><a href="#using-the-game-ability-system">Using the Game Ability System</a>
-      <ol>
-        <li><a href="#ability-system-component">Ability System Component</a></li>
-        <li><a href="#gameplay-ability">Gameplay Ability</a></li>
-      </ol>
-    </li>
-    <li><a href="#using-game-ability-system--gameplay-tags">Using Game Ability System + Gameplay Tags</a>
-      <ol>
-        <li><a href="#gameplay-tags">Gameplay Tags</a></li>
-      </ol>
-    </li>
-    <li><a href="#summary">Summary</a></li>
+    <li><a href="#gameplay-ability-system">Gameplay Ability System</a></li>
+    <li><a href="#components">Components</a></li>
+    <li><a href="#gas-in-multiplayer-games">GAS in Multiplayer Games</a></li>
+    <li><a href="#blueprint-vs-c">Blueprint vs C++</a></li>
   </ol>
 </nav>
         </div>
@@ -368,497 +356,81 @@ series: [&ldquo;Gameplay Ability System (GAS)&rdquo;]</a></li>
     <section class="article-content">
     
     
-    <p>Please translate only the values of title, tags, categories, and series into English without altering the structure. If not, errors like the following may occur:
-failed to unmarshal YAML: yaml: line 10: could not find expected &lsquo;:&rsquo;</p>
-<p>After this, a Korean document written in Markdown including header will be provided. Please translate its header and body into English:</p>
-<hr>
-<p>title: &ldquo;Unreal GAS Start&rdquo;
-date: 2024-03-18T15:58:25+09:00
-image: img/unreal.svg</p>
-<h2 id="series-gameplay-ability-system-gas">tags: [&ldquo;Unreal&rdquo;, &ldquo;언리얼&rdquo;, &ldquo;UE&rdquo;, &ldquo;GAS&rdquo;, &ldquo;Ability&rdquo;]
-categories: [&ldquo;Unreal&rdquo;]
-series: [&ldquo;Gameplay Ability System (GAS)&rdquo;]</h2>
-<p><a class="link" href="https://www.inflearn.com/course/lee-deokwoo-unreal-programming-part-4"  target="_blank" rel="noopener"
-    >Link to Lee Deokwoo&rsquo;s lecture</a> and <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
-    >document compiled by another developer</a>.</p>
-<p>This content was summarized based on the lecture by Lee Deokwoo and the documentation provided by other developers.</p>
+    <p><a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
+    >Based on the lectures by Lee Deukwoo</a>
+and <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
+    >document compiled by other developers</a>.</p>
 <p>For detailed and accurate information, please refer to the links above.</p>
-<p>Series:</p>
+<p>Series</p>
 <ul>
-<li><a class="link" href="/p/unreal-gas-overview/" >Unreal GAS Overview</a></li>
-<li><a class="link" href="/p/unreal-gas-start/" >Unreal GAS Start</a> &lt;- Current post</li>
+<li><a class="link" href="/p/unreal-gas-overview/" >Unreal GAS Overview</a> &lt;- Current post</li>
+<li><a class="link" href="/p/unreal-gas-getting-started/" >Unreal GAS Getting Started</a></li>
 <li><a class="link" href="../unreal-gas-input-handling/" >Unreal GAS Input Handling</a></li>
 </ul>
 <hr>
-<p>In this post, while implementing the movement of an actor through three different methods, we will explore the usage of the GAS framework and examine the differences between each method.</p>
+<h2 id="gameplay-ability-system">Gameplay Ability System</h2>
 <ul>
-<li>Actor Function Extension</li>
-<li>Using the Game Ability System</li>
-<li>Using the Game Ability System + Gameplay Tag</li>
-</ul>
-<p>The actor used is a fountain, and the movement is designed based on 3 seconds of stationary rotation/stop as the standard.</p>
-<h2 id="actor-function-extension">Actor Function Extension</h2>
-<p>Implementation using URotatingMovementComponent directly without the GAS framework</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ARENABATTLEGAS_API</span> <span class="nl">AABGASFountain</span> <span class="p">:</span> <span class="k">public</span> <span class="n">AABFountain</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">GENERATED_BODY</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">AABGASFountain</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">PostInitializeComponents</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">BeginPlay</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">TimerAction</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">VisibleAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Movement</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">TObjectPtr</span><span class="o">&lt;</span><span class="n">URotatingMovementComponent</span><span class="o">&gt;</span> <span class="n">RotatingMovement</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Timer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">ActionInterval</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">FTimerHandle</span> <span class="n">ActionTimer</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">BeginPlay</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">BeginPlay</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">GetWorld</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetTimerManager</span><span class="p">().</span><span class="n">SetTimer</span><span class="p">(</span><span class="n">ActionTimer</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">,</span> <span class="n">ActionInterval</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">Activate</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">Deactivate</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="using-the-game-ability-system">Using the Game Ability System</h2>
-<p>In order to implement movement using the GAS framework, it is necessary to understand the following two concepts:</p>
+<li>A framework that provides actor abilities and interactions between actors through abilities</li>
+<li>Advantages
 <ul>
-<li>Ability System Component</li>
-<li>Gameplay Ability</li>
-</ul>
-<h3 id="ability-system-component">Ability System Component</h3>
-<ul>
-<li>Manages the Gameplay Ability System</li>
-<li>Can only be attached once per actor</li>
-<li>Actors can trigger Gameplay Abilities through this component</li>
-<li>Enables interaction between actors with this component controlled by the Game Ability System</li>
-</ul>
-<h3 id="gameplay-ability">Gameplay Ability</h3>
-<ul>
-<li>An action that can be registered in the Ability System Component and triggered</li>
-<li>Activation Process
-<ul>
-<li>Registration in Ability System Component: AbilitySystemComponent-&gt;GiveAbility()</li>
-<li>Triggering the action: AbilitySystemComponent-&gt;TryActivateAbility()</li>
-<li>Inside the triggered ability, requirements are implemented using SpecHandle, ActorInfo, ActivationInfo</li>
+<li>Flexibility, scalability: Easily utilized for diverse and complex game development</li>
+<li>Modular system: Minimizes dependency on each function</li>
+<li>Network support</li>
+<li>Data-driven design</li>
+<li>Completeness: Games like Fortnite already utilize it</li>
 </ul>
 </li>
-<li>Key Methods
+<li>Disadvantages
 <ul>
-<li>CanActivateAbility</li>
-<li><strong>ActivateAbility</strong></li>
-<li><strong>CancelAbility</strong></li>
-<li>EndAbility</li>
+<li>Learning curve</li>
+<li>Overheads in small-scale projects</li>
 </ul>
 </li>
 </ul>
-<p>Using the above two concepts, the implementation of the same movement as in the beginning can be done as follows.</p>
-<ol>
-<li>Create an ability class by inheriting GameplayAbility</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ARENABATTLEGAS_API</span> <span class="nl">UABGA_Rotate</span> <span class="p">:</span> <span class="k">public</span> <span class="n">UGameplayAbility</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">GENERATED_BODY</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span> 
-</span></span><span class="line"><span class="cl">		<span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">CancelAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span> 
-</span></span><span class="line"><span class="cl">		<span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bReplicateCancelAbility</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                                   <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">TriggerEventData</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">Avatar</span> <span class="o">=</span> <span class="n">ActorInfo</span><span class="o">-&gt;</span><span class="n">AvatarActor</span><span class="p">.</span><span class="n">Get</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">RotatingMovement</span> <span class="o">=</span> <span class="n">Avatar</span><span class="o">-&gt;</span><span class="n">GetComponentByClass</span><span class="p">(</span><span class="n">URotatingMovementComponent</span><span class="o">::</span><span class="n">StaticClass</span><span class="p">()))</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">RotatingMovement</span><span class="o">-&gt;</span><span class="n">Activate</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">CancelAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bReplicateCancelAbility</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">CancelAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">bReplicateCancelAbility</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// code skipped for brevity
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="2">
-<li>Attach components to the actor and implement the interface</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ARENABATTLEGAS_API</span> <span class="nl">AABGASFountain</span> <span class="p">:</span> <span class="k">public</span> <span class="n">AABFountain</span><span class="p">,</span> <span class="k">public</span> <span class="n">IAbilitySystemInterface</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">GENERATED_BODY</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">AABGASFountain</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="n">UAbilitySystemComponent</span><span class="o">*</span> <span class="nf">GetAbilitySystemComponent</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">VisibleAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Ability</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">TObjectPtr</span><span class="o">&lt;</span><span class="n">UAbilitySystemComponent</span><span class="o">&gt;</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">VisibleAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Ability</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">TObjectPtr</span><span class="o">&lt;</span><span class="n">URotatingMovementComponent</span><span class="o">&gt;</span> <span class="n">RotatingMovement</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">Timer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">ActionInterval</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">FTimerHandle</span> <span class="n">ActionTimer</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">UAbilitySystemComponent</span><span class="o">*</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">GetAbilitySystemComponent</span><span class="p">()</span> <span class="k">const</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">AbilitySystemComponent</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="3">
-<li>Register and trigger abilities in the attached components</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">FGameplayAbilitySpec</span> <span class="nf">RotateSpec</span><span class="p">(</span><span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">StaticClass</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">GiveAbility</span><span class="p">(</span><span class="n">RotateSpec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">RotateSpec</span> <span class="o">=</span> <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">FindAbilitySpecFromClass</span><span class="p">(</span><span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">StaticClass</span><span class="p">()))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">RotateSpec</span><span class="o">-&gt;</span><span class="n">IsActive</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">TryActivateAbility</span><span class="p">(</span><span class="n">RotateSpec</span><span class="o">-&gt;</span><span class="n">Handle</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">CancelAbilityHandle</span><span class="p">(</span><span class="n">RotateSpec</span><span class="o">-&gt;</span><span class="n">Handle</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="using-game-ability-system--gameplay-tags">Using Game Ability System + Gameplay Tags</h2>
-<p>When using the Game Ability System without Gameplay Tags, the advantages of the GAS framework are not fully utilized.
-Let&rsquo;s first understand what Gameplay Tags are:</p>
-<h3 id="gameplay-tags">Gameplay Tags</h3>
-<p>FGameplayTag represents a name registered hierarchically like &ldquo;Parent.Child.Grandchild&hellip;&rdquo;. These tags are registered by the GameplayTagManager.
-By using these tags, classes can be categorized and states can be effectively tracked.</p>
-<p>Using bool values or enums for state tracking and checking through conditional statements can be replaced by checking if an object has a Gameplay Tag.</p>
-<p>Furthermore, managing multiple tags is better done through FGameplayTagContainer than Tarray<FGameplayTag>. This is because using a container allows for easy access to tag arrays at any time and provides various methods for tag management.</p>
-<p>The GAS framework is very friendly with Gameplay Tags. As the UAbilitySystemComponent implements IGameplayTagAssetInterface, tags can be directly assigned to the Ability System Component and several states of Gameplay Abilities can be managed with tag containers.</p>
-<p>When using Gameplay Tags, the same requirements can be implemented as follows:</p>
-<ol>
-<li>Create tags</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// DefaultGameplayTags.ini
-</span></span><span class="line"><span class="cl"><span class="o">[</span>/Script/GameplayTags.GameplayTagsSettings<span class="o">]</span>
-</span></span><span class="line"><span class="cl">//...
-</span></span><span class="line"><span class="cl">+GameplayTagList<span class="o">=(</span><span class="nv">Tag</span><span class="o">=</span><span class="s2">&#34;Actor.Action.Rotate&#34;</span>,DevComment<span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">+GameplayTagList<span class="o">=(</span><span class="nv">Tag</span><span class="o">=</span><span class="s2">&#34;Actor.State.IsRotating&#34;</span>,DevComment<span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="2">
-<li>Write macros to easily retrieve tags</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// ABGameplayTag.h
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define ABTAG_ACTOR_ROTATE FGameplayTag::RequestGameplayTag(FName(&#34;Actor.Action.Rotate&#34;))
-</span></span></span><span class="line"><span class="cl"><span class="cp">#define ABTAG_ACTOR_ISROTATING FGameplayTag::RequestGameplayTag(FName(&#34;Actor.State.IsRotating&#34;))
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="3">
-<li>Register tags in Gameplay Ability</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">UABGA_Rotate</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">AbilityTags</span><span class="p">.</span><span class="n">AddTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ROTATE</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">ActivationOwnedTags</span><span class="p">.</span><span class="n">AddTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ISROTATING</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="4">
-<li>Register and activate abilities using the tags</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// ABGASFountain.h
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">GAS</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">TArray</span><span class="o">&lt;</span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UGameplayAbility</span><span class="o">&gt;&gt;</span> <span class="n">Abilities</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Implementation
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">Element</span> <span class="p">:</span> <span class="n">Abilities</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">FGameplayAbilitySpec</span> <span class="nf">Spec</span><span class="p">(</span><span class="n">Element</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">GiveAbility</span><span class="p">(</span><span class="n">Spec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">FGameplayTagContainer</span> <span class="nf">TargetTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ROTATE</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">HasMatchingGameplayTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ISROTATING</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">TryActivateAbilitiesByTag</span><span class="p">(</span><span class="n">TargetTag</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">CancelAbilities</span><span class="p">(</span><span class="o">&amp;</span><span class="n">TargetTag</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Subsequently, a blueprint class that inherits the AABGASFountain cpp class should be created, and the appropriate activities should be added to Abilities in the Details panel.</p>
-<h2 id="summary">Summary</h2>
-<p>Implemented the rotation of a fountain using three methods:</p>
-<ol>
-<li>Actor Function Extension</li>
-<li>GAS: Creating a new class (ability) to separate functionality from the actor</li>
-<li>GAS + Gameplay Tags: Removing dependency between actor and ability using tags</li>
-</ol>
-<p>Advantages of using GAS and Gameplay Tags together:</p>
-<ol>
-<li>Minimize the role of the actor</li>
-<li>Dependency removal. Easy maintenance and high reusability</li>
-<li>Scalability + Ease of collaboration with other job roles</li>
-</ol>
-<p><img src="/img/post/gas/RotatingFountain.gif"
+<blockquote>
+<p>Suitable for creating large-scale RPGs and multiplayer games</p>
+</blockquote>
+<h2 id="components">Components</h2>
+<p><img src="/img/post/gas/gas1.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="RotatingFountain.gif"
+		alt="gas1.png"
 	
 	
 ></p>
+<ul>
+<li>Gameplay Ability: Implements character abilities based on cost and cooldown (optional)</li>
+<li>Attributes: Manipulate actor characteristics</li>
+<li>Gameplay Effects: Change actor states based on ability activation</li>
+<li>Gameplay Tags: Assign tags to actors</li>
+<li>Gameplay Cues: Visual effects</li>
+<li>Replication for all of the above</li>
+</ul>
+<p><img src="/img/post/gas/gas2.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="gas1.png"
+	
+	
+></p>
+<h2 id="gas-in-multiplayer-games">GAS in Multiplayer Games</h2>
+<p>The GAS plugin supports client-side prediction, allowing abilities and effects to be applied without server approval.</p>
+<ul>
+<li>Ability activation</li>
+<li>Animation montage playback</li>
+<li>Attribute modification</li>
+<li>Gameplay tag assignment</li>
+<li>Execution of gameplay cues</li>
+<li>Movement control through CharacterMovementComponent and RootMotionSource functions</li>
+</ul>
+<h2 id="blueprint-vs-c">Blueprint vs C++</h2>
+<p>While GAS should be implemented in C++, GameplayAbilities and GameplayEffects can be implemented in Blueprint.</p>
 
 </section>
 
@@ -909,18 +481,37 @@ By using these tags, classes can be categorized and states can be effectively tr
             
                 
 <article class="has-image">
-    <a href="/en/p/unreal-gas-overview/">
+    <a href="/en/p/unreal-gas-input-handling/">
         
         
             <div class="article-image">
                 
-                    <img src="/en/p/unreal-gas-overview/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-overview/img/unreal.svg"/>
+                    <img src="/en/p/unreal-gas-input-handling/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-input-handling/img/unreal.svg"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Unreal GAS Overview</h2>
+            <h2 class="article-title">Unreal GAS Input Handling</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/p/unreal-gas-start/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/en/p/unreal-gas-start/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-start/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Unreal GAS Start</h2>
         </div>
     </a>
 </article>
