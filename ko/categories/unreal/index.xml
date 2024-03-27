@@ -236,7 +236,7 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;FGameplayAbilitySpec&lt;/strong&gt; : 능력 자체를 의미하는 구조체. 능력의 상태, 발동횟수 등과 같은 정보를 담고있다.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;FGameplayAbilitySpecHandle&lt;/strong&gt; : 능력을 고유하게 식별하기 위해 사용되는 구조체. GameplayAbility의 타입마다 하나씩 생성된다.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img%2Fhandle.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/handle.png&#34;
 	
 	
 	
@@ -503,7 +503,7 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;이번에는 공격 애니메이션 몽타주를 Gameplay Task를 이용해 재생할 것이다. GAS 플러그인은 아래와 같은 여러 태스크들을 기본으로 제공한다.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img%2Fability_task.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/ability_task.png&#34;
 	
 	
 	
@@ -614,7 +614,7 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;게임플레이 어빌리티 블루프린트 생성
-&lt;img src=&#34;https://sangho0n.github.io/img%2Fbp_tags.png&#34;
+&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/bp_tags.png&#34;
 	
 	
 	
@@ -627,7 +627,7 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;캐릭터에서 어빌리티 클래스를 cpp에서 블루프린트로 변경
-&lt;img src=&#34;https://sangho0n.github.io/img%2Fbp_character.png&#34;
+&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/bp_character.png&#34;
 	
 	
 	
@@ -672,7 +672,7 @@ PlayerState 클래스를 Owner로 설정하는 것이 좋다.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;최종화면&#34;&gt;최종화면&lt;/h2&gt;
 &lt;center&gt;
-&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img%2Fdebug.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://sangho0n.github.io/img/post/gas/debug.gif&#34;
 	
 	
 	

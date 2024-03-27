@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='The header portion of the provided Korean document has been translated into English: title: &amp;ldquo;Unreal GAS Input Processing&amp;rdquo; date: 2024-03-26T22:19:41&#43;09:00 image: img/unreal.svg tags: [&amp;ldquo;Unreal&amp;rdquo;, &amp;ldquo;언리얼&amp;rdquo;, &amp;ldquo;UE&amp;rdquo;, &amp;ldquo;GAS&amp;rdquo;, &amp;ldquo;Ability&amp;rdquo;] categories: [&amp;ldquo;Unreal&amp;rdquo;] series: [&amp;ldquo;Gameplay Ability System (GAS)&amp;rdquo;] Based on the lecture by Lee Deokwoo and documentation by other developers. This post covers the method of'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='In the md file, the metadata translation is as follows: 1 2 3 4 5 6 7 8 9 --- title: &amp;#34;Unreal GAS Input Processing&amp;#34; date: 2024-03-26T22:19:41&#43;09:00 image: img/unreal.svg tags: [&amp;#34;Unreal&amp;#34;, &amp;#34;언리얼&amp;#34;, &amp;#34;UE&amp;#34;, &amp;#34;GAS&amp;#34;, &amp;#34;Ability&amp;#34;] categories: [&amp;#34;Unreal&amp;#34;] series: [&amp;#34;Gameplay Ability System (GAS)&amp;#34;] --- The Korean document body written in Markdown is translated into English below: This post'>
 <title></title>
 
 <link rel='canonical' href='https://sangho0n.github.io/en/p/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content=''>
-<meta property='og:description' content='The header portion of the provided Korean document has been translated into English: title: &amp;ldquo;Unreal GAS Input Processing&amp;rdquo; date: 2024-03-26T22:19:41&#43;09:00 image: img/unreal.svg tags: [&amp;ldquo;Unreal&amp;rdquo;, &amp;ldquo;언리얼&amp;rdquo;, &amp;ldquo;UE&amp;rdquo;, &amp;ldquo;GAS&amp;rdquo;, &amp;ldquo;Ability&amp;rdquo;] categories: [&amp;ldquo;Unreal&amp;rdquo;] series: [&amp;ldquo;Gameplay Ability System (GAS)&amp;rdquo;] Based on the lecture by Lee Deokwoo and documentation by other developers. This post covers the method of'>
+<meta property='og:description' content='In the md file, the metadata translation is as follows: 1 2 3 4 5 6 7 8 9 --- title: &amp;#34;Unreal GAS Input Processing&amp;#34; date: 2024-03-26T22:19:41&#43;09:00 image: img/unreal.svg tags: [&amp;#34;Unreal&amp;#34;, &amp;#34;언리얼&amp;#34;, &amp;#34;UE&amp;#34;, &amp;#34;GAS&amp;#34;, &amp;#34;Ability&amp;#34;] categories: [&amp;#34;Unreal&amp;#34;] series: [&amp;#34;Gameplay Ability System (GAS)&amp;#34;] --- The Korean document body written in Markdown is translated into English below: This post'>
 <meta property='og:url' content='https://sangho0n.github.io/en/p/'>
 <meta property='og:site_name' content='sanghoon&#39;s dev-log'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' />
 <meta name="twitter:title" content="">
-<meta name="twitter:description" content="The header portion of the provided Korean document has been translated into English: title: &amp;ldquo;Unreal GAS Input Processing&amp;rdquo; date: 2024-03-26T22:19:41&#43;09:00 image: img/unreal.svg tags: [&amp;ldquo;Unreal&amp;rdquo;, &amp;ldquo;언리얼&amp;rdquo;, &amp;ldquo;UE&amp;rdquo;, &amp;ldquo;GAS&amp;rdquo;, &amp;ldquo;Ability&amp;rdquo;] categories: [&amp;ldquo;Unreal&amp;rdquo;] series: [&amp;ldquo;Gameplay Ability System (GAS)&amp;rdquo;] Based on the lecture by Lee Deokwoo and documentation by other developers. This post covers the method of">
+<meta name="twitter:description" content="In the md file, the metadata translation is as follows: 1 2 3 4 5 6 7 8 9 --- title: &amp;#34;Unreal GAS Input Processing&amp;#34; date: 2024-03-26T22:19:41&#43;09:00 image: img/unreal.svg tags: [&amp;#34;Unreal&amp;#34;, &amp;#34;언리얼&amp;#34;, &amp;#34;UE&amp;#34;, &amp;#34;GAS&amp;#34;, &amp;#34;Ability&amp;#34;] categories: [&amp;#34;Unreal&amp;#34;] series: [&amp;#34;Gameplay Ability System (GAS)&amp;#34;] --- The Korean document body written in Markdown is translated into English below: This post">
     </head>
     <body class="
     article-page
@@ -260,9 +260,9 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#series-gameplay-ability-system-gas">tags: [&ldquo;Unreal&rdquo;, &ldquo;언리얼&rdquo;, &ldquo;UE&rdquo;, &ldquo;GAS&rdquo;, &ldquo;Ability&rdquo;]
-categories: [&ldquo;Unreal&rdquo;]
-series: [&ldquo;Gameplay Ability System (GAS)&rdquo;]</a></li>
+    <li><a href="#owneractor-and-avataractor">OwnerActor and AvatarActor</a></li>
+    <li><a href="#fgameplayabilityspec-and-fgameplayabilityspechandle">FGameplayAbilitySpec and FGameplayAbilitySpecHandle</a></li>
+    <li><a href="#inputid">InputID</a></li>
   </ol>
 </nav>
         </div>
@@ -320,18 +320,46 @@ series: [&ldquo;Gameplay Ability System (GAS)&rdquo;]</a></li>
     <section class="article-content">
     
     
-    <p>The header portion of the provided Korean document has been translated into English:</p>
+    <p>In the <code>md</code> file, the metadata translation is as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-md" data-lang="md"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: &#34;Unreal GAS Input Processing&#34;
+</span></span><span class="line"><span class="cl">date: 2024-03-26T22:19:41+09:00
+</span></span><span class="line"><span class="cl">image: img/unreal.svg
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tags: [&#34;Unreal&#34;, &#34;언리얼&#34;, &#34;UE&#34;, &#34;GAS&#34;, &#34;Ability&#34;]
+</span></span><span class="line"><span class="cl">categories: [&#34;Unreal&#34;]
+</span></span><span class="line"><span class="cl">series: [&#34;Gameplay Ability System (GAS)&#34;]
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The Korean document body written in Markdown is translated into English below:</p>
 <hr>
-<p>title: &ldquo;Unreal GAS Input Processing&rdquo;
-date: 2024-03-26T22:19:41+09:00
-image: img/unreal.svg</p>
-<h2 id="series-gameplay-ability-system-gas">tags: [&ldquo;Unreal&rdquo;, &ldquo;언리얼&rdquo;, &ldquo;UE&rdquo;, &ldquo;GAS&rdquo;, &ldquo;Ability&rdquo;]
-categories: [&ldquo;Unreal&rdquo;]
-series: [&ldquo;Gameplay Ability System (GAS)&rdquo;]</h2>
-<p><a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
-    >Based on the lecture by Lee Deokwoo</a> and <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
-    >documentation by other developers</a>.</p>
-<p>This post covers the method of triggering abilities (jump, attack) through user input.</p>
+<p>This post will explore how to trigger abilities (jump, attack) based on user input.</p>
+<h2 id="owneractor-and-avataractor">OwnerActor and AvatarActor</h2>
+<p>In the Gameplay Ability System, OwnerActor refers to the actor that has the AbilitySystemComponent. On the other hand, AvatarActor indicates the physical representation of the AbilitySystemComponent.</p>
+<p>As seen in the previous post, OwnerActor and AvatarActor can be set to the same actor. In most cases, character abilities are triggered based on the current state, so it&rsquo;s common to set PlayerState as the OwnerActor. In this post, we will attach the ability system to the PlayerState and set OwnerActor and AvatarActor accordingly. (Note: even in cases where Owner and Avatar are different actors, both actors must implement IAbilitySystemInterface.)</p>
+<p>Furthermore, PlayerState is a convenient class for pub-sub communication between the server and clients, making it especially useful in multiplayer game development. It&rsquo;s advisable to set the PlayerState class as the Owner in multiplayer games.</p>
+<h2 id="fgameplayabilityspec-and-fgameplayabilityspechandle">FGameplayAbilitySpec and FGameplayAbilitySpecHandle</h2>
+<p>As mentioned in the previous post, in order to grant abilities to the AbilitySystemComponent, you need to create an instance of the FGameplayAbilitySpec structure and register it. The registered structures can be accessed through the <code>FGameplayAbilitySpecContainer ActivatableAbilities</code> within the component.</p>
+<p>In methods related to ability activation, you&rsquo;ll notice that FGameplayAbilitySpecHandle structures are used as arguments. This structure is used to uniquely identify granted abilities. It is designed this way when dealing with GameplayAbility in the AbilitySystemComponent.</p>
+<h2 id="inputid">InputID</h2>
+<p>Now, let&rsquo;s consider how to bind actions to trigger abilities. Using the EnhancedInputComponent and InputID, you can create a generic input handling mechanism.</p>
+<p>In this post, we will look at the example of how input handling for abilities like jumping and attacking is implemented.</p>
+<hr>
+<p>These are the English translations of the respective sections of the Korean Markdown document.</p>
 
 </section>
 

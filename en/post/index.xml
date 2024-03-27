@@ -1708,18 +1708,46 @@ By using these tags, classes can be categorized and states can be effectively tr
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://sangho0n.github.io/en/p/</guid>
-        <description>&lt;p&gt;The header portion of the provided Korean document has been translated into English:&lt;/p&gt;
+        <description>&lt;p&gt;In the &lt;code&gt;md&lt;/code&gt; file, the metadata translation is as follows:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-md&#34; data-lang=&#34;md&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;title: &amp;#34;Unreal GAS Input Processing&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;date: 2024-03-26T22:19:41+09:00
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;image: img/unreal.svg
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tags: [&amp;#34;Unreal&amp;#34;, &amp;#34;언리얼&amp;#34;, &amp;#34;UE&amp;#34;, &amp;#34;GAS&amp;#34;, &amp;#34;Ability&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;categories: [&amp;#34;Unreal&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;series: [&amp;#34;Gameplay Ability System (GAS)&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The Korean document body written in Markdown is translated into English below:&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;title: &amp;ldquo;Unreal GAS Input Processing&amp;rdquo;
-date: 2024-03-26T22:19:41+09:00
-image: img/unreal.svg&lt;/p&gt;
-&lt;h2 id=&#34;series-gameplay-ability-system-gas&#34;&gt;tags: [&amp;ldquo;Unreal&amp;rdquo;, &amp;ldquo;언리얼&amp;rdquo;, &amp;ldquo;UE&amp;rdquo;, &amp;ldquo;GAS&amp;rdquo;, &amp;ldquo;Ability&amp;rdquo;]
-categories: [&amp;ldquo;Unreal&amp;rdquo;]
-series: [&amp;ldquo;Gameplay Ability System (GAS)&amp;rdquo;]&lt;/h2&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Based on the lecture by Lee Deokwoo&lt;/a&gt; and &lt;a class=&#34;link&#34; href=&#34;https://github.com/tranek/GASDocumentation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;documentation by other developers&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This post covers the method of triggering abilities (jump, attack) through user input.&lt;/p&gt;
+&lt;p&gt;This post will explore how to trigger abilities (jump, attack) based on user input.&lt;/p&gt;
+&lt;h2 id=&#34;owneractor-and-avataractor&#34;&gt;OwnerActor and AvatarActor&lt;/h2&gt;
+&lt;p&gt;In the Gameplay Ability System, OwnerActor refers to the actor that has the AbilitySystemComponent. On the other hand, AvatarActor indicates the physical representation of the AbilitySystemComponent.&lt;/p&gt;
+&lt;p&gt;As seen in the previous post, OwnerActor and AvatarActor can be set to the same actor. In most cases, character abilities are triggered based on the current state, so it&amp;rsquo;s common to set PlayerState as the OwnerActor. In this post, we will attach the ability system to the PlayerState and set OwnerActor and AvatarActor accordingly. (Note: even in cases where Owner and Avatar are different actors, both actors must implement IAbilitySystemInterface.)&lt;/p&gt;
+&lt;p&gt;Furthermore, PlayerState is a convenient class for pub-sub communication between the server and clients, making it especially useful in multiplayer game development. It&amp;rsquo;s advisable to set the PlayerState class as the Owner in multiplayer games.&lt;/p&gt;
+&lt;h2 id=&#34;fgameplayabilityspec-and-fgameplayabilityspechandle&#34;&gt;FGameplayAbilitySpec and FGameplayAbilitySpecHandle&lt;/h2&gt;
+&lt;p&gt;As mentioned in the previous post, in order to grant abilities to the AbilitySystemComponent, you need to create an instance of the FGameplayAbilitySpec structure and register it. The registered structures can be accessed through the &lt;code&gt;FGameplayAbilitySpecContainer ActivatableAbilities&lt;/code&gt; within the component.&lt;/p&gt;
+&lt;p&gt;In methods related to ability activation, you&amp;rsquo;ll notice that FGameplayAbilitySpecHandle structures are used as arguments. This structure is used to uniquely identify granted abilities. It is designed this way when dealing with GameplayAbility in the AbilitySystemComponent.&lt;/p&gt;
+&lt;h2 id=&#34;inputid&#34;&gt;InputID&lt;/h2&gt;
+&lt;p&gt;Now, let&amp;rsquo;s consider how to bind actions to trigger abilities. Using the EnhancedInputComponent and InputID, you can create a generic input handling mechanism.&lt;/p&gt;
+&lt;p&gt;In this post, we will look at the example of how input handling for abilities like jumping and attacking is implemented.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;These are the English translations of the respective sections of the Korean Markdown document.&lt;/p&gt;
 </description>
         </item>
         
