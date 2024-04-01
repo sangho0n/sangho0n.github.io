@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Based on lectures by Lee Geun-woo and documents compiled by other developers. For detailed and accurate information, please refer to the links above. Series Unreal GAS Overview Unreal GAS Start &amp;lt;- Current Post Unreal GAS Input Handling In this post, we will explore the implementation of actor movement through three methods to understand the usage of the GAS framework, and examine the differences between each method. Actor Function Extension Using'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Based on lectures by Lee Duk-Woo and documentation compiled by another developer. Please refer to the links above for detailed and accurate information. Series Unreal GAS Overview Unreal GAS Start &amp;lt;- Current Post Unreal GAS Input Processing Unreal GAS Implementing Continuous Attacks In this post, I will explore the usage of the GAS framework by implementing actor movement through three different methods, understanding how to use the GAS framework, and'>
 <title>Unreal GAS Start</title>
 
 <link rel='canonical' href='https://sangho0n.github.io/en/p/unreal-gas-start/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Unreal GAS Start'>
-<meta property='og:description' content='Based on lectures by Lee Geun-woo and documents compiled by other developers. For detailed and accurate information, please refer to the links above. Series Unreal GAS Overview Unreal GAS Start &amp;lt;- Current Post Unreal GAS Input Handling In this post, we will explore the implementation of actor movement through three methods to understand the usage of the GAS framework, and examine the differences between each method. Actor Function Extension Using'>
+<meta property='og:description' content='Based on lectures by Lee Duk-Woo and documentation compiled by another developer. Please refer to the links above for detailed and accurate information. Series Unreal GAS Overview Unreal GAS Start &amp;lt;- Current Post Unreal GAS Input Processing Unreal GAS Implementing Continuous Attacks In this post, I will explore the usage of the GAS framework by implementing actor movement through three different methods, understanding how to use the GAS framework, and'>
 <meta property='og:url' content='https://sangho0n.github.io/en/p/unreal-gas-start/'>
 <meta property='og:site_name' content='sanghoon&#39;s dev-log'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='GAS' /><meta property='article:tag' content='Ability' /><meta property='article:published_time' content='2024-03-18T15:58:25&#43;09:00'/><meta property='article:modified_time' content='2024-03-18T15:58:25&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/unreal-gas-start/img/unreal.svg' />
 <meta name="twitter:title" content="Unreal GAS Start">
-<meta name="twitter:description" content="Based on lectures by Lee Geun-woo and documents compiled by other developers. For detailed and accurate information, please refer to the links above. Series Unreal GAS Overview Unreal GAS Start &amp;lt;- Current Post Unreal GAS Input Handling In this post, we will explore the implementation of actor movement through three methods to understand the usage of the GAS framework, and examine the differences between each method. Actor Function Extension Using"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Based on lectures by Lee Duk-Woo and documentation compiled by another developer. Please refer to the links above for detailed and accurate information. Series Unreal GAS Overview Unreal GAS Start &amp;lt;- Current Post Unreal GAS Input Processing Unreal GAS Implementing Continuous Attacks In this post, I will explore the usage of the GAS framework by implementing actor movement through three different methods, understanding how to use the GAS framework, and"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://sangho0n.github.io/en/p/unreal-gas-start/img/unreal.svg' />
     </head>
     <body class="
@@ -262,18 +262,13 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#actor-function-extension">Actor Function Extension</a></li>
-    <li><a href="#using-the-game-ability-system">Using the Game Ability System</a>
+    <li><a href="#using-game-ability-system">Using Game Ability System</a>
       <ol>
         <li><a href="#ability-system-component">Ability System Component</a></li>
         <li><a href="#game-ability">Game Ability</a></li>
       </ol>
     </li>
-    <li><a href="#using-game-ability-system--gameplay-tags">Using Game Ability System + Gameplay Tags</a>
-      <ol>
-        <li><a href="#gameplay-tags">Gameplay Tags</a></li>
-      </ol>
-    </li>
-    <li><a href="#summary">Summary</a></li>
+    <li><a href="#using-game-ability-system--gameplay-tag">Using Game Ability System + Gameplay Tag</a></li>
   </ol>
 </nav>
         </div>
@@ -365,28 +360,28 @@
     <section class="article-content">
     
     
-    <p><a class="link" href="https://www.inflearn.com/course/lee-geunwoo-unreal-programming-part-4"  target="_blank" rel="noopener"
-    >Based on lectures by Lee Geun-woo</a>
+    <p><a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
+    >Based on lectures by Lee Duk-Woo</a>
 and <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
-    >documents compiled by other developers</a>.</p>
-<p>For detailed and accurate information, please refer to the links above.</p>
+    >documentation compiled by another developer</a>.</p>
+<p>Please refer to the links above for detailed and accurate information.</p>
 <p>Series</p>
 <ul>
-<li><a class="link" href="/p/unreal-gas-overview/" >Unreal GAS Overview</a></li>
-<li><a class="link" href="/p/unreal-gas-start/" >Unreal GAS Start</a> &lt;- Current Post</li>
-<li><a class="link" href="../unreal-gas-input-handling/" >Unreal GAS Input Handling</a></li>
+<li><a class="link" href="/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ea%b0%9c%ec%9a%94/" >Unreal GAS Overview</a></li>
+<li><a class="link" href="/p/%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%8b%9c%ec%9e%91/" >Unreal GAS Start</a> &lt;- Current Post</li>
+<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%9e%85%eb%a0%a5%ec%b2%98%eb%a6%ac/" >Unreal GAS Input Processing</a></li>
+<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%97%b0%ec%86%8d%ea%b3%b5%ea%b2%a9/" >Unreal GAS Implementing Continuous Attacks</a></li>
 </ul>
 <hr>
-<p>In this post, we will explore the implementation of actor movement through three methods to understand the usage of the GAS framework,
-and examine the differences between each method.</p>
+<p>In this post, I will explore the usage of the GAS framework by implementing actor movement through three different methods, understanding how to use the GAS framework, and examining the differences between each method.</p>
 <ul>
 <li>Actor Function Extension</li>
-<li>Using the Game Ability System</li>
-<li>Using Game Ability System with Gameplay Tags</li>
+<li>Using Game Ability System</li>
+<li>Using Game Ability System + Gameplay Tag</li>
 </ul>
-<p>For the actor, a fountain is used, and the movement is designed based on a 3-second stationary rotation/stop as a reference.</p>
+<p>For the actor, a fountain with movement based on a 3-second stationary rotation/stop was created.</p>
 <h2 id="actor-function-extension">Actor Function Extension</h2>
-<p>Implementing movement using URotatingMovementComponent directly without the GAS framework.</p>
+<p>Implemented directly using URotatingMovementComponent without the GAS framework.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -477,30 +472,30 @@ and examine the differences between each method.</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="using-the-game-ability-system">Using the Game Ability System</h2>
-<p>To implement movement using the GAS framework, you need to understand the following two concepts first:</p>
+</div><h2 id="using-game-ability-system">Using Game Ability System</h2>
+<p>To implement movement using the GAS framework, you need to understand two key concepts:</p>
 <ul>
 <li>Ability System Component</li>
 <li>Game Ability</li>
 </ul>
 <h3 id="ability-system-component">Ability System Component</h3>
 <ul>
-<li>A component that manages the Gameplay Ability System</li>
+<li>Manages the Gameplay Ability System for the game</li>
 <li>Only one can be attached per actor</li>
-<li>Actors can invoke Gameplay Abilities through this component</li>
-<li>Enables interaction between actors with this component through the Game Ability System</li>
+<li>Allows actors to trigger Gameplay Abilities through it</li>
+<li>Enables interaction between actors with this component in the Game Ability System</li>
 </ul>
 <h3 id="game-ability">Game Ability</h3>
 <ul>
-<li>An action registered in the Ability System Component that can be activated</li>
-<li>Activation Process
+<li>An action that is registered with the Ability System Component to be triggered</li>
+<li>Activation process:
 <ul>
-<li>Registered in Ability System Component: AbilitySystemComponent-&gt;GiveAbility()</li>
-<li>Activating the ability: AbilitySystemComponent-&gt;TryActivateAbility()</li>
-<li>Within the activated ability, requirements are implemented using SpecHandle, ActorInfo, ActivationInfo</li>
+<li>Register with Ability System Component: AbilitySystemComponent-&gt;GiveAbility()</li>
+<li>Activate the action: AbilitySystemComponent-&gt;TryActivateAbility()</li>
+<li>Inside the activated ability, utilize SpecHandle, ActorInfo, ActivationInfo to implement requirements</li>
 </ul>
 </li>
-<li>Key Methods
+<li>Key methods:
 <ul>
 <li>CanActivateAbility</li>
 <li><strong>ActivateAbility</strong></li>
@@ -509,7 +504,7 @@ and examine the differences between each method.</p>
 </ul>
 </li>
 </ul>
-<p>Implementing the same movement as before using the two above concepts:</p>
+<p>Using the above concepts, the same movement can be implemented as follows.</p>
 <ol>
 <li>Create an ability class by inheriting from GameplayAbility</li>
 </ol>
@@ -573,7 +568,7 @@ and examine the differences between each method.</p>
 </span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bReplicateCancelAbility</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">CancelAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">bReplicateCancelAbility</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// omitted
+</span></span><span class="line"><span class="cl">    <span class="c1">// Omitted
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -635,7 +630,7 @@ and examine the differences between each method.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="3">
-<li>Register and activate the ability on the attached component</li>
+<li>Register and activate abilities on the attached components</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -691,155 +686,21 @@ and examine the differences between each method.</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="using-game-ability-system--gameplay-tags">Using Game Ability System + Gameplay Tags</h2>
-<p>When using the Game Ability System without Gameplay Tags, the advantages of the GAS framework are not fully utilized.
-Let&rsquo;s first understand what Gameplay Tags are.</p>
-<h3 id="gameplay-tags">Gameplay Tags</h3>
-<p>FGameplayTag represents a name registered in a hierarchical form like <code>Parent.Child.Grandchild...</code>. These tags are registered by the GameplayTagManager.
-By using these tags, classes can be classified and states can be effectively tracked.</p>
-<p>Instead of using bool values or enums to track states, the presence of Gameplay Tags in an object can replace conditions based on values to determine the state.</p>
-<p>Furthermore, managing multiple tags is better done using FGameplayTagContainer than Tarray<FGameplayTag>. This is because not only can you receive tags in array form at any time,
-but also various methods make tag management easier.</p>
-<p>The GAS framework is very friendly with Gameplay Tags. As the UAbilitySystemComponent implements IGameplayTagAssetInterface, you can directly assign tags to the Ability System Component,
-and also manage various states within GameplayAbility using tag containers such as CancelAbilitiesWithTag, BlockAbilitiesWithTag, and ActivationOwnedTags.</p>
-<p>By utilizing Gameplay Tags, you can implement the same requirements as follows:</p>
-<ol>
-<li>Create tags</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// DefaultGameplayTags.ini
-</span></span><span class="line"><span class="cl"><span class="o">[</span>/Script/GameplayTags.GameplayTagsSettings<span class="o">]</span>
-</span></span><span class="line"><span class="cl">//...
-</span></span><span class="line"><span class="cl">+GameplayTagList<span class="o">=(</span><span class="nv">Tag</span><span class="o">=</span><span class="s2">&#34;Actor.Action.Rotate&#34;</span>,DevComment<span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">+GameplayTagList<span class="o">=(</span><span class="nv">Tag</span><span class="o">=</span><span class="s2">&#34;Actor.State.IsRotating&#34;</span>,DevComment<span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="2">
-<li>Define macros for easy retrieval of tags</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// ABGameplayTag.h
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define ABTAG_ACTOR_ROTATE FGameplayTag::RequestGameplayTag(FName(&#34;Actor.Action.Rotate&#34;))
-</span></span></span><span class="line"><span class="cl"><span class="cp">#define ABTAG_ACTOR_ISROTATING FGameplayTag::RequestGameplayTag(FName(&#34;Actor.State.IsRotating&#34;))
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="3">
-<li>Register tags on the Gameplay Ability</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">UABGA_Rotate</span><span class="o">::</span><span class="n">UABGA_Rotate</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">AbilityTags</span><span class="p">.</span><span class="n">AddTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ROTATE</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// Tag planted upon activation
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">ActivationOwnedTags</span><span class="p">.</span><span class="n">AddTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ISROTATING</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol start="4">
-<li>Register and activate abilities based on tags</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// ABGASFountain.h
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">UPROPERTY</span><span class="p">(</span><span class="n">EditAnywhere</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="n">GAS</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">TArray</span><span class="o">&lt;</span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UGameplayAbility</span><span class="o">&gt;&gt;</span> <span class="n">Abilities</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Implementation
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Super</span><span class="o">::</span><span class="n">PostInitializeComponents</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">InitAbilityActorInfo</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">Element</span> <span class="p">:</span> <span class="n">Abilities</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">FGameplayAbilitySpec</span> <span class="nf">Spec</span><span class="p">(</span><span class="n">Element</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">GiveAbility</span><span class="p">(</span><span class="n">Spec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">AABGASFountain</span><span class="o">::</span><span class="n">TimerAction</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">FGameplayTagContainer</span> <span class="nf">TargetTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ROTATE</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">HasMatchingGameplayTag</span><span class="p">(</span><span class="n">ABTAG_ACTOR_ISROTATING</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">TryActivateAbilitiesByTag</span><span class="p">(</span><span class="n">TargetTag</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">CancelAbilities</span><span class="p">(</span><span class="o">&amp;</span><span class="n">TargetTag</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>After creating a blueprint class that inherits from the AABGASFountain cpp class, simply add the appropriate activity to the Abilities in the Details panel.</p>
-<h2 id="summary">Summary</h2>
-<p>Rotating fountain implemented through three methods:</p>
+</div><h2 id="using-game-ability-system--gameplay-tag">Using Game Ability System + Gameplay Tag</h2>
+<p>When using Gameplay Tags along with the Game Ability System, the advantages of the GAS framework are maximized.
+Gameplay Tags allow for efficient categorization and tracking of states, reducing dependency between objects and enhancing reusability.</p>
+<hr>
+<p>This post explored implementing a rotating fountain through three different methods:</p>
 <ol>
 <li>Actor function extension</li>
 <li>GAS: Creating a new class (ability) to separate functionality from the actor</li>
-<li>GAS + Gameplay Tags: Removing dependencies between the actor and ability</li>
+<li>GAS + Gameplay Tags: Using tags to remove dependencies between actors and abilities</li>
 </ol>
-<p>Benefits of using GAS and Gameplay Tags together:</p>
+<p>Advantages of using GAS and Gameplay Tags together:</p>
 <ol>
-<li>Minimization of actor roles</li>
-<li>Dependency removal. Easy maintenance and higher reusability</li>
-<li>Scalability + Ease of collaboration with other job roles</li>
+<li>Minimize the actor&rsquo;s role</li>
+<li>Reduce dependencies, making maintenance easier and increasing reusability</li>
+<li>Easy collaboration and scalability with other classes</li>
 </ol>
 <p><img src="/img/post/gas/RotatingFountain.gif"
 	
@@ -901,18 +762,18 @@ and also manage various states within GameplayAbility using tag containers such 
             
                 
 <article class="has-image">
-    <a href="/en/p/unreal-gas-input-handling/">
+    <a href="/en/p/unreal-gas-continuous-attack-implementation/">
         
         
             <div class="article-image">
                 
-                    <img src="/en/p/unreal-gas-input-handling/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-input-handling/img/unreal.svg"/>
+                    <img src="/en/p/unreal-gas-continuous-attack-implementation/img/unreal.svg" loading="lazy" data-key="" data-hash="/en/p/unreal-gas-continuous-attack-implementation/img/unreal.svg"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Unreal GAS Input Handling</h2>
+            <h2 class="article-title">Unreal GAS Continuous Attack Implementation</h2>
         </div>
     </a>
 </article>

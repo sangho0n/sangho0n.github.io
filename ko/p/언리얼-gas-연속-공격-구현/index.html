@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 시리즈 언리얼 GAS 개요 언리얼 GAS 시작 언리얼'>
+<title>언리얼 GAS 연속 공격 구현</title>
+
+<link rel='canonical' href='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%97%B0%EC%86%8D-%EA%B3%B5%EA%B2%A9-%EA%B5%AC%ED%98%84/'>
+
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='언리얼 GAS 연속 공격 구현'>
+<meta property='og:description' content='이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 시리즈 언리얼 GAS 개요 언리얼 GAS 시작 언리얼'>
+<meta property='og:url' content='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%97%B0%EC%86%8D-%EA%B3%B5%EA%B2%A9-%EA%B5%AC%ED%98%84/'>
+<meta property='og:site_name' content='sanghoon&#39;s dev-log'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='GAS' /><meta property='article:tag' content='어빌리티' /><meta property='article:published_time' content='2024-04-01T13:53:44&#43;09:00'/><meta property='article:modified_time' content='2024-04-01T13:53:44&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%97%B0%EC%86%8D-%EA%B3%B5%EA%B2%A9-%EA%B5%AC%ED%98%84/img/unreal.svg' />
+<meta name="twitter:title" content="언리얼 GAS 연속 공격 구현">
+<meta name="twitter:description" content="이득우 님의 강의 와 다른 개발자가 정리해놓은 문서를 보고 정리한 내용입니다. 자세하고 정확한 내용은 위 링크를 참조하세요 시리즈 언리얼 GAS 개요 언리얼 GAS 시작 언리얼"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://sangho0n.github.io/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%97%B0%EC%86%8D-%EA%B3%B5%EA%B2%A9-%EA%B5%AC%ED%98%84/img/unreal.svg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/ko/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/avatar_hufa2a3a1a2b6d47cfb712fe4c06494714_9812_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/ko">sanghoon&#39;s dev-log</a></h1>
+            <h2 class="site-description">안녕하세요. 게임개발자 한상훈입니다.</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/sangho0n'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/sanghoon_eat/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/ko/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/ko/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/ko/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/ko/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://sangho0n.github.io/ko/" selected>한국어</option>
+                        
+                            <option value="https://sangho0n.github.io/en/" >English</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span></span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title"></h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#연속공격-구현">연속공격 구현</a>
+      <ol>
+        <li><a href="#naive">Naive</a></li>
+        <li><a href="#gas-이용">GAS 이용</a></li>
+      </ol>
+    </li>
+    <li><a href="#custom-ability-task">Custom Ability Task</a>
+      <ol>
+        <li><a href="#구현cpp">구현(cpp)</a></li>
+        <li><a href="#블루프린트에서-custom-task-사용하기">블루프린트에서 custom task 사용하기</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%97%B0%EC%86%8D-%EA%B3%B5%EA%B2%A9-%EA%B5%AC%ED%98%84/">
+                
+                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%97%B0%EC%86%8D-%EA%B3%B5%EA%B2%A9-%EA%B5%AC%ED%98%84/img/unreal.svg" loading="lazy" alt="Featured image of post 언리얼 GAS 연속 공격 구현" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/ko/categories/unreal/" >
+                Unreal
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%97%B0%EC%86%8D-%EA%B3%B5%EA%B2%A9-%EA%B5%AC%ED%98%84/">언리얼 GAS 연속 공격 구현</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024-04-01</time>
+            </div>
+        
+
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://sangho0n.github.io/en/p/unreal-gas-continuous-attack-implementation/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
+    >이득우 님의 강의</a>
+와 <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
+    >다른 개발자가 정리해놓은 문서</a>를 보고 정리한 내용입니다.</p>
+<p>자세하고 정확한 내용은 위 링크를 참조하세요</p>
+<p>시리즈</p>
+<ul>
+<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ea%b0%9c%ec%9a%94/" >언리얼 GAS 개요</a></li>
+<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%8b%9c%ec%9e%91/" >언리얼 GAS 시작</a></li>
+<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%9e%85%eb%a0%a5%ec%b2%98%eb%a6%ac/" >언리얼 GAS 입력처리</a></li>
+<li><a class="link" href="../%ec%96%b8%eb%a6%ac%ec%96%bc-gas-%ec%97%b0%ec%86%8d%ea%b3%b5%ea%b2%a9/" >언리얼 GAS 연속 공격 구현</a> &lt;- 현재포스트</li>
+</ul>
+<hr>
+<p>이번 포스트에서는 애니메이션 몽타주에 등록되어있는 섹션을 GAS에서는 어떻게 재생시킬 수 있는지 알아보겠다.
+더불어 custom Task를 만들어보고, Ability Task를 블루프린트에서 사용하는 방식에 대해 알아보겠다.</p>
+<h2 id="연속공격-구현">연속공격 구현</h2>
+<p>이전 포스트에서는 UAbilityTask_PlayMontageAndWait를 이용해 애님몽타주의 첫 섹션을 재생시키는 것으로 공격 움직임을 나타냈었다.
+GAS의 Gameplay Ability 클래스에는 다음과 같이 섹션의 이름으로 플레이될 애니메이션을 바꿀 수 있는 메서드가 이미 정의되어 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UGameplayAbility</span><span class="o">::</span><span class="n">MontageJumpToSection</span><span class="p">(</span><span class="n">FName</span> <span class="n">SectionName</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">check</span><span class="p">(</span><span class="n">CurrentActorInfo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">UAbilitySystemComponent</span><span class="o">*</span> <span class="k">const</span> <span class="n">AbilitySystemComponent</span> <span class="o">=</span> <span class="n">GetAbilitySystemComponentFromActorInfo_Checked</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">IsAnimatingAbility</span><span class="p">(</span><span class="k">this</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">AbilitySystemComponent</span><span class="o">-&gt;</span><span class="n">CurrentMontageJumpToSection</span><span class="p">(</span><span class="n">SectionName</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>위 메서드를 활용하여 연속 공격을 구현해보자.</p>
+<hr>
+<h3 id="naive">Naive</h3>
+<p>연속공격을 구현할 때 가장 기본적인 메커니즘은 아래와 같다.</p>
+<ul>
+<li>애님인스턴스에 애님몽타주 등록</li>
+<li>애님몽타주 섹션의 끝마다 다음 section으로 넘어갈 수 있는지 확인하는 AnimNotify(NextComboCheck) 설정</li>
+<li>공격이 끝나지 않았는데 공격 요청이 들어왔을 경우 다음 섹션으로 넘어가는 flag를 true로 설정</li>
+<li>AnimNotify에서 flag 확인 후 조건에 따라 Montage_JumpToSection 메서드를 이용해 섹션 이동</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// 공격 input에 의해 아래 함수 호출
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">AMyCharacter</span><span class="o">::</span><span class="n">AttackNonEquip_Multicast_Implementation</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">animInstance</span> <span class="o">=</span> <span class="n">Cast</span><span class="o">&lt;</span><span class="n">UMSBAnimInstance</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetMesh</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetAnimInstance</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">CharacterState</span><span class="o">-&gt;</span><span class="n">IsAttacking</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">animInstance</span><span class="o">-&gt;</span><span class="n">SetNextComboInputOn</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">CharacterState</span><span class="o">-&gt;</span><span class="n">SetAttacking</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">animInstance</span><span class="o">-&gt;</span><span class="n">PlayComboAnim</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 연속공격 애니메이션 몽타주 재생
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">UMyAnimInstance</span><span class="o">::</span><span class="n">PlayComboAnim</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">CurrentCombo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">NextComboInputOn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">Montage_Play</span><span class="p">(</span><span class="n">ComboMontage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UMyAnimInstance</span><span class="o">::</span><span class="n">AnimNotify_NextComboCheck</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">NextComboInputOn</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">JumpToNextSection</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">		<span class="n">NextComboInputOn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">FName</span> <span class="n">UMyAnimInstance</span><span class="o">::</span><span class="n">GetNextComboSectionName</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">CurrentCombo</span> <span class="o">=</span> <span class="n">FMath</span><span class="o">::</span><span class="n">Clamp</span><span class="p">(</span><span class="n">CurrentCombo</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">MaxComboCount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">NextSection</span> <span class="o">=</span> <span class="n">FName</span><span class="p">(</span><span class="o">*</span><span class="n">FString</span><span class="o">::</span><span class="n">Printf</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&#34;Combo%d&#34;</span><span class="p">),</span> <span class="n">CurrentCombo</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">NextSection</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UMSBAnimInstance</span><span class="o">::</span><span class="n">JumpToNextSection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">text</span> <span class="o">=</span> <span class="n">GetNextComboSectionName</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Montage_JumpToSection</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">ComboMontage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="gas-이용">GAS 이용</h3>
+<p>같은 역할을 하는 코드를 다음과 같은 점을 염두에 두고 구현해보겠다.</p>
+<ul>
+<li>GAS 이용</li>
+<li>Montage Section 데이터들을 별도 에셋으로 분리하여 관리(전체 연속 공격 수, 재생 속도 등이 바뀌더라도 코드 컴파일 없이 빠른 개발 가능)</li>
+<li>애님노티파이 대신 Timer를 이용</li>
+</ul>
+<p>사용된 Primary Data Asset 클래스</p>
+<p><img src="/img/post/gas/data_asset.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="data_asset"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">TriggerEventData</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">AABCharacterBase</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ActorInfo</span><span class="o">-&gt;</span><span class="n">AvatarActor</span><span class="p">.</span><span class="n">Get</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetCharacterMovement</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetMovementMode</span><span class="p">(</span><span class="n">EMovementMode</span><span class="o">::</span><span class="n">MOVE_None</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CurrentComboData</span> <span class="o">=</span> <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetComboActionData</span><span class="p">();</span> <span class="c1">// 위에서 정의한 ABA_ComboAttack을 가져옴
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">*</span> <span class="n">PlayerAttackTask</span> <span class="o">=</span> <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">::</span><span class="n">CreatePlayMontageAndWaitProxy</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">       <span class="k">this</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">FName</span><span class="p">(</span><span class="s">&#34;PlayAttack&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetComboActionMontage</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">       <span class="mf">1.0f</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">GetNextSection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PlayerAttackTask</span><span class="o">-&gt;</span><span class="n">OnCompleted</span><span class="p">.</span><span class="n">AddDynamic</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnActionComplete</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PlayerAttackTask</span><span class="o">-&gt;</span><span class="n">OnCompleted</span><span class="p">.</span><span class="n">AddDynamic</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnActionInterrupted</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PlayerAttackTask</span><span class="o">-&gt;</span><span class="n">ReadyForActivation</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">StartComboTimer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">InputPressed</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//Super::InputPressed(Handle, ActorInfo, ActivationInfo);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ComboTimerHandle</span><span class="p">.</span><span class="n">IsValid</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">HasNextComboInputOn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">HasNextComboInputOn</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">FName</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">GetNextSection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CurrentCombo</span> <span class="o">=</span> <span class="n">FMath</span><span class="o">::</span><span class="n">Clamp</span><span class="p">(</span><span class="n">CurrentCombo</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CurrentComboData</span><span class="o">-&gt;</span><span class="n">MaxComboCount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">NextSection</span> <span class="o">=</span> <span class="n">FString</span><span class="o">::</span><span class="n">Printf</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&#34;%s%d&#34;</span><span class="p">),</span> <span class="o">*</span><span class="n">CurrentComboData</span><span class="o">-&gt;</span><span class="n">MontageSectionNamePrefix</span><span class="p">,</span> <span class="n">CurrentCombo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">FName</span><span class="p">(</span><span class="n">NextSection</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">StartComboTimer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">int32</span> <span class="n">ComboIndex</span> <span class="o">=</span> <span class="n">CurrentCombo</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ensure</span><span class="p">(</span><span class="n">CurrentComboData</span><span class="o">-&gt;</span><span class="n">EffectiveFrameCount</span><span class="p">.</span><span class="n">IsValidIndex</span><span class="p">(</span><span class="n">ComboIndex</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">float</span> <span class="n">ComboEffectiveTime</span> <span class="o">=</span> <span class="n">CurrentComboData</span><span class="o">-&gt;</span><span class="n">EffectiveFrameCount</span><span class="p">[</span><span class="n">ComboIndex</span><span class="p">]</span> <span class="o">/</span> <span class="n">CurrentComboData</span><span class="o">-&gt;</span><span class="n">FrameRate</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">ComboEffectiveTime</span> <span class="o">&gt;</span> <span class="mf">0.0f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">GetWorld</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetTimerManager</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">          <span class="p">.</span><span class="n">SetTimer</span><span class="p">(</span><span class="n">ComboTimerHandle</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">CheckComboInput</span><span class="p">,</span> <span class="n">ComboEffectiveTime</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">CheckComboInput</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ComboTimerHandle</span><span class="p">.</span><span class="n">Invalidate</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">HasNextComboInputOn</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">MontageJumpToSection</span><span class="p">(</span><span class="n">GetNextSection</span><span class="p">());</span> <span class="c1">// pre-defined from super class
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="n">StartComboTimer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">       <span class="n">HasNextComboInputOn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="custom-ability-task">Custom Ability Task</h2>
+<p>지난 포스트에서는 기본으로 제공되던 Jump 어빌리티를 이용해 점프를 구현했었다.
+이 경우 상태추적이 원하는대로 쉽게 되지 않고, 태스크 없이 어빌리티에서 직접 캐릭터를 점프시켜버리기 때문에 추가 요구사항에 유연하게 대처하기 힘들다.
+새로 점프 어빌리티와 태스크를 만들고 상태에 따라 다른 어빌리티의 발동을 제한하는 법을 알아보자.</p>
+<h3 id="구현cpp">구현(cpp)</h3>
+<p>이전에 언급했었던 <strong>커스텀 어빌리티 생성 패턴</strong>에 맞춰 제작하겠다.</p>
+<blockquote>
+<p>1. 어빌리티 태스크에 작업이 완료된 후 브로드캐스팅되는 델리게이트 선언<br>2. 어빌리티에서 위 델리게이트에 바인딩 될 콜백 함수 선언 및 바인딩<br>3. 바인딩 후 ReadyForActivation 메서드를 이용해 태스크가 실행될 수 있는 상태 만들기<br>4. 델리게이트에 의해 호출된 메서드에서 EndAbility를 통해 어빌리티 종료</p>
+</blockquote>
+<p>이때, 점프 태스크의 종료는 점프 애니메이션의 종료, 즉 땅에 발을 디뎠을 때 종료되는 것으로 설정하였다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// Task 구현부
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">::</span><span class="n">Activate</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">Activate</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">ACharacter</span><span class="o">*</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">ACharacter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetAvatarActor</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Character</span><span class="o">-&gt;</span><span class="n">LandedDelegate</span><span class="p">.</span><span class="n">AddDynamic</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnLanded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Character</span><span class="o">-&gt;</span><span class="n">Jump</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SetWaitingOnAvatar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">::</span><span class="n">OnDestroy</span><span class="p">(</span><span class="kt">bool</span> <span class="n">bInOwnerFinished</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ACharacter</span><span class="o">*</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">ACharacter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetAvatarActor</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Character</span><span class="o">-&gt;</span><span class="n">LandedDelegate</span><span class="p">.</span><span class="n">RemoveDynamic</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnLanded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">OnDestroy</span><span class="p">(</span><span class="n">bInOwnerFinished</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">::</span><span class="n">OnLanded</span><span class="p">(</span><span class="k">const</span> <span class="n">FHitResult</span><span class="o">&amp;</span> <span class="n">Hit</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">ShouldBroadcastAbilityTaskDelegates</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">OnComplete</span><span class="p">.</span><span class="n">Broadcast</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Ability 구현부
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">UABGA_Jump</span><span class="o">::</span><span class="n">UABGA_Jump</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">InstancingPolicy</span> <span class="o">=</span> <span class="n">EGameplayAbilityInstancingPolicy</span><span class="o">::</span><span class="n">InstancedPerActor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Jump</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayEventData</span><span class="o">*</span> <span class="n">TriggerEventData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">TriggerEventData</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// custom ability task를 이용해 jump 구현
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">JumpAndWaitForLandingTask</span> <span class="o">=</span> <span class="n">UAbilityTask</span><span class="o">::</span><span class="n">NewAbilityTask</span><span class="o">&lt;</span><span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">JumpAndWaitForLandingTask</span><span class="o">-&gt;</span><span class="n">OnComplete</span><span class="p">.</span><span class="n">AddDynamic</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnLanded</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">JumpAndWaitForLandingTask</span><span class="o">-&gt;</span><span class="n">ReadyForActivation</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Jump</span><span class="o">::</span><span class="n">InputReleased</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">ACharacter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ActorInfo</span><span class="o">-&gt;</span><span class="n">AvatarActor</span><span class="p">.</span><span class="n">Get</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Character</span><span class="o">-&gt;</span><span class="n">StopJumping</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">InputReleased</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">UABGA_Jump</span><span class="o">::</span><span class="n">CanActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayTagContainer</span><span class="o">*</span> <span class="n">SourceTags</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayTagContainer</span><span class="o">*</span> <span class="n">TargetTags</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FGameplayTagContainer</span><span class="o">*</span> <span class="n">OptionalRelevantTags</span><span class="p">)</span> <span class="k">const</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="n">bResult</span> <span class="o">=</span> <span class="n">Super</span><span class="o">::</span><span class="n">CanActivateAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">SourceTags</span><span class="p">,</span> <span class="n">TargetTags</span><span class="p">,</span> <span class="n">OptionalRelevantTags</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">bResult</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="k">auto</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">ACharacter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ActorInfo</span><span class="o">-&gt;</span><span class="n">AvatarActor</span><span class="p">.</span><span class="n">Get</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">Character</span> <span class="o">&amp;&amp;</span> <span class="n">Character</span><span class="o">-&gt;</span><span class="n">CanJump</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Jump</span><span class="o">::</span><span class="n">OnLanded</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">EndAbility</span><span class="p">(</span><span class="n">CurrentSpecHandle</span><span class="p">,</span> <span class="n">CurrentActorInfo</span><span class="p">,</span> <span class="n">CurrentActivationInfo</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>마찬가지로 태그 지정은 블루프린트에서 이루어졌다. 이때 점프 중에는 공격이 불가능,
+공격 중에는 점프가 불가능하도록 구현하였는데, 이를 위해서는 <code>Activation Blocked Tags</code>를 지정해주면 된다.</p>
+<center>
+<p><img src="/img/post/gas/jump_tags.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="jump_tags"
+	
+	
+> <img src="/img/post/gas/attack_tags.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="attack_tags"
+	
+	
+></p>
+</center>
+<h3 id="블루프린트에서-custom-task-사용하기">블루프린트에서 custom task 사용하기</h3>
+<p><code>UAbilityTask::NewAbilityTask</code> 메서드는 블루프린트에서 호출할 수 없다. 엔진 코드를 수정해도 되지만, 여기서는 태스크 생성을 위한
+별도의 static 메서드를 만든 후, 해당 메서드를 <code>BlueprintCallable</code>로 선언하겠다.
+또한 OnComplete 델리게이트를 <code>BlueprintAssignable</code>로 선언하여 블루프린트에서도 태스크가 끝났다는 사실을 알 수 있도록 하겠다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">DECLARE_DYNAMIC_MULTICAST_DELEGATE</span><span class="p">(</span><span class="n">FJumpAndWaitForLandingDelegate</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="n">UCLASS</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ARENABATTLEGAS_API</span> <span class="nl">UABAT_JumpAndWaitForLanding</span> <span class="p">:</span> <span class="k">public</span> <span class="n">UAbilityTask</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GENERATED_BODY</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UABAT_JumpAndWaitForLanding</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">UFUNCTION</span><span class="p">(</span><span class="n">BlueprintCallable</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="s">&#34;Abiltiy|Task&#34;</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">       <span class="n">DisplayName</span> <span class="o">=</span> <span class="s">&#34;JumpAndWaitForLanding&#34;</span><span class="p">,</span> <span class="n">HidePin</span> <span class="o">=</span> <span class="s">&#34;OwningAbility&#34;</span><span class="p">,</span> <span class="n">DefaultToSelf</span> <span class="o">=</span> <span class="s">&#34;OwningAbility&#34;</span><span class="p">,</span> <span class="n">BlueprintInternalUseOnly</span><span class="o">=</span><span class="nb">true</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">*</span> <span class="n">CreateTask</span><span class="p">(</span><span class="n">UGameplayAbility</span><span class="o">*</span> <span class="n">OwningAbility</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">Activate</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">OnDestroy</span><span class="p">(</span><span class="kt">bool</span> <span class="n">bInOwnerFinished</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">UPROPERTY</span><span class="p">(</span><span class="n">BlueprintAssignable</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FJumpAndWaitForLandingDelegate</span> <span class="n">OnComplete</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UFUNCTION</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">OnLanded</span><span class="p">(</span><span class="k">const</span> <span class="n">FHitResult</span><span class="o">&amp;</span> <span class="n">Hit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">*</span> <span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">::</span><span class="n">CreateTask</span><span class="p">(</span><span class="n">UGameplayAbility</span><span class="o">*</span> <span class="n">OwningAbility</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">*</span> <span class="n">NewTask</span> <span class="o">=</span> <span class="n">NewAbilityTask</span><span class="o">&lt;</span><span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">&gt;</span><span class="p">(</span><span class="n">OwningAbility</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">NewTask</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>태스크 코드를 위처럼 변경한 후, <code>UABGA_Jump::ActivateAbility</code> 메서드에서 태스크를 생성하여 ReadyForActivation을 호출하던 부분을 주석처리한다.
+이후 Jump 어빌리티 블루프린트에서 다음과 같이 바인딩한다.</p>
+<center>
+<p><img src="/img/post/gas/bp_task.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="bp_task"
+	
+	
+></p>
+</center>
+<p><del>이상하게 블루프린트에서는 ReadyForActivation을 호출하지 않아도 태스크가 정상적으로 동작한다! 아마도 엔진 내부에서 생성만 해도 활성화가 되도록 구현이 된 것 같다.</del></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/ko/tags/unreal/">Unreal</a>
+        
+            <a href="/ko/tags/%EC%96%B8%EB%A6%AC%EC%96%BC/">언리얼</a>
+        
+            <a href="/ko/tags/ue/">UE</a>
+        
+            <a href="/ko/tags/gas/">GAS</a>
+        
+            <a href="/ko/tags/%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0/">어빌리티</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title"></h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%9E%85%EB%A0%A5%EC%B2%98%EB%A6%AC/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 GAS 입력처리</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EC%8B%9C%EC%9E%91/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 GAS 시작</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-gas-%EA%B0%9C%EC%9A%94/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 GAS 개요</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-%EC%8A%A4%EB%A7%88%ED%8A%B8-%ED%8F%AC%EC%9D%B8%ED%84%B0/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 스마트 포인터</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/img/unreal.svg" loading="lazy" data-key="" data-hash="/ko/p/%EC%96%B8%EB%A6%AC%EC%96%BC-enhanced-input/img/unreal.svg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">언리얼 Enhanced Input</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2024 Sanghoon, Han
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe.min.js"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://lib.baomitu.com/photoswipe/4.1.3/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://lib.baomitu.com/photoswipe/4.1.3/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src=""crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
