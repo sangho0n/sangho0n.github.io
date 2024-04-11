@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Based on the lecture by Lee Duk-woo and documentation compiled by other developers. For detailed and accurate information, please refer to the links above. Series: Unreal GAS Overview Unreal GAS Start Unreal GAS Input Handling Unreal GAS Continuous Attack Implementation &amp;lt;- Current Post In this post, we&amp;rsquo;ll explore how the sections registered in the animation montage can be played in GAS and implemented. Additionally, we&amp;rsquo;ll create a custom Task and'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='This post is a summary based on Lee Deukwoo&amp;rsquo;s lecture and documentation prepared by another developer. For detailed and accurate information, please refer to the above links. Series Basics of GAS Unreal GAS Overview Getting Started with Unreal GAS Basic Character Creation with GAS Handling Input in Unreal GAS Implementing Continuous Attacks in Unreal GAS &amp;lt;- Current Post Implementing Attack Judgment System in Unreal GAS Attributes and Gameplay Effects Unreal'>
 <title>Unreal GAS Continuous Attack Implementation</title>
 
 <link rel='canonical' href='https://sangho0n.github.io/en/p/unreal-gas-continuous-attack-implementation/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Unreal GAS Continuous Attack Implementation'>
-<meta property='og:description' content='Based on the lecture by Lee Duk-woo and documentation compiled by other developers. For detailed and accurate information, please refer to the links above. Series: Unreal GAS Overview Unreal GAS Start Unreal GAS Input Handling Unreal GAS Continuous Attack Implementation &amp;lt;- Current Post In this post, we&amp;rsquo;ll explore how the sections registered in the animation montage can be played in GAS and implemented. Additionally, we&amp;rsquo;ll create a custom Task and'>
+<meta property='og:description' content='This post is a summary based on Lee Deukwoo&amp;rsquo;s lecture and documentation prepared by another developer. For detailed and accurate information, please refer to the above links. Series Basics of GAS Unreal GAS Overview Getting Started with Unreal GAS Basic Character Creation with GAS Handling Input in Unreal GAS Implementing Continuous Attacks in Unreal GAS &amp;lt;- Current Post Implementing Attack Judgment System in Unreal GAS Attributes and Gameplay Effects Unreal'>
 <meta property='og:url' content='https://sangho0n.github.io/en/p/unreal-gas-continuous-attack-implementation/'>
 <meta property='og:site_name' content='sanghoon&#39;s dev-log'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Unreal' /><meta property='article:tag' content='언리얼' /><meta property='article:tag' content='UE' /><meta property='article:tag' content='GAS' /><meta property='article:tag' content='Ability' /><meta property='article:published_time' content='2024-04-01T13:53:44&#43;09:00'/><meta property='article:modified_time' content='2024-04-01T13:53:44&#43;09:00'/><meta property='og:image' content='https://sangho0n.github.io/en/p/unreal-gas-continuous-attack-implementation/img/unreal.svg' />
 <meta name="twitter:title" content="Unreal GAS Continuous Attack Implementation">
-<meta name="twitter:description" content="Based on the lecture by Lee Duk-woo and documentation compiled by other developers. For detailed and accurate information, please refer to the links above. Series: Unreal GAS Overview Unreal GAS Start Unreal GAS Input Handling Unreal GAS Continuous Attack Implementation &amp;lt;- Current Post In this post, we&amp;rsquo;ll explore how the sections registered in the animation montage can be played in GAS and implemented. Additionally, we&amp;rsquo;ll create a custom Task and"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="This post is a summary based on Lee Deukwoo&amp;rsquo;s lecture and documentation prepared by another developer. For detailed and accurate information, please refer to the above links. Series Basics of GAS Unreal GAS Overview Getting Started with Unreal GAS Basic Character Creation with GAS Handling Input in Unreal GAS Implementing Continuous Attacks in Unreal GAS &amp;lt;- Current Post Implementing Attack Judgment System in Unreal GAS Attributes and Gameplay Effects Unreal"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://sangho0n.github.io/en/p/unreal-gas-continuous-attack-implementation/img/unreal.svg' />
     </head>
     <body class="
@@ -261,7 +261,15 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#continuous-attack-implementation">Continuous Attack Implementation</a>
+    <li><a href="#series">Series</a>
+      <ol>
+        <li><a href="#basics-of-gas">Basics of GAS</a></li>
+        <li><a href="#basic-character-creation-with-gas">Basic Character Creation with GAS</a></li>
+        <li><a href="#attributes-and-gameplay-effects">Attributes and Gameplay Effects</a></li>
+        <li><a href="#utilizing-gas">Utilizing GAS</a></li>
+      </ol>
+    </li>
+    <li><a href="#implementing-continuous-attack">Implementing Continuous Attack</a>
       <ol>
         <li><a href="#naive-approach">Naive Approach</a></li>
         <li><a href="#using-gas">Using GAS</a></li>
@@ -269,7 +277,7 @@
     </li>
     <li><a href="#custom-ability-task">Custom Ability Task</a>
       <ol>
-        <li><a href="#implementation-cpp">Implementation (cpp)</a></li>
+        <li><a href="#implementation-c">Implementation (C++)</a></li>
         <li><a href="#using-custom-task-in-blueprints">Using custom task in Blueprints</a></li>
       </ol>
     </li>
@@ -364,24 +372,38 @@
     <section class="article-content">
     
     
-    <p><a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
-    >Based on the lecture by Lee Duk-woo</a>
-and <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
-    >documentation compiled by other developers</a>.</p>
-<p>For detailed and accurate information, please refer to the links above.</p>
-<p>Series:</p>
+    <p>This post is a summary based on <a class="link" href="https://www.inflearn.com/course/%EC%9D%B4%EB%93%9D%EC%9A%B0-%EC%96%B8%EB%A6%AC%EC%96%BC-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-part-4"  target="_blank" rel="noopener"
+    >Lee Deukwoo&rsquo;s lecture</a> and <a class="link" href="https://github.com/tranek/GASDocumentation"  target="_blank" rel="noopener"
+    >documentation prepared by another developer</a>.</p>
+<p>For detailed and accurate information, please refer to the above links.</p>
+<h2 id="series">Series</h2>
+<h3 id="basics-of-gas">Basics of GAS</h3>
 <ul>
-<li><a class="link" href="../unreal-gas-overview/" >Unreal GAS Overview</a></li>
-<li><a class="link" href="../unreal-gas-start/" >Unreal GAS Start</a></li>
-<li><a class="link" href="../unreal-gas-input-handling/" >Unreal GAS Input Handling</a></li>
-<li><a class="link" href="../unreal-gas-continuous-attack/" >Unreal GAS Continuous Attack Implementation</a> &lt;- Current Post</li>
+<li><a class="link" href="../Unreal-GAS-Overview/" >Unreal GAS Overview</a></li>
+<li><a class="link" href="../Unreal-GAS-Getting-Started/" >Getting Started with Unreal GAS</a></li>
+</ul>
+<h3 id="basic-character-creation-with-gas">Basic Character Creation with GAS</h3>
+<ul>
+<li><a class="link" href="../Unreal-GAS-Input-Handling/" >Handling Input in Unreal GAS</a></li>
+<li><a class="link" href="../Unreal-GAS-Continuous-Attack-Implementation/" >Implementing Continuous Attacks in Unreal GAS</a> &lt;- Current Post</li>
+<li><a class="link" href="../Unreal-GAS-Attack-Judgment-System/" >Implementing Attack Judgment System in Unreal GAS</a></li>
+</ul>
+<h3 id="attributes-and-gameplay-effects">Attributes and Gameplay Effects</h3>
+<ul>
+<li>Unreal GAS Character Attributes</li>
+<li>Unreal GAS Gameplay Effects</li>
+<li>Interfacing Attributes and UI in Unreal GAS</li>
+</ul>
+<h3 id="utilizing-gas">Utilizing GAS</h3>
+<ul>
+<li>Implementing Item Crate in Unreal GAS</li>
+<li>Implementing Area of Effect Skill in Unreal GAS</li>
 </ul>
 <hr>
-<p>In this post, we&rsquo;ll explore how the sections registered in the animation montage can be played in GAS and implemented.
-Additionally, we&rsquo;ll create a custom Task and examine how to use Ability Task in blueprints.</p>
-<h2 id="continuous-attack-implementation">Continuous Attack Implementation</h2>
-<p>In the previous post, we represented the attack movement by playing the first section of the animation montage using UAbilityTask_PlayMontageAndWait.
-The Gameplay Ability class in GAS already defines a method that allows you to change the animation to be played by the section&rsquo;s name as follows:</p>
+<p>In this post, we will explore how animation sections registered in animation montages can be played in GAS and create a custom Task while learning how to use Ability Tasks in blueprints.</p>
+<h2 id="implementing-continuous-attack">Implementing Continuous Attack</h2>
+<p>In the previous post, we represented the attack motion by playing the first section of the animation montage using UAbilityTask_PlayMontageAndWait.
+The Gameplay Ability class in GAS already defines a method that allows changing the animation to be played based on the section&rsquo;s name.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -411,12 +433,12 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </div><p>Let&rsquo;s implement continuous attacks using this method.</p>
 <hr>
 <h3 id="naive-approach">Naive Approach</h3>
-<p>The most basic mechanism for implementing continuous attacks is as follows:</p>
+<p>The most basic mechanism to implement continuous attacks is as follows:</p>
 <ul>
-<li>Register the animation montage to the animation instance</li>
-<li>Set AnimNotify (NextComboCheck) to check if it can move to the next section at the end of each montage section</li>
-<li>If an attack request is received while the attack has not ended, set the flag for transitioning to the next section to true</li>
-<li>Check the flag in AnimNotify and move to the next section using the Montage_JumpToSection method as per conditions</li>
+<li>Register the animation montage in the animation instance</li>
+<li>Set an AnimNotify (NextComboCheck) to verify at the end of each animation montage section if it can transition to the next section</li>
+<li>When an attack request is received before the attack ends, set a flag to proceed to the next section</li>
+<li>Check the flag in AnimNotify and transition to the next section using the Montage_JumpToSection method</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -467,7 +489,7 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// Called by the attack input
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// Invoked upon attack input
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">AMyCharacter</span><span class="o">::</span><span class="n">AttackNonEquip_Multicast_Implementation</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">animInstance</span> <span class="o">=</span> <span class="n">Cast</span><span class="o">&lt;</span><span class="n">UMSBAnimInstance</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetMesh</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetAnimInstance</span><span class="p">());</span>
@@ -482,7 +504,7 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Play the continuous attack animation montage
+</span></span><span class="line"><span class="cl"><span class="c1">// Play continuous attack animation montage
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">UMyAnimInstance</span><span class="o">::</span><span class="n">PlayComboAnim</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">CurrentCombo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -516,11 +538,11 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </div>
 </div><hr>
 <h3 id="using-gas">Using GAS</h3>
-<p>When implementing the same role in code, consider the following:</p>
+<p>We will now implement the equivalent code keeping in mind the following:</p>
 <ul>
-<li>Utilize GAS</li>
-<li>Separate Montage Section data into separate assets for easier management (allows for quick development without recompiling even if the number of continuous attacks, playback speed, etc., changes)</li>
-<li>Use Timer instead of AnimNotify</li>
+<li>Use of GAS</li>
+<li>Separate and manage Montage Section data as assets (enables rapid development without needing to recompile code even if the total number of attacks, playback speed, etc., change)</li>
+<li>Use of Timer instead of AnimNotify</li>
 </ul>
 <p>Primary Data Asset class used:</p>
 <p><img src="/img/post/gas/data_asset.png"
@@ -601,6 +623,8 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </span><span class="lnt">64
 </span><span class="lnt">65
 </span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
@@ -610,7 +634,7 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">CastChecked</span><span class="o">&lt;</span><span class="n">AABCharacterBase</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ActorInfo</span><span class="o">-&gt;</span><span class="n">AvatarActor</span><span class="p">.</span><span class="n">Get</span><span class="p">());</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetCharacterMovement</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">SetMovementMode</span><span class="p">(</span><span class="n">EMovementMode</span><span class="o">::</span><span class="n">MOVE_None</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">CurrentComboData</span> <span class="o">=</span> <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetComboActionData</span><span class="p">();</span> <span class="c1">// Obtain the ABA_ComboAttack defined above
+</span></span><span class="line"><span class="cl">    <span class="n">CurrentComboData</span> <span class="o">=</span> <span class="n">Character</span><span class="o">-&gt;</span><span class="n">GetComboActionData</span><span class="p">();</span> <span class="c1">// Retrieved ABA_ComboAttack defined earlier
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
 </span></span><span class="line"><span class="cl">    <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">*</span> <span class="n">PlayerAttackTask</span> <span class="o">=</span> <span class="n">UAbilityTask_PlayMontageAndWait</span><span class="o">::</span><span class="n">CreatePlayMontageAndWaitProxy</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">       <span class="k">this</span><span class="p">,</span>
@@ -629,6 +653,8 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Attack</span><span class="o">::</span><span class="n">InputPressed</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//Super::InputPressed(Handle, ActorInfo, ActivationInfo);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ComboTimerHandle</span><span class="p">.</span><span class="n">IsValid</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">       <span class="n">HasNextComboInputOn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
@@ -672,15 +698,17 @@ The Gameplay Ability class in GAS already defines a method that allows you to ch
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="custom-ability-task">Custom Ability Task</h2>
-<p>In the previous post, we implemented jumping using the provided Jump ability.
-It was difficult to track the state as desired, and directly forcing the character to jump without a task made it challenging to address additional requirements.
-Let&rsquo;s create a new Jump ability and task, and learn how to restrict the activation of different abilities based on states.</p>
-<h3 id="implementation-cpp">Implementation (cpp)</h3>
-<p>Following the <strong>custom ability creation pattern</strong> mentioned earlier, we shall create the Task:</p>
-<blockquote>
-<p>1. Declare a delegate that is broadcasted when the task is complete in the Ability Task<br>2. Declare a callback function to be bound to the delegate and bind it in the Ability<br>3. Use the ReadyForActivation method to enable the task to be executed after binding<br>4. End the ability in the method called by the delegate</p>
-</blockquote>
-<p>In this case, the completion of the jump task is set to the landing of the jump animation, i.e., when the character&rsquo;s feet touch the ground.</p>
+<p>In the previous post, we implemented jumping using the provided Jump ability, but handling the state transitions as needed was not straightforward, and directly jumping the character from the ability made it challenging to adapt to additional requirements.
+Let&rsquo;s create a new Jump ability and task to learn how to restrict the activation of different abilities based on the character&rsquo;s state.</p>
+<h3 id="implementation-c">Implementation (C++)</h3>
+<p>The custom Task implementation follows the <strong>Custom Ability Task Creation Pattern</strong> we mentioned earlier.</p>
+<ul>
+<li>Declare a delegate that broadcasts when the Task has completed</li>
+<li>Declare a callback function to be bound to this delegate in the Ability</li>
+<li>Use the ReadyForActivation method to make the Task executable</li>
+<li>End the Ability in the method called by the delegate</li>
+</ul>
+<p>In this case, the Jump Task ends when the character lands, meaning when the character&rsquo;s feet touch the ground.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -791,11 +819,11 @@ Let&rsquo;s create a new Jump ability and task, and learn how to restrict the ac
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Super</span><span class="o">::</span><span class="n">ActivateAbility</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ActorInfo</span><span class="p">,</span> <span class="n">ActivationInfo</span><span class="p">,</span> <span class="n">TriggerEventData</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Implement jump using the custom ability task
+</span></span><span class="line"><span class="cl">    <span class="c1">// Implement jump using custom ability task
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">JumpAndWaitForLandingTask</span> <span class="o">=</span> <span class="n">UAbilityTask</span><span class="o">::</span><span class="n">NewAbilityTask</span><span class="o">&lt;</span><span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="n">JumpAndWaitForLandingTask</span><span class="o">-&gt;</span><span class="n">OnComplete</span><span class="p">.</span><span class="n">AddDynamic</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ThisClass</span><span class="o">::</span><span class="n">OnLanded</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">JumpAndWaitForLandingTask</span><span class="o">-&gt;</span><span class="n">ReadyForActivation</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// JumpAndWaitForLandingTask-&gt;ReadyForActivation();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">UABGA_Jump</span><span class="o">::</span><span class="n">InputReleased</span><span class="p">(</span><span class="k">const</span> <span class="n">FGameplayAbilitySpecHandle</span> <span class="n">Handle</span><span class="p">,</span> <span class="k">const</span> <span class="n">FGameplayAbilityActorInfo</span><span class="o">*</span> <span class="n">ActorInfo</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">FGameplayAbilityActivationInfo</span> <span class="n">ActivationInfo</span><span class="p">)</span>
@@ -823,8 +851,8 @@ Let&rsquo;s create a new Jump ability and task, and learn how to restrict the ac
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>We also assigned tags in blueprints. Jumping is disabled during an attack, and attacking is disabled during a jump to achieve this, we specified the <code>Activation Blocked Tags</code>.</p>
-<center>
+</div><p>To make tags on whether to block activation for jumping or attacking, these were specified in blueprints.
+For jumping, it isn&rsquo;t allowed to attack, and for attacking, it isn&rsquo;t allowed to jump. This was achieved by setting the <code>Activation Blocked Tags</code>.</p>
 <p><img src="/img/post/gas/jump_tags.png"
 	
 	
@@ -844,10 +872,8 @@ Let&rsquo;s create a new Jump ability and task, and learn how to restrict the ac
 	
 	
 ></p>
-</center>
 <h3 id="using-custom-task-in-blueprints">Using custom task in Blueprints</h3>
-<p><code>UAbilityTask::NewAbilityTask</code> method cannot be called from Blueprints. While modifying the engine code is an option, here we will create a separate static method for task creation and declare the method as <code>BlueprintCallable</code>.
-Additionally, we&rsquo;ll declare the OnComplete delegate as <code>BlueprintAssignable</code> to indicate the task completion in Blueprints.</p>
+<p>The method <code>UAbilityTask::NewAbilityTask</code> cannot be called from blueprints. While modifying engine code is an option, here, we will create a separate static method for task creation and declare the OnComplete delegate as <code>BlueprintAssignable</code> to let blueprints know when the task has completed.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -896,7 +922,7 @@ Additionally, we&rsquo;ll declare the OnComplete delegate as <code>BlueprintAssi
 </span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">UABAT_JumpAndWaitForLanding</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">UFUNCTION</span><span class="p">(</span><span class="n">BlueprintCallable</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="s">&#34;Ability|Task&#34;</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">UFUNCTION</span><span class="p">(</span><span class="n">BlueprintCallable</span><span class="p">,</span> <span class="n">Category</span><span class="o">=</span><span class="s">&#34;Abiltiy|Task&#34;</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">       <span class="n">DisplayName</span> <span class="o">=</span> <span class="s">&#34;JumpAndWaitForLanding&#34;</span><span class="p">,</span> <span class="n">HidePin</span> <span class="o">=</span> <span class="s">&#34;OwningAbility&#34;</span><span class="p">,</span> <span class="n">DefaultToSelf</span> <span class="o">=</span> <span class="s">&#34;OwningAbility&#34;</span><span class="p">,</span> <span class="n">BlueprintInternalUseOnly</span><span class="o">=</span><span class="nb">true</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="n">UABAT_JumpAndWaitForLanding</span><span class="o">*</span> <span class="n">CreateTask</span><span class="p">(</span><span class="n">UGameplayAbility</span><span class="o">*</span> <span class="n">OwningAbility</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -918,9 +944,8 @@ Additionally, we&rsquo;ll declare the OnComplete delegate as <code>BlueprintAssi
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>After modifying the task code as above, comment out the part in <code>UABGA_Jump::ActivateAbility</code> method that creates the task with ReadyForActivation.
-Next, bind it in the Jump ability blueprint as shown below.</p>
-<center>
+</div><p>After modifying the task code as above, the part in <code>UABGA_Jump::ActivateAbility</code> where the task was created and <code>ReadyForActivation</code> was called should be commented out.
+Then, in the blueprint of the Jump ability, bind the delegates.</p>
 <p><img src="/img/post/gas/bp_task.png"
 	
 	
@@ -931,8 +956,6 @@ Next, bind it in the Jump ability blueprint as shown below.</p>
 	
 	
 ></p>
-</center>
-<p><del>Oddly, the task works fine in Blueprints even without calling ReadyForActivation! It seems like the engine internally activates the task once it is created.</del></p>
 
 </section>
 
